@@ -4,16 +4,17 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
-import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import entities.bombs.BombList;
 import entities.players.PlayerList;
-import events.PlayerInput;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
     public static InputManager INPUT_MANAGER;
+    public static Camera CAM;
     public static Node ROOT_NODE;
 
     public static void main(String[] args) {
@@ -32,19 +33,17 @@ public class Main extends SimpleApplication {
         ASSET_MANAGER = assetManager;
         INPUT_MANAGER = inputManager;
         ROOT_NODE = rootNode;
-
-        viewPort.setBackgroundColor(ColorRGBA.White);
-        flyCam.setEnabled(true);
-        flyCam.setMoveSpeed(10.0f);
+        CAM = cam;
+        flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
-        rootNode.addLight(new AmbientLight());
+        Ambient.init();
         Map.init();
         PlayerList.init();
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        //TODO: add update code
+        BombList.onUpdate();
     }
 
 }

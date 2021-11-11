@@ -3,6 +3,7 @@ package cores;
 import com.jme3.math.Vector3f;
 import entities.*;
 import entities.bombs.Bomb;
+import entities.bombs.BombList;
 
 import java.util.Random;
 
@@ -43,6 +44,7 @@ public class Map {
         if (entity[x][z] != null) {
             entity[x][z].remove();
             entity[x][z] = null;
+            setBlock(x, z, NOT_BLOCKED);
         }
         switch (value) {
             case CONTAINER:
@@ -53,6 +55,7 @@ public class Map {
                 break;
             case BOMB:
                 entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), System.currentTimeMillis());
+                BombList.add((Bomb) entity[x][z]);
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package entities;
 
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import cores.Main;
@@ -7,7 +8,7 @@ import cores.Main;
 public abstract class Entity {
     protected Spatial spatial;
     protected int id;
-    private static int idCount = 0;
+    private static int ID_COUNT = 0;
     public static final float BLOCK_SIZE = 2f;
 
     public Entity(Vector3f position, String path) {
@@ -15,8 +16,7 @@ public abstract class Entity {
         spatial.setLocalTranslation(position.x, position.y, position.z);
         Main.ROOT_NODE.attachChild(spatial);
         this.spatial = spatial;
-        idCount += 1;
-        id = idCount;
+        id = ++ID_COUNT;
     }
 
     public void setPosition(Vector3f position) {
@@ -29,6 +29,12 @@ public abstract class Entity {
 
     public Spatial getSpatial() {
         return spatial;
+    }
+
+    public Vector2f getCord() {
+        int cordX = (int) ((getPosition().x + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
+        int cordZ = (int) ((getPosition().z + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
+        return new Vector2f(cordX, cordZ);
     }
 
     public void remove() {
