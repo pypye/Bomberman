@@ -5,7 +5,7 @@ import cores.Map;
 import entities.Entity;
 
 public class Player extends Entity {
-    public static final float SPEED = 1.5f;
+    public static final float SPEED = 2f;
     public static final float OFFSET = 0.5f;
 
     public Player(Vector3f position) {
@@ -18,7 +18,7 @@ public class Player extends Entity {
         int cordX = (int) ((v.x + value * SPEED + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ1 = (int) ((v.z + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ2 = (int) ((v.z - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
-        if (Map.isBlock(cordX, cordZ1) || Map.isBlock(cordX, cordZ2)) return;
+        if (Map.isBlocked(cordX, cordZ1) || Map.isBlocked(cordX, cordZ2)) return;
         this.setPosition(new Vector3f(v.x + value * SPEED, v.y, v.z));
     }
 
@@ -28,7 +28,7 @@ public class Player extends Entity {
         int cordX = (int) ((v.x - value * SPEED - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ1 = (int) ((v.z - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ2 = (int) ((v.z + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
-        if (Map.isBlock(cordX, cordZ1) || Map.isBlock(cordX, cordZ2)) return;
+        if (Map.isBlocked(cordX, cordZ1) || Map.isBlocked(cordX, cordZ2)) return;
         this.setPosition(new Vector3f(v.x - value * SPEED, v.y, v.z));
     }
 
@@ -38,7 +38,7 @@ public class Player extends Entity {
         int cordX1 = (int) ((v.x - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordX2 = (int) ((v.x + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ = (int) ((v.z - value * SPEED - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
-        if (Map.isBlock(cordX1, cordZ) || Map.isBlock(cordX2, cordZ)) return;
+        if (Map.isBlocked(cordX1, cordZ) || Map.isBlocked(cordX2, cordZ)) return;
         this.setPosition(new Vector3f(v.x, v.y, v.z - value * SPEED));
     }
 
@@ -48,7 +48,7 @@ public class Player extends Entity {
         int cordX1 = (int) ((v.x + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordX2 = (int) ((v.x - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ = (int) ((v.z + value * SPEED + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
-        if (Map.isBlock(cordX1, cordZ) || Map.isBlock(cordX2, cordZ)) return;
+        if (Map.isBlocked(cordX1, cordZ) || Map.isBlocked(cordX2, cordZ)) return;
         this.setPosition(new Vector3f(v.x, v.y, v.z + value * SPEED));
     }
 

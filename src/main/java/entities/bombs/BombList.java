@@ -3,6 +3,8 @@ package entities.bombs;
 import cores.Map;
 import entities.players.Player;
 import entities.players.PlayerList;
+import particles.BombExplode;
+import particles.BombExplodeList;
 
 import java.util.ArrayList;
 
@@ -16,13 +18,34 @@ public class BombList {
     public static void remove(Bomb bomb) {
         int cordX = (int) bomb.getCord().x;
         int cordY = (int) bomb.getCord().y;
-        for (int i = Math.max(0, cordX - 2); i <= Math.min(cordX + 2, 20); i++) {
-            Map.setObject(i, cordY, Map.GRASS);
+        BombExplodeList.add(new BombExplode(cordX, cordY));
+        for (int i = Math.max(0, cordX - 1); i >= Math.max(0, cordX - bomb.getExplosionLength()); --i) {
+            if (explosion(i, cordY)) break;
         }
-        for (int i = Math.max(0, cordY - 2); i <= Math.min(cordY + 2, 20); i++) {
-            Map.setObject(cordX, i, Map.GRASS);
+        for (int i = Math.min(cordX + 1, 20); i <= Math.min(cordX + bomb.getExplosionLength(), 20); ++i) {
+            if (explosion(i, cordY)) break;
         }
+        for (int i = Math.max(0, cordY - 1); i >= Math.max(0, cordY - bomb.getExplosionLength()); --i) {
+            if (explosion(cordX, i)) break;
+        }
+        for (int i = Math.min(cordY + 1, 20); i <= Math.min(cordY + bomb.getExplosionLength(), 20); ++i) {
+            if (explosion(cordX, i)) break;
+        }
+        Map.setObject(cordX, cordY, Map.GRASS);
+        bomb.getSpark().remove();
         bombs.remove(bomb);
+    }
+
+    private static boolean explosion(int x, int y) {
+        if (Map.getObject(x, y) != Map.GRASS) {
+            if (Map.getObject(x, y) == Map.CONTAINER) {
+                BombExplodeList.add(new BombExplode(x, y));
+                Map.setObject(x, y, Map.GRASS);
+            }
+            return true;
+        }
+        BombExplodeList.add(new BombExplode(x, y));
+        return false;
     }
 
     public static void onUpdate() {
@@ -33,7 +56,7 @@ public class BombList {
                 if (bomb.getCord().x == player.getCord().x && bomb.getCord().y == player.getCord().y) check = false;
             }
             if (check) {
-                Map.setBlock((int) bomb.getCord().x, (int) bomb.getCord().y, Map.BLOCKED);
+                Map.setBlocked((int) bomb.getCord().x, (int) bomb.getCord().y, true);
             }
             if (System.currentTimeMillis() - bomb.getTimeStarted() >= Bomb.DURATION) {
                 removeList.add(bomb);

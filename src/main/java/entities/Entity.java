@@ -6,7 +6,9 @@ import com.jme3.scene.Spatial;
 import cores.Main;
 
 public abstract class Entity {
+
     protected Spatial spatial;
+    protected boolean blocked;
     protected int id;
     private static int ID_COUNT = 0;
     public static final float BLOCK_SIZE = 2f;
@@ -35,6 +37,14 @@ public abstract class Entity {
         int cordX = (int) ((getPosition().x + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ = (int) ((getPosition().z + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         return new Vector2f(cordX, cordZ);
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
     }
 
     public void remove() {
