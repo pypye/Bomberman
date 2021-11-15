@@ -1,13 +1,17 @@
 package events;
 
 import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.Player;
 
+import java.util.HashSet;
+
 public class PlayerInput {
-    private static Player player;
+    public static Player player;
+    private static final HashSet<String> keys = new HashSet<>();
 
     public static void initKeys(Player _player) {
         player = _player;
@@ -16,9 +20,22 @@ public class PlayerInput {
         Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         Main.INPUT_MANAGER.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
         Main.INPUT_MANAGER.addMapping("SetBomb", new KeyTrigger(KeyInput.KEY_SPACE));
+        Main.INPUT_MANAGER.addListener(actionListener, "Forward", "Backward", "Left", "Right");
         Main.INPUT_MANAGER.addListener(analogListener, "Forward", "Backward", "Left", "Right", "SetBomb");
     }
 
+    private static final ActionListener actionListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (keyPressed) {
+                keys.add(name);
+                player.composer.setCurrentAction("move");
+                player.composer.setGlobalSpeed(Player.SPEED);
+            } else {
+                keys.remove(name);
+            }
+        }
+    };
     private static final AnalogListener analogListener = new AnalogListener() {
         @Override
         public void onAnalog(String name, float value, float tpf) {
@@ -29,4 +46,10 @@ public class PlayerInput {
             if (name.equals("SetBomb")) player.setBomb();
         }
     };
+
+    public static void onUpdate() {
+        if (keys.size() == 0) {
+            player.composer.setCurrentAction("stand");
+        }
+    }
 }

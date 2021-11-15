@@ -1,18 +1,29 @@
 package entities.players;
 
+import com.jme3.anim.AnimComposer;
+import com.jme3.math.FastMath;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import cores.AnimUtils;
+import cores.LightUtils;
 import cores.Map;
 import entities.Entity;
 
 public class Player extends Entity {
     public static final float SPEED = 2f;
     public static final float OFFSET = 0.5f;
+    public AnimComposer composer;
 
     public Player(Vector3f position) {
-        super(position, "Models/Player/player.obj");
+        super(position, "Models/Player/player.gltf");
+        LightUtils.setSpatialLight(spatial);
+        spatial = AnimUtils.getAnimRoot(spatial);
+        composer = spatial.getControl(AnimComposer.class);
+        composer.setCurrentAction("stand");
     }
 
     public void moveForward(float value) {
+        rotate(FastMath.HALF_PI);
         Vector3f v = this.getPosition();
         if (v.x + value * SPEED + OFFSET > 39.0f) return;
         int cordX = (int) ((v.x + value * SPEED + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
@@ -23,6 +34,7 @@ public class Player extends Entity {
     }
 
     public void moveBackward(float value) {
+        rotate(-FastMath.HALF_PI);
         Vector3f v = this.getPosition();
         if (v.x - value * SPEED - OFFSET < -1.0f) return;
         int cordX = (int) ((v.x - value * SPEED - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
@@ -30,9 +42,11 @@ public class Player extends Entity {
         int cordZ2 = (int) ((v.z + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX, cordZ1) || Map.isBlocked(cordX, cordZ2)) return;
         this.setPosition(new Vector3f(v.x - value * SPEED, v.y, v.z));
+
     }
 
     public void moveLeft(float value) {
+        rotate(FastMath.PI);
         Vector3f v = this.getPosition();
         if (v.z - value * SPEED - OFFSET < -1.0f) return;
         int cordX1 = (int) ((v.x - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
@@ -43,6 +57,7 @@ public class Player extends Entity {
     }
 
     public void moveRight(float value) {
+        rotate(0);
         Vector3f v = this.getPosition();
         if (v.z + value * SPEED + OFFSET > 39.0f) return;
         int cordX1 = (int) ((v.x + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
@@ -57,5 +72,11 @@ public class Player extends Entity {
         int cordZ = (int) this.getCord().y;
         if (Map.getObject(cordX, cordZ) != Map.GRASS) return;
         Map.setObject(cordX, cordZ, Map.BOMB);
+    }
+
+    private void rotate(float angle) {
+        Quaternion rot = spatial.getLocalRotation();
+        rot.slerp(new Quaternion().fromAngleAxis(angle, Vector3f.UNIT_Y), 0.25f);
+        spatial.setLocalRotation(rot);
     }
 }
