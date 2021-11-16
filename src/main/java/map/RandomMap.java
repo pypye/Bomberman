@@ -1,6 +1,6 @@
 package map;
 
-public class RadomMap {
+public class RandomMap {
 
   public static final int N = 20; //size of Maze
 
@@ -15,11 +15,11 @@ public class RadomMap {
   }
 
   /**
-   * @param limit is limit number of container and rock
+   * @param nContainer is limit number of container
    * @param nRock is limit number of rock
    * @return 2D maze
    */
-  public static int[][] radomMaze(int limit, int nRock) {
+  public static int[][] radomMaze(int nContainer, int nRock) {
     int[] maze1D = new int[N * N + 5];
     int[][] maze2D = new int[N+1][N+1];
     int components = 0; //
@@ -29,6 +29,8 @@ public class RadomMap {
     for (int i = 0; i <= N * N; i++) {
       maze1D[i] = 0;
     }
+
+    int limit = nContainer + nRock;
 
     while (block < limit) {
       uf = new UF(N * N + 1);
