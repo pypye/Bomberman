@@ -14,4 +14,10 @@ public class PlayerList {
     public static void add(Player player) {
         players.add(player);
     }
+
+    public static void onUpdate(float tpf) {
+        for (Player player : players) {
+            player.onUpdate(tpf);
+        }
+    }
 }

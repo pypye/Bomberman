@@ -1,6 +1,7 @@
 package entities.bombs;
 
 import cores.Map;
+import entities.buffs.BuffItem;
 import entities.players.Player;
 import entities.players.PlayerList;
 import particles.BombExplode;
@@ -20,19 +21,19 @@ public class BombList {
         int cordX = (int) bomb.getCord().x;
         int cordY = (int) bomb.getCord().y;
         BombExplodeList.add(new BombExplode(cordX, cordY));
-        for (int i = Math.max(0, cordX - 1); i >= Math.max(0, cordX - bomb.getExplosionLength()); --i) {
+        for (int i = Math.max(0, cordX - 1); i >= Math.max(0, cordX - bomb.getOwner().getBombExplodeLength()); --i) {
             if (explosion(i, cordY)) break;
         }
-        for (int i = Math.min(cordX + 1, 20); i <= Math.min(cordX + bomb.getExplosionLength(), 20); ++i) {
+        for (int i = Math.min(cordX + 1, 20); i <= Math.min(cordX + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
             if (explosion(i, cordY)) break;
         }
-        for (int i = Math.max(0, cordY - 1); i >= Math.max(0, cordY - bomb.getExplosionLength()); --i) {
+        for (int i = Math.max(0, cordY - 1); i >= Math.max(0, cordY - bomb.getOwner().getBombExplodeLength()); --i) {
             if (explosion(cordX, i)) break;
         }
-        for (int i = Math.min(cordY + 1, 20); i <= Math.min(cordY + bomb.getExplosionLength(), 20); ++i) {
+        for (int i = Math.min(cordY + 1, 20); i <= Math.min(cordY + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
             if (explosion(cordX, i)) break;
         }
-        Map.setObject(cordX, cordY, Map.GRASS);
+        Map.setObject(cordX, cordY, Map.GRASS, null);
         bomb.getSpark().remove();
         bombs.remove(bomb);
     }
@@ -41,7 +42,7 @@ public class BombList {
         if (Map.getObject(x, y) != Map.GRASS) {
             if (Map.getObject(x, y) == Map.CONTAINER) {
                 BombExplodeList.add(new BombExplode(x, y));
-                generateBuffItem(x, y);
+                BuffItem.generateBuffItem(x, y);
             }
             return true;
         }
@@ -68,9 +69,5 @@ public class BombList {
         }
     }
 
-    private static void generateBuffItem(int cordX, int cordY){
-        Random random = new Random();
-        int lower = 5, upper = 15;
-        Map.setObject(cordX, cordY, random.nextInt(upper - lower) + lower);
-    }
+
 }

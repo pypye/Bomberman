@@ -17,6 +17,10 @@ public class Main extends SimpleApplication {
     public static InputManager INPUT_MANAGER;
     public static Camera CAM;
     public static Node ROOT_NODE;
+    public static Node GUI_NODE;
+    public static float WIDTH;
+    public static float HEIGHT;
+
     public static void main(String[] args) {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
@@ -29,13 +33,18 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
+
     //Player x;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
         INPUT_MANAGER = inputManager;
+        WIDTH = settings.getWidth();
+        HEIGHT = settings.getHeight();
         ROOT_NODE = rootNode;
+        GUI_NODE = guiNode;
         CAM = cam;
+
         flyCam.setEnabled(false);
         //flyCam.setMoveSpeed(2.5f);
         assetManager.registerLocator("assets", FileLocator.class);
@@ -50,6 +59,7 @@ public class Main extends SimpleApplication {
         BombList.onUpdate();
         BombExplodeList.onUpdate();
         PlayerInput.onUpdate();
+        PlayerList.onUpdate(tpf);
         //x.moveRight(0.01f);
     }
 

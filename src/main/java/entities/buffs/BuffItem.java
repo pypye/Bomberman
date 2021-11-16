@@ -10,10 +10,16 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import cores.Main;
+import cores.Map;
 import entities.Entity;
+import entities.players.Player;
 import particles.BuffItemEffect;
 
+import java.util.Random;
+
 public class BuffItem extends Entity {
+    private BuffItemEffect buffEffect;
+    private Spatial shadow;
     public BuffItem(Vector3f position, String path) {
         super(position, path);
         Quaternion rot = spatial.getLocalRotation();
@@ -23,11 +29,26 @@ public class BuffItem extends Entity {
         Material mat_shad = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Unshaded.j3md");
         mat_shad.setTexture("ColorMap", Main.ASSET_MANAGER.loadTexture("Textures/PowerUp/Shadow.png"));
         mat_shad.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
-        Spatial shadow = new Geometry("Box", new Box(0.3f, 0f, 0.3f));
+        shadow = new Geometry("Box", new Box(0.3f, 0f, 0.3f));
         shadow.setMaterial(mat_shad);
         shadow.setQueueBucket(RenderQueue.Bucket.Transparent);
         shadow.setLocalTranslation(position.x, position.y - 0.4f, position.z);
-        new BuffItemEffect(spatial);
+        buffEffect = new BuffItemEffect(spatial);
         Main.ROOT_NODE.attachChild(shadow);
+    }
+
+    public static void generateBuffItem(int cordX, int cordY) {
+        Random random = new Random();
+        int lower = 5, upper = 9;
+        Map.setObject(cordX, cordY, random.nextInt(upper - lower) + lower, null);
+    }
+
+    public void buff(Player player) {
+        int x = (int) this.getCord().x;
+        int y = (int) this.getCord().y;
+        Map.setObject(x, y, Map.GRASS, null);
+        buffEffect.remove();
+        Main.ROOT_NODE.detachChild(shadow);
+        shadow = null;
     }
 }

@@ -4,6 +4,7 @@ import com.jme3.math.Vector3f;
 import entities.*;
 import entities.bombs.Bomb;
 import entities.bombs.BombList;
+import entities.players.Player;
 import entities.terrains.Container;
 import entities.terrains.Grass;
 import entities.terrains.Rock;
@@ -34,16 +35,16 @@ public class Map {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
-                setObject(i, j, r.nextInt(3));
+                setObject(i, j, r.nextInt(3), null);
             }
         }
-        setObject(0, 0, GRASS);
-        setObject(0, 1, GRASS);
-        setObject(1, 0, GRASS);
-        setObject(1, 1, GRASS);
+        setObject(0, 0, GRASS, null);
+        setObject(0, 1, GRASS, null);
+        setObject(1, 0, GRASS, null);
+        setObject(1, 1, GRASS, null);
     }
 
-    public static void setObject(int x, int z, int value) {
+    public static void setObject(int x, int z, int value, Player owner) {
         object[x][z] = value;
         if (entity[x][z] != null) {
             entity[x][z].remove();
@@ -59,7 +60,7 @@ public class Map {
                 else entity[x][z] = new Tree(new Vector3f(x * 2f, 1f, z * 2f));
                 break;
             case BOMB:
-                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), System.currentTimeMillis());
+                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, System.currentTimeMillis());
                 BombList.add((Bomb) entity[x][z]);
                 break;
             case SPEED_ITEM:
@@ -90,5 +91,9 @@ public class Map {
 
     public static boolean isBlocked(int x, int y) {
         return entity[x][y] != null && entity[x][y].isBlocked();
+    }
+
+    public static Entity getEntity(int x, int y){
+        return entity[x][y];
     }
 }

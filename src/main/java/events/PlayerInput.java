@@ -30,8 +30,8 @@ public class PlayerInput {
         public void onAction(String name, boolean keyPressed, float tpf) {
             if (keyPressed) {
                 keys.add(name);
-                player.composer.setCurrentAction("move");
-                player.composer.setGlobalSpeed(Player.SPEED);
+                player.getComposer().setCurrentAction("move");
+                player.getComposer().setGlobalSpeed(player.getSpeed());
             } else {
                 keys.remove(name);
             }
@@ -50,7 +50,7 @@ public class PlayerInput {
 
     public static void onUpdate() {
         if (keys.size() == 0) {
-            player.composer.setCurrentAction("stand");
+            player.getComposer().setCurrentAction("stand");
         }
     }
 }
