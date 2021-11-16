@@ -7,6 +7,7 @@ import particles.BombExplode;
 import particles.BombExplodeList;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BombList {
     public static ArrayList<Bomb> bombs = new ArrayList<>();
@@ -40,7 +41,7 @@ public class BombList {
         if (Map.getObject(x, y) != Map.GRASS) {
             if (Map.getObject(x, y) == Map.CONTAINER) {
                 BombExplodeList.add(new BombExplode(x, y));
-                Map.setObject(x, y, Map.GRASS);
+                generateBuffItem(x, y);
             }
             return true;
         }
@@ -65,5 +66,11 @@ public class BombList {
         for (Bomb bomb : removeList) {
             BombList.remove(bomb);
         }
+    }
+
+    private static void generateBuffItem(int cordX, int cordY){
+        Random random = new Random();
+        int lower = 5, upper = 15;
+        Map.setObject(cordX, cordY, random.nextInt(upper - lower) + lower);
     }
 }

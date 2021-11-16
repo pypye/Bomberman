@@ -4,9 +4,6 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
-import com.jme3.math.FastMath;
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
@@ -14,7 +11,6 @@ import entities.bombs.BombList;
 import entities.players.PlayerList;
 import events.PlayerInput;
 import particles.BombExplodeList;
-import particles.BombSpark;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -33,7 +29,7 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
-
+    //Player x;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
@@ -41,10 +37,12 @@ public class Main extends SimpleApplication {
         ROOT_NODE = rootNode;
         CAM = cam;
         flyCam.setEnabled(false);
+        //flyCam.setMoveSpeed(2.5f);
         assetManager.registerLocator("assets", FileLocator.class);
-        Ambient.init();
+        Environment.init();
         Map.init();
         PlayerList.init();
+        //x = new Mushroom(new Vector3f(0, 1, 0));
     }
 
     @Override
@@ -52,6 +50,7 @@ public class Main extends SimpleApplication {
         BombList.onUpdate();
         BombExplodeList.onUpdate();
         PlayerInput.onUpdate();
+        //x.moveRight(0.01f);
     }
 
 }

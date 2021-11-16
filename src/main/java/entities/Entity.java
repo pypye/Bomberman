@@ -8,16 +8,15 @@ import cores.Main;
 public abstract class Entity {
 
     protected Spatial spatial;
-    protected boolean blocked;
+    protected boolean blocked = false;
     protected int id;
     private static int ID_COUNT = 0;
     public static final float BLOCK_SIZE = 2f;
 
     public Entity(Vector3f position, String path) {
-        Spatial spatial = Main.ASSET_MANAGER.loadModel(path);
+        spatial = Main.ASSET_MANAGER.loadModel(path);
         spatial.setLocalTranslation(position.x, position.y, position.z);
         Main.ROOT_NODE.attachChild(spatial);
-        this.spatial = spatial;
         id = ++ID_COUNT;
     }
 

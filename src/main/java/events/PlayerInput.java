@@ -5,15 +5,16 @@ import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
+import entities.players.MainPlayer;
 import entities.players.Player;
 
 import java.util.HashSet;
 
 public class PlayerInput {
-    public static Player player;
+    public static MainPlayer player;
     private static final HashSet<String> keys = new HashSet<>();
 
-    public static void initKeys(Player _player) {
+    public static void initKeys(MainPlayer _player) {
         player = _player;
         Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
         Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_S));

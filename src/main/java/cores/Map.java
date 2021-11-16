@@ -4,6 +4,14 @@ import com.jme3.math.Vector3f;
 import entities.*;
 import entities.bombs.Bomb;
 import entities.bombs.BombList;
+import entities.terrains.Container;
+import entities.terrains.Grass;
+import entities.terrains.Rock;
+import entities.terrains.Tree;
+import entities.buffs.BombExtendItem;
+import entities.buffs.FlameItem;
+import entities.buffs.ShieldItem;
+import entities.buffs.SpeedItem;
 
 import java.util.Random;
 
@@ -16,6 +24,10 @@ public class Map {
     public static final int CONTAINER = 2;
     public static final int BOMB = 3;
     public static final int PORTAL = 4;
+    public static final int SPEED_ITEM = 5;
+    public static final int FLAME_ITEM = 6;
+    public static final int BOMB_EX_ITEM = 7;
+    public static final int SHIELD_ITEM = 8;
 
     public static void init() {
         Random r = new Random();
@@ -43,12 +55,27 @@ public class Map {
                 break;
             case ROCK:
                 Random r = new Random();
-                if(r.nextBoolean()) entity[x][z] = new Rock(new Vector3f(x * 2f, 2f, z * 2f));
+                if (r.nextBoolean()) entity[x][z] = new Rock(new Vector3f(x * 2f, 2f, z * 2f));
                 else entity[x][z] = new Tree(new Vector3f(x * 2f, 1f, z * 2f));
                 break;
             case BOMB:
                 entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), System.currentTimeMillis());
                 BombList.add((Bomb) entity[x][z]);
+                break;
+            case SPEED_ITEM:
+                entity[x][z] = new SpeedItem(new Vector3f(x * 2f, 1.5f, z * 2f));
+                break;
+            case FLAME_ITEM:
+                entity[x][z] = new FlameItem(new Vector3f(x * 2f, 1.5f, z * 2f));
+                break;
+            case BOMB_EX_ITEM:
+                entity[x][z] = new BombExtendItem(new Vector3f(x * 2f, 1.5f, z * 2f));
+                break;
+            case SHIELD_ITEM:
+                entity[x][z] = new ShieldItem(new Vector3f(x * 2f, 1.5f, z * 2f));
+                break;
+            default:
+                object[x][z] = 0;
                 break;
         }
     }
