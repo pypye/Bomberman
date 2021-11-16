@@ -1,12 +1,17 @@
 package map;
 
+import Player.Enemy;
+import Player.Pair;
+import Player.SpawnPlayer;
+import java.util.ArrayList;
+
 public class RandomMap {
 
   public static final int N = 20; //size of Maze
 
-  public static int radomInt() {
+  public static int radomInt(int limit) {
     double randomDouble = Math.random();
-    randomDouble = randomDouble * N * N + 1;
+    randomDouble = randomDouble * limit * limit + 1;
     return (int) randomDouble;
   }
 
@@ -16,12 +21,12 @@ public class RandomMap {
 
   /**
    * @param nContainer is limit number of container
-   * @param nRock is limit number of rock
+   * @param nRock      is limit number of rock
    * @return 2D maze
    */
   public static int[][] radomMaze(int nContainer, int nRock) {
     int[] maze1D = new int[N * N + 5];
-    int[][] maze2D = new int[N+1][N+1];
+    int[][] maze2D = new int[N + 1][N + 1];
     int components = 0; //
     int block = 0; //so luong khoi hien tai
     UF uf;
@@ -35,7 +40,7 @@ public class RandomMap {
     while (block < limit) {
       uf = new UF(N * N + 1);
       block++;
-      int radomInt = radomInt();
+      int radomInt = radomInt(N);
       if (maze1D[radomInt] == 1) {
         block--;
         continue;
@@ -84,8 +89,8 @@ public class RandomMap {
       }
     }
     block = 0;
-    while(block < nRock) {
-      int radomInt = radomInt();
+    while (block < nRock) {
+      int radomInt = radomInt(N);
       if (maze1D[radomInt] == 1) {
         block++;
         int U = ((radomInt - 1) / N) + 1;
@@ -96,4 +101,14 @@ public class RandomMap {
     }
     return maze2D;
   }
+
+  public static void show(int[][] arr) {
+    for (int i = 1; i <= N; i++) {
+      for (int j = 1; j <= N; j++) {
+        System.out.print(arr[i][j] + " ");
+      }
+      System.out.println();
+    }
+  }
+
 }
