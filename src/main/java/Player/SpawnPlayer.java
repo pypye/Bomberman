@@ -1,4 +1,4 @@
-package Player;
+package player;
 
 import java.util.ArrayList;
 import map.RandomMap;
@@ -19,10 +19,10 @@ public class SpawnPlayer extends Pair{
       int U = ((radomInt - 1) / N) + 1;
       int V = ((radomInt - 1) % N) + 1;
       if (map[U][V] == 0) {
-        for (int i = 0; i < playerList.size(); i++) {
-          int u = playerList.get(i).getX();
-          int v = playerList.get(i).getY();
-          if(distance(u,v,U,V) < distancePlayer) {
+        for (Pair pair : playerList) {
+          int u = pair.getX();
+          int v = pair.getY();
+          if (distance(u, v, U, V) < distancePlayer) {
             isNear = true;
           }
         }

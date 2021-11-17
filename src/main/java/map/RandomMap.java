@@ -1,10 +1,5 @@
 package map;
 
-import Player.Enemy;
-import Player.Pair;
-import Player.SpawnPlayer;
-import java.util.ArrayList;
-
 public class RandomMap {
 
   public static final int N = 20; //size of Maze
