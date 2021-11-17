@@ -1,4 +1,4 @@
-package gui;
+package hud;
 
 import com.jme3.ui.Picture;
 import cores.Main;
@@ -7,6 +7,8 @@ public class ItemGUI {
     private final Picture item;
     private float x;
     private float y;
+    private float posX;
+    private float posY;
 
     public ItemGUI(float sizeX, float sizeY, String path) {
         item = new Picture("HUD");
@@ -44,5 +46,19 @@ public class ItemGUI {
     public void setY(float y) {
         this.y = y;
         this.item.setHeight(y);
+    }
+
+    public void setPosition(float x, float y){
+        this.posX = x;
+        this.posY = y;
+        this.item.setPosition(x, y);
+    }
+
+    public float getPosX() {
+        return posX;
+    }
+
+    public float getPosY() {
+        return posY;
     }
 }

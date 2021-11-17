@@ -1,4 +1,6 @@
-package gui;
+package hud.gui;
+
+import hud.ItemGUI;
 
 public class BuffGUI {
     public static final float SIZE = 64f;

@@ -1,4 +1,4 @@
-package gui;
+package hud.gui;
 
 public class ShieldBuffGUI extends BuffGUI {
     public ShieldBuffGUI(float x, float y) {

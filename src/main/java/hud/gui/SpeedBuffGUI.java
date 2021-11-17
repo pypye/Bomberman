@@ -1,4 +1,4 @@
-package gui;
+package hud.gui;
 
 public class SpeedBuffGUI extends BuffGUI {
 

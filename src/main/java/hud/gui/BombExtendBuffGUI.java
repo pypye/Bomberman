@@ -1,4 +1,4 @@
-package gui;
+package hud.gui;
 
 public class BombExtendBuffGUI extends BuffGUI {
     public BombExtendBuffGUI(float x, float y) {

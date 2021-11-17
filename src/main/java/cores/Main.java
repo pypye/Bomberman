@@ -33,7 +33,6 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
-
     //Player x;
     @Override
     public void simpleInitApp() {
