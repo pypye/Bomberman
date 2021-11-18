@@ -13,12 +13,12 @@ import cores.Main;
 import cores.Map;
 import entities.Entity;
 import entities.players.Player;
-import particles.BuffItemEffect;
+import particles.BuffItemParticle;
 
 import java.util.Random;
 
 public class BuffItem extends Entity {
-    private BuffItemEffect buffEffect;
+    private BuffItemParticle buffEffect;
     private Spatial shadow;
     public BuffItem(Vector3f position, String path) {
         super(position, path);
@@ -33,7 +33,7 @@ public class BuffItem extends Entity {
         shadow.setMaterial(mat_shad);
         shadow.setQueueBucket(RenderQueue.Bucket.Transparent);
         shadow.setLocalTranslation(position.x, position.y - 0.4f, position.z);
-        buffEffect = new BuffItemEffect(spatial);
+        buffEffect = new BuffItemParticle(spatial);
         Main.ROOT_NODE.attachChild(shadow);
     }
 

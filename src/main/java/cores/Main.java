@@ -10,7 +10,8 @@ import com.jme3.system.AppSettings;
 import entities.bombs.BombList;
 import entities.players.PlayerList;
 import events.PlayerInput;
-import particles.BombExplodeList;
+import particles.BombExplodeParticleList;
+import ui.gui3d.ItemGui3d;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -33,7 +34,8 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
-    //Player x;
+
+    ItemGui3d gui3d;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
@@ -43,23 +45,26 @@ public class Main extends SimpleApplication {
         ROOT_NODE = rootNode;
         GUI_NODE = guiNode;
         CAM = cam;
-
+        cam.setPlaneState(0);
         flyCam.setEnabled(false);
         //flyCam.setMoveSpeed(2.5f);
         assetManager.registerLocator("assets", FileLocator.class);
         Environment.init();
         Map.init();
         PlayerList.init();
+        gui3d = new ItemGui3d(PlayerList.players.get(0).getSpatial());
         //x = new Mushroom(new Vector3f(0, 1, 0));
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         BombList.onUpdate();
-        BombExplodeList.onUpdate();
+        BombExplodeParticleList.onUpdate();
         PlayerInput.onUpdate();
         PlayerList.onUpdate(tpf);
+        gui3d.onUpdate();
         //x.moveRight(0.01f);
+
     }
 
 }

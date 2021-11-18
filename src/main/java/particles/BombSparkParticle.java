@@ -10,10 +10,10 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import cores.Main;
 
-public class BombSpark {
+public class BombSparkParticle {
     private final ParticleEmitter particleEmitter;
 
-    public BombSpark(Spatial a) {
+    public BombSparkParticle(Spatial a) {
         particleEmitter = new ParticleEmitter("bombSpark", ParticleMesh.Type.Triangle, 15);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
         material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/bomb_spark.png"));

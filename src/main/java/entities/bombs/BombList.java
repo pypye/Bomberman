@@ -4,11 +4,10 @@ import cores.Map;
 import entities.buffs.BuffItem;
 import entities.players.Player;
 import entities.players.PlayerList;
-import particles.BombExplode;
-import particles.BombExplodeList;
+import particles.BombExplodeParticle;
+import particles.BombExplodeParticleList;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class BombList {
     public static ArrayList<Bomb> bombs = new ArrayList<>();
@@ -20,7 +19,7 @@ public class BombList {
     public static void remove(Bomb bomb) {
         int cordX = (int) bomb.getCord().x;
         int cordY = (int) bomb.getCord().y;
-        BombExplodeList.add(new BombExplode(cordX, cordY));
+        BombExplodeParticleList.add(new BombExplodeParticle(cordX, cordY));
         for (int i = Math.max(0, cordX - 1); i >= Math.max(0, cordX - bomb.getOwner().getBombExplodeLength()); --i) {
             if (explosion(i, cordY)) break;
         }
@@ -41,12 +40,12 @@ public class BombList {
     private static boolean explosion(int x, int y) {
         if (Map.getObject(x, y) != Map.GRASS) {
             if (Map.getObject(x, y) == Map.CONTAINER) {
-                BombExplodeList.add(new BombExplode(x, y));
+                BombExplodeParticleList.add(new BombExplodeParticle(x, y));
                 BuffItem.generateBuffItem(x, y);
             }
             return true;
         }
-        BombExplodeList.add(new BombExplode(x, y));
+        BombExplodeParticleList.add(new BombExplodeParticle(x, y));
         return false;
     }
 

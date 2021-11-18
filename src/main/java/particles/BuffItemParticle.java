@@ -8,9 +8,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import cores.Main;
 
-public class BuffItemEffect {
+public class BuffItemParticle {
     private final ParticleEmitter particleEmitter;
-    public BuffItemEffect(Spatial a) {
+    public BuffItemParticle(Spatial a) {
         particleEmitter = new ParticleEmitter("itemEffect", ParticleMesh.Type.Triangle, 10);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
         material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/Particles/star_04.png"));

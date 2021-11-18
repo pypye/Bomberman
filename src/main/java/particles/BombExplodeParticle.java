@@ -7,12 +7,12 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import cores.Main;
 
-public class BombExplode {
+public class BombExplodeParticle {
     public static double DURATION = 1150;
     private final double startTime;
     private final ParticleEmitter particleEmitter;
 
-    public BombExplode(int x, int z) {
+    public BombExplodeParticle(int x, int z) {
         particleEmitter = new ParticleEmitter("bombSpark", ParticleMesh.Type.Triangle, 15);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
         material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/bomb_explode.png"));

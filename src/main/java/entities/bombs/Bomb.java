@@ -3,23 +3,23 @@ package entities.bombs;
 import com.jme3.math.Vector3f;
 import entities.Entity;
 import entities.players.Player;
-import particles.BombSpark;
+import particles.BombSparkParticle;
 
 public class Bomb extends Entity {
     public static final double DURATION = 3000.0;
-    private final BombSpark spark;
+    private final BombSparkParticle spark;
     private final double timeStarted;
     private final Player owner;
 
     public Bomb(Vector3f position, Player owner, double timeStarted) {
         super(position, "Models/Bomb/bomb.obj");
-        this.spark = new BombSpark(spatial);
+        this.spark = new BombSparkParticle(spatial);
         this.timeStarted = timeStarted;
         this.blocked = false;
         this.owner = owner;
     }
 
-    public BombSpark getSpark() {
+    public BombSparkParticle getSpark() {
         return spark;
     }
 
