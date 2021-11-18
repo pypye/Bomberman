@@ -10,12 +10,16 @@ import entities.Entity;
 
 public class Player extends Entity {
     public static final float OFFSET = 0.5f;
-    protected float speed = 2f;
-    protected int bombMax = 1;
-    protected int bombLeft = 1;
-    protected int bombExplodeLength = 1;
+    public static final float DEFAULT_SPEED = 3f;
+    public static final int DEFAULT_BOMB_LENGTH = 1;
+    public static final int DEFAULT_BOMB_MAX = 3;
 
-    protected float bombCoolDownTime = 5f;
+    protected float speed = DEFAULT_SPEED;
+    protected int bombMax = DEFAULT_BOMB_MAX;
+    protected int bombLeft = DEFAULT_BOMB_MAX;
+    protected int bombExplodeLength = DEFAULT_BOMB_LENGTH;
+
+    protected float bombCoolDownCurrent = 0f;
     protected float speedBuffDuration = 0f;
     protected float bombBuffDuration = 0f;
     protected float shieldBuffDuration = 0f;
@@ -31,6 +35,7 @@ public class Player extends Entity {
     public Player(Vector3f position, String path) {
         super(position, path);
         LightUtils.setSpatialLight(spatial);
+
     }
 
     public void moveForward(float value) {
@@ -90,7 +95,10 @@ public class Player extends Entity {
         int cordX = (int) this.getCord().x;
         int cordZ = (int) this.getCord().y;
         if (Map.getObject(cordX, cordZ) != Map.GRASS) return;
-        Map.setObject(cordX, cordZ, Map.BOMB, this);
+        if (bombLeft > 0) {
+            Map.setObject(cordX, cordZ, Map.BOMB, this);
+            bombLeft--;
+        }
     }
 
     private void rotate(float angle) {
@@ -100,6 +108,7 @@ public class Player extends Entity {
     }
 
     public void onUpdate(float tpf) {
+        onCoolDownBomb(tpf);
         onSpeedBuffEffect(tpf);
         onBombBuffEffect(tpf);
         onShieldBuffEffect(tpf);
@@ -111,7 +120,7 @@ public class Player extends Entity {
         if (speedBuffDuration <= 0) {
             speedBuffActivated = false;
             speedBuffDuration = 0;
-            speed = 2f;
+            speed = DEFAULT_SPEED;
             return;
         }
         if (!speedBuffActivated) {
@@ -125,7 +134,7 @@ public class Player extends Entity {
         if (bombBuffDuration <= 0) {
             bombBuffActivated = false;
             bombBuffDuration = 0;
-            bombMax = 1;
+            bombMax = DEFAULT_BOMB_MAX;
             if (bombLeft > bombMax) bombLeft = bombMax;
             return;
         }
@@ -153,12 +162,24 @@ public class Player extends Entity {
         if (flameBuffDuration <= 0) {
             flameBuffActivated = false;
             flameBuffDuration = 0;
-            bombExplodeLength = 1;
+            bombExplodeLength = DEFAULT_BOMB_LENGTH;
             return;
         }
         if (!flameBuffActivated) {
             flameBuffActivated = true;
             bombExplodeLength += 1;
+        }
+    }
+
+    protected void onCoolDownBomb(float tpf) {
+        if (bombMax == bombLeft) {
+            bombCoolDownCurrent = 0;
+            return;
+        }
+        bombCoolDownCurrent += tpf;
+        if (bombCoolDownCurrent >= 4) {
+            bombCoolDownCurrent = 0;
+            bombLeft++;
         }
     }
 
@@ -194,12 +215,12 @@ public class Player extends Entity {
         this.bombExplodeLength = bombExplodeLength;
     }
 
-    public float getBombCoolDownTime() {
-        return bombCoolDownTime;
+    public float getBombCoolDownCurrent() {
+        return bombCoolDownCurrent;
     }
 
-    public void setBombCoolDownTime(float bombCoolDownTime) {
-        this.bombCoolDownTime = bombCoolDownTime;
+    public void setBombCoolDownCurrent(float bombCoolDownCurrent) {
+        this.bombCoolDownCurrent = bombCoolDownCurrent;
     }
 
     public float getSpeedBuffDuration() {

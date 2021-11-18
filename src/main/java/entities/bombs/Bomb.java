@@ -7,6 +7,7 @@ import particles.BombSparkParticle;
 
 public class Bomb extends Entity {
     public static final double DURATION = 3000.0;
+    public static final double COOL_DOWN = 4000.0;
     private final BombSparkParticle spark;
     private final double timeStarted;
     private final Player owner;

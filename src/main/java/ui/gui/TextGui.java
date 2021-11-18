@@ -43,6 +43,16 @@ public class TextGui extends ItemGui {
     }
 
     @Override
+    public float getX() {
+        return hudText.getLineWidth();
+    }
+
+    @Override
+    public float getY() {
+        return hudText.getLineHeight();
+    }
+
+    @Override
     public void setPosition(float x, float y) {
         this.posX = x;
         this.posY = y;

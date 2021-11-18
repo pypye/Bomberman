@@ -11,6 +11,6 @@ public class ShieldItem extends BuffItem {
     @Override
     public void buff(Player player) {
         super.buff(player);
-        player.setShieldBuffDuration(player.getShieldBuffDuration() + 5);
+        player.setShieldBuffDuration(player.getShieldBuffDuration() + 10);
     }
 }

@@ -56,6 +56,5 @@ public class BuffGui {
     public void locate(float posX, float posY) {
         LocationGui.anchorBottomLeft(background, posX, posY);
         LocationGui.centerObject(item, background);
-        LocationGui.centerXObject(textGui, background, posY);
     }
 }

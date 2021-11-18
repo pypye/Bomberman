@@ -11,7 +11,9 @@ import entities.bombs.BombList;
 import entities.players.PlayerList;
 import events.PlayerInput;
 import particles.BombExplodeParticleList;
-import ui.gui3d.ItemGui3d;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -24,6 +26,7 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         Main app = new Main();
+        Logger.getLogger("com.jme3").setLevel(Level.OFF);
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1280, 720);
         settings.setTitle("Bomberman");
@@ -35,7 +38,6 @@ public class Main extends SimpleApplication {
         app.start();
     }
 
-    ItemGui3d gui3d;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
@@ -52,7 +54,6 @@ public class Main extends SimpleApplication {
         Environment.init();
         Map.init();
         PlayerList.init();
-        gui3d = new ItemGui3d(PlayerList.players.get(0).getSpatial());
         //x = new Mushroom(new Vector3f(0, 1, 0));
     }
 
@@ -62,7 +63,6 @@ public class Main extends SimpleApplication {
         BombExplodeParticleList.onUpdate();
         PlayerInput.onUpdate();
         PlayerList.onUpdate(tpf);
-        gui3d.onUpdate();
         //x.moveRight(0.01f);
 
     }

@@ -6,17 +6,18 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import cores.Main;
 import events.PlayerInput;
+import ui.gui.LocationGui;
 import ui.gui.buffs.*;
-import ui.gui3d.ItemGui3d;
+import ui.gui3d.StatusBarGui3d;
 import utils.AnimUtils;
 
 public class MainPlayer extends Player {
     private final AnimComposer composer;
-
     private final BuffGui speedBuffGUI = new SpeedBuffGui(-1, 90);
     private final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
     private final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
     private final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
+    private final StatusBarGui3d gui3d;
 
     public MainPlayer(Vector3f position) {
         super(position, "Models/Player/player.gltf");
@@ -31,10 +32,20 @@ public class MainPlayer extends Player {
         chaseCam.setMinDistance(10);
         chaseCam.setMaxDistance(20);
         chaseCam.setZoomSensitivity(0.25f);
+        gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
     }
 
     public AnimComposer getComposer() {
         return composer;
+    }
+
+    @Override
+    public void onUpdate(float tpf) {
+        super.onUpdate(tpf);
+        gui3d.setMaxCount(bombMax);
+        gui3d.setCount(bombLeft);
+        gui3d.setCoolDown(bombCoolDownCurrent);
+        gui3d.onUpdate();
     }
 
     @Override
@@ -44,7 +55,7 @@ public class MainPlayer extends Player {
             if (BuffListGui.getBuffList().contains(speedBuffGUI)) BuffListGui.removeBuff(speedBuffGUI);
             speedBuffActivated = false;
             speedBuffDuration = 0;
-            speed = 2f;
+            speed = DEFAULT_SPEED;
             return;
         }
         if (!speedBuffActivated) {
@@ -53,6 +64,7 @@ public class MainPlayer extends Player {
             speed *= 2;
         }
         speedBuffGUI.getText().setText(String.format("%.1fs", speedBuffDuration));
+        LocationGui.centerXObject(speedBuffGUI.getText(), speedBuffGUI.getBackground(), speedBuffGUI.getText().getPosY());
     }
 
     @Override
@@ -62,7 +74,7 @@ public class MainPlayer extends Player {
             if (BuffListGui.getBuffList().contains(bombExtendBuffGui)) BuffListGui.removeBuff(bombExtendBuffGui);
             bombBuffActivated = false;
             bombBuffDuration = 0;
-            bombMax = 1;
+            bombMax = DEFAULT_BOMB_MAX;
             if (bombLeft > bombMax) bombLeft = bombMax;
             return;
         }
@@ -73,6 +85,7 @@ public class MainPlayer extends Player {
             bombMax += 1;
         }
         bombExtendBuffGui.getText().setText(String.format("%.1fs", bombBuffDuration));
+        LocationGui.centerXObject(bombExtendBuffGui.getText(), bombExtendBuffGui.getBackground(), bombExtendBuffGui.getText().getPosY());
     }
 
     @Override
@@ -89,6 +102,7 @@ public class MainPlayer extends Player {
             shieldBuffActivated = true;
         }
         shieldBuffGUI.getText().setText(String.format("%.1fs", shieldBuffDuration));
+        LocationGui.centerXObject(shieldBuffGUI.getText(), shieldBuffGUI.getBackground(), shieldBuffGUI.getText().getPosY());
     }
 
     @Override
@@ -100,7 +114,7 @@ public class MainPlayer extends Player {
             }
             flameBuffActivated = false;
             flameBuffDuration = 0;
-            bombExplodeLength = 1;
+            bombExplodeLength = DEFAULT_BOMB_LENGTH;
             return;
         }
         if (!flameBuffActivated) {
@@ -109,5 +123,6 @@ public class MainPlayer extends Player {
             bombExplodeLength += 1;
         }
         flameBuffGui.getText().setText(String.format("%.1fs", flameBuffDuration));
+        LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosY());
     }
 }

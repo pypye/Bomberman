@@ -11,6 +11,6 @@ public class SpeedItem extends BuffItem {
     @Override
     public void buff(Player player) {
         super.buff(player);
-        player.setSpeedBuffDuration(player.getSpeedBuffDuration() + 5);
+        player.setSpeedBuffDuration(player.getSpeedBuffDuration() + 10);
     }
 }
