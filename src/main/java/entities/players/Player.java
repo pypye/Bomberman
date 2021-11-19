@@ -3,6 +3,7 @@ package entities.players;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Spatial;
 import entities.buffs.BuffItem;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
@@ -39,7 +40,6 @@ public class Player extends Entity {
     protected final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
     protected final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
     protected final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
-
     protected StatusBarGui3d gui3d;
 
     public Player(Vector3f position, String path) {

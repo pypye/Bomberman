@@ -4,6 +4,7 @@ import com.jme3.anim.AnimComposer;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Spatial;
 import cores.Main;
 import events.PlayerInput;
 import ui.gui.LocationGui;
@@ -13,11 +14,11 @@ import utils.AnimUtils;
 
 public class MainPlayer extends Player {
     private final AnimComposer composer;
-
+    private Spatial child;
     public MainPlayer(Vector3f position) {
         super(position, "Models/Player/player.gltf");
-        spatial = AnimUtils.getAnimRoot(spatial);
-        composer = spatial.getControl(AnimComposer.class);
+        child = AnimUtils.getAnimRoot(spatial);
+        composer = child.getControl(AnimComposer.class);
         composer.setCurrentAction("stand");
         PlayerInput.initKeys(this);
         ChaseCamera chaseCam = new ChaseCamera(Main.CAM, spatial, Main.INPUT_MANAGER);

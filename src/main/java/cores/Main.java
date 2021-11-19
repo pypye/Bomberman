@@ -38,7 +38,7 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
-    Player x;
+    //Player x;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
@@ -54,16 +54,16 @@ public class Main extends SimpleApplication {
         assetManager.registerLocator("assets", FileLocator.class);
         Environment.init();
         Map.init();
-        new MainPlayer(new Vector3f(0f, 1f, 0f));
-        x = new Mushroom(new Vector3f(0, 1, 0));
-        PlayerList.add(x);
+
+        //x = new Mushroom(new Vector3f(0, 1, 0));
+        //PlayerList.add(x);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         BombList.onUpdate();
         BombExplodeParticleList.onUpdate();
-        x.moveRight(0.01f);
+        //x.moveRight(0.01f);
         PlayerInput.onUpdate();
         PlayerList.onUpdate(tpf);
     }

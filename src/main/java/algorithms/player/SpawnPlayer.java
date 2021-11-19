@@ -10,14 +10,14 @@ public class SpawnPlayer extends Pair{
   public static int distance(int u, int v, int U, int V) {
     return (Math.abs(u - U) + Math.abs(v - V));
   }
-
+  //change ArrayList <Pair> to ArrayList <Vector2f>
   public static ArrayList<Pair> spawn(int numPlayer, int[][] map, int distancePlayer) {
     int cntPlayer = 0;
     while (cntPlayer < numPlayer) {
       boolean isNear = false;
-      int radomInt = RandomizeMap.radomInt(N);
-      int U = ((radomInt - 1) / N) + 1;
-      int V = ((radomInt - 1) % N) + 1;
+      int randomInt = RandomizeMap.randomInt(N);
+      int U = ((randomInt - 1) / N) + 1;
+      int V = ((randomInt - 1) % N) + 1;
       if (map[U][V] == 0) {
         for (Pair pair : playerList) {
           int u = pair.getX();

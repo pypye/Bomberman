@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import algorithms.RandomizeMap;
+import com.jme3.math.Vector2f;
 
 public class Oneal extends Enemy {
 
@@ -69,7 +70,7 @@ public class Oneal extends Enemy {
     int v = enemy.getY();
     if (isMove == null) {
       while (true) {
-        int randomInt = RandomizeMap.radomInt(2) - 1;
+        int randomInt = RandomizeMap.randomInt(2) - 1;
         int U = u + dx[randomInt];
         int V = v + dy[randomInt];
         if (map[U][V] == 0) {

@@ -4,7 +4,7 @@ public class RandomizeMap {
 
   public static final int N = 20; //size of Maze
 
-  public static int radomInt(int limit) {
+  public static int randomInt(int limit) {
     double randomDouble = Math.random();
     randomDouble = randomDouble * limit * limit + 1;
     return (int) randomDouble;
@@ -19,7 +19,7 @@ public class RandomizeMap {
    * @param nRock      is limit number of rock
    * @return 2D maze
    */
-  public static int[][] radomMaze(int nContainer, int nRock) {
+  public static int[][] randomMaze(int nContainer, int nRock) {
     int[] maze1D = new int[N * N + 5];
     int[][] maze2D = new int[N + 1][N + 1];
     int components = 0; //
@@ -35,14 +35,14 @@ public class RandomizeMap {
     while (block < limit) {
       unionFind = new UnionFind(N * N + 1);
       block++;
-      int radomInt = radomInt(N);
-      if (maze1D[radomInt] == 1) {
+      int randomInt = randomInt(N);
+      if (maze1D[randomInt] == 1) {
         block--;
         continue;
       }
-      int U = ((radomInt - 1) / N) + 1;
-      int V = ((radomInt - 1) % N) + 1;
-      maze1D[radomInt] = 1;
+      int U = ((randomInt - 1) / N) + 1;
+      int V = ((randomInt - 1) % N) + 1;
+      maze1D[randomInt] = 1;
       maze2D[U][V] = 1;
       for (int i = 1; i <= N * N; i++) {
         if (maze1D[i] == 1) {
@@ -78,19 +78,19 @@ public class RandomizeMap {
       }
       components = unionFind.count();
       if (components - block > 2) {
-        maze1D[radomInt] = 0;
+        maze1D[randomInt] = 0;
         maze2D[U][V] = 0;
         block--;
       }
     }
     block = 0;
     while (block < nRock) {
-      int radomInt = radomInt(N);
-      if (maze1D[radomInt] == 1) {
+      int randomInt = randomInt(N);
+      if (maze1D[randomInt] == 1) {
         block++;
-        int U = ((radomInt - 1) / N) + 1;
-        int V = ((radomInt - 1) % N) + 1;
-        maze1D[radomInt] = 2;
+        int U = ((randomInt - 1) / N) + 1;
+        int V = ((randomInt - 1) % N) + 1;
+        maze1D[randomInt] = 2;
         maze2D[U][V] = 2;
       }
     }
