@@ -3,6 +3,7 @@ package cores;
 import algorithms.RandomizeMap;
 import algorithms.player.Pair;
 import algorithms.player.SpawnPlayer;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.*;
 import entities.bombs.Bomb;
@@ -45,7 +46,7 @@ public class Map {
                 setObject(i, j, map[i+1][j+1], null);
             }
         }
-        ArrayList<Pair> player = SpawnPlayer.spawn(20, map, 5);
+        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 5);
         Player a = new MainPlayer(new Vector3f((player.get(0).getX()-1) * 2f, 1, (player.get(0).getY()-1) * 2f));
         System.out.println(a.getPosition());
         for(int i = 1; i < player.size(); ++i){

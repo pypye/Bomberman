@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class Enemy extends Pair {
 
-  public static final int[] dx = {0, 0, -1, 1, 0, 0, 0, 0};
-  public static final int[] dy = {-1, 1, 0, 0, 0, 0, 0, 0};
-
   public static final int LEFT = 0;
   public static final int Right = 1;
   public static final int UP = 2;
