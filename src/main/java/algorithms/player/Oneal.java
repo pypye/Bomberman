@@ -1,9 +1,9 @@
-package player;
+package algorithms.player;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import map.RandomMap;
+import algorithms.RandomizeMap;
 
 public class Oneal extends Enemy {
 
@@ -55,7 +55,7 @@ public class Oneal extends Enemy {
 
   /**
    * @param enemy   enemy
-   * @param players is a list of player
+   * @param players is a list of algorithms.player
    * @return Enemy if cant move go random
    */
   public static Enemy nextM(Enemy enemy, int[][] map, ArrayList<Pair> players) {
@@ -69,7 +69,7 @@ public class Oneal extends Enemy {
     int v = enemy.getY();
     if (isMove == null) {
       while (true) {
-        int randomInt = RandomMap.radomInt(2) - 1;
+        int randomInt = RandomizeMap.radomInt(2) - 1;
         int U = u + dx[randomInt];
         int V = v + dy[randomInt];
         if (map[U][V] == 0) {

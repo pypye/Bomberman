@@ -13,11 +13,6 @@ import utils.AnimUtils;
 
 public class MainPlayer extends Player {
     private final AnimComposer composer;
-    private final BuffGui speedBuffGUI = new SpeedBuffGui(-1, 90);
-    private final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
-    private final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
-    private final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
-    private final StatusBarGui3d gui3d;
 
     public MainPlayer(Vector3f position) {
         super(position, "Models/Player/player.gltf");
@@ -32,20 +27,12 @@ public class MainPlayer extends Player {
         chaseCam.setMinDistance(10);
         chaseCam.setMaxDistance(20);
         chaseCam.setZoomSensitivity(0.25f);
+        gui3d.unlink();
         gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
     }
 
     public AnimComposer getComposer() {
         return composer;
-    }
-
-    @Override
-    public void onUpdate(float tpf) {
-        super.onUpdate(tpf);
-        gui3d.setMaxCount(bombMax);
-        gui3d.setCount(bombLeft);
-        gui3d.setCoolDown(bombCoolDownCurrent);
-        gui3d.onUpdate();
     }
 
     @Override

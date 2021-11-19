@@ -1,12 +1,12 @@
-package map;
+package algorithms;
 
-public class UF {
+public class UnionFind {
 
   private int[] parent;  // parent[i] = parent of i
   private byte[] rank;   // rank[i] = rank of subtree rooted at i (never more than 31)
   private int count;     // number of components
 
-  public UF(int n) {
+  public UnionFind(int n) {
     if (n < 0) {
       throw new IllegalArgumentException();
     }

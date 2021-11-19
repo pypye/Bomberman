@@ -1,4 +1,4 @@
-package player;
+package algorithms.player;
 
 public class Pair {
 

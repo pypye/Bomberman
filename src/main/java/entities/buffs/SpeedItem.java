@@ -5,7 +5,7 @@ import entities.players.Player;
 
 public class SpeedItem extends BuffItem {
     public SpeedItem(Vector3f position) {
-        super(position, "Models/PowerUp/pup_speed.obj");
+        super(position, "Models/Buffs/pup_speed.obj");
     }
 
     @Override

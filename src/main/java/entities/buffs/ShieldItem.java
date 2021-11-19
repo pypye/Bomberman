@@ -5,7 +5,7 @@ import entities.players.Player;
 
 public class ShieldItem extends BuffItem {
     public ShieldItem(Vector3f position) {
-        super(position, "Models/PowerUp/pup_shield.obj");
+        super(position, "Models/Buffs/pup_shield.obj");
     }
 
     @Override

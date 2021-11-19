@@ -8,7 +8,7 @@
 
 // converts a normalized direction vector
 // into a texture coordinate for fetching
-// texel from a sphere map
+// texel from a sphere algorithms
 vec2 Optics_SphereCoord(in vec3 dir){
     float dzplus1 = dir.z + 1.0;
 

@@ -15,7 +15,7 @@ public class BombExplodeParticle {
     public BombExplodeParticle(int x, int z) {
         particleEmitter = new ParticleEmitter("bombSpark", ParticleMesh.Type.Triangle, 15);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
-        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/bomb_explode.png"));
+        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Particles/bomb_explode.png"));
         particleEmitter.setMaterial(material);
         particleEmitter.setLocalTranslation(x * 2f, 1, z * 2f);
         particleEmitter.setImagesX(1);

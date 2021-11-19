@@ -11,7 +11,7 @@ public class ItemGui {
     protected float posY;
 
     public ItemGui(float sizeX, float sizeY, String path) {
-        item = new Picture("HUD");
+        item = new Picture(path);
         item.setImage(Main.ASSET_MANAGER, path, true);
         this.setX(sizeX);
         this.setY(sizeY);

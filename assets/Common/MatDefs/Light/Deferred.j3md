@@ -28,7 +28,7 @@ MaterialDef Phong Lighting Deferred {
         Vector2 FrustumNearFar
         Matrix4 ViewProjectionMatrixInverse
 
-        // Color ramp, will map diffuse and specular values through it.
+        // Color ramp, will algorithms diffuse and specular values through it.
         Texture2D ColorRamp
     }
 

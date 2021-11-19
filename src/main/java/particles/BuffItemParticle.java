@@ -13,7 +13,7 @@ public class BuffItemParticle {
     public BuffItemParticle(Spatial a) {
         particleEmitter = new ParticleEmitter("itemEffect", ParticleMesh.Type.Triangle, 10);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
-        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/Particles/star_04.png"));
+        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Particles/star_04.png"));
         particleEmitter.setMaterial(material);
         particleEmitter.setLocalTranslation(a.getLocalTranslation());
         particleEmitter.setImagesX(1);

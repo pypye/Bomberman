@@ -1,6 +1,6 @@
-package map;
+package algorithms;
 
-public class RandomMap {
+public class RandomizeMap {
 
   public static final int N = 20; //size of Maze
 
@@ -24,7 +24,7 @@ public class RandomMap {
     int[][] maze2D = new int[N + 1][N + 1];
     int components = 0; //
     int block = 0; //so luong khoi hien tai
-    UF uf;
+    UnionFind unionFind;
 
     for (int i = 0; i <= N * N; i++) {
       maze1D[i] = 0;
@@ -33,7 +33,7 @@ public class RandomMap {
     int limit = nContainer + nRock;
 
     while (block < limit) {
-      uf = new UF(N * N + 1);
+      unionFind = new UnionFind(N * N + 1);
       block++;
       int radomInt = radomInt(N);
       if (maze1D[radomInt] == 1) {
@@ -52,31 +52,31 @@ public class RandomMap {
         int v = ((i - 1) % N) + 1;
         if (u > 1) {
           int p = twoForOne(u - 1, v);
-          if (!(maze1D[p] == 1 || uf.find(i) == uf.find(p))) {
-            uf.union(i, p);
+          if (!(maze1D[p] == 1 || unionFind.find(i) == unionFind.find(p))) {
+            unionFind.union(i, p);
           }
         }
         if (u < N) {
           int p = twoForOne(u + 1, v);
-          if (!(maze1D[p] == 1 || uf.find(i) == uf.find(p))) {
-            uf.union(i, p);
+          if (!(maze1D[p] == 1 || unionFind.find(i) == unionFind.find(p))) {
+            unionFind.union(i, p);
           }
         }
         if (v > 1) {
 
           int p = twoForOne(u, v - 1);
-          if (!(maze1D[p] == 1 || uf.find(i) == uf.find(p))) {
-            uf.union(i, p);
+          if (!(maze1D[p] == 1 || unionFind.find(i) == unionFind.find(p))) {
+            unionFind.union(i, p);
           }
         }
         if (v < N) {
           int p = twoForOne(u, v + 1);
-          if (!(maze1D[p] == 1 || uf.find(i) == uf.find(p))) {
-            uf.union(i, p);
+          if (!(maze1D[p] == 1 || unionFind.find(i) == unionFind.find(p))) {
+            unionFind.union(i, p);
           }
         }
       }
-      components = uf.count();
+      components = unionFind.count();
       if (components - block > 2) {
         maze1D[radomInt] = 0;
         maze2D[U][V] = 0;

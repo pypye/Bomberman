@@ -18,7 +18,7 @@ import particles.BuffItemParticle;
 import java.util.Random;
 
 public class BuffItem extends Entity {
-    private BuffItemParticle buffEffect;
+    private final BuffItemParticle buffEffect;
     private Spatial shadow;
     public BuffItem(Vector3f position, String path) {
         super(position, path);
@@ -27,7 +27,7 @@ public class BuffItem extends Entity {
         spatial.setLocalRotation(rot);
 
         Material mat_shad = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat_shad.setTexture("ColorMap", Main.ASSET_MANAGER.loadTexture("Textures/PowerUp/Shadow.png"));
+        mat_shad.setTexture("ColorMap", Main.ASSET_MANAGER.loadTexture("Textures/Buffs/shadow.png"));
         mat_shad.getAdditionalRenderState().setBlendMode(RenderState.BlendMode.Alpha);
         shadow = new Geometry("Box", new Box(0.3f, 0f, 0.3f));
         shadow.setMaterial(mat_shad);

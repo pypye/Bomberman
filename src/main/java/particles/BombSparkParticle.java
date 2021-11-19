@@ -16,7 +16,7 @@ public class BombSparkParticle {
     public BombSparkParticle(Spatial a) {
         particleEmitter = new ParticleEmitter("bombSpark", ParticleMesh.Type.Triangle, 15);
         Material material = new Material(Main.ASSET_MANAGER, "Common/MatDefs/Misc/Particle.j3md");
-        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Bomb/bomb_spark.png"));
+        material.setTexture("Texture", Main.ASSET_MANAGER.loadTexture("Textures/Particles/bomb_spark.png"));
         particleEmitter.setMaterial(material);
         particleEmitter.setLocalTranslation(a.getLocalTranslation());
         particleEmitter.getLocalTranslation().addLocal(0, 1.35f, 0.4f);

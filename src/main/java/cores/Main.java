@@ -4,16 +4,17 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
+import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import entities.bombs.BombList;
+import entities.players.MainPlayer;
+import entities.players.enemies.Mushroom;
+import entities.players.Player;
 import entities.players.PlayerList;
 import events.PlayerInput;
 import particles.BombExplodeParticleList;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -26,7 +27,7 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         Main app = new Main();
-        Logger.getLogger("com.jme3").setLevel(Level.OFF);
+        //Logger.getLogger("com.jme3").setLevel(Level.OFF);
         AppSettings settings = new AppSettings(true);
         settings.setResolution(1280, 720);
         settings.setTitle("Bomberman");
@@ -37,7 +38,7 @@ public class Main extends SimpleApplication {
         app.setDisplayStatView(false);
         app.start();
     }
-
+    Player x;
     @Override
     public void simpleInitApp() {
         ASSET_MANAGER = assetManager;
@@ -53,18 +54,18 @@ public class Main extends SimpleApplication {
         assetManager.registerLocator("assets", FileLocator.class);
         Environment.init();
         Map.init();
-        PlayerList.init();
-        //x = new Mushroom(new Vector3f(0, 1, 0));
+        new MainPlayer(new Vector3f(0f, 1f, 0f));
+        x = new Mushroom(new Vector3f(0, 1, 0));
+        PlayerList.add(x);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         BombList.onUpdate();
         BombExplodeParticleList.onUpdate();
+        x.moveRight(0.01f);
         PlayerInput.onUpdate();
         PlayerList.onUpdate(tpf);
-        //x.moveRight(0.01f);
-
     }
 
 }

@@ -27,19 +27,19 @@ MaterialDef Phong Lighting {
         // Specular power/shininess
         Float Shininess : 1
 
-        // Diffuse map
+        // Diffuse algorithms
         Texture2D DiffuseMap
 
-        // Normal map
+        // Normal algorithms
         Texture2D NormalMap -LINEAR
 
-        // Specular/gloss map
+        // Specular/gloss algorithms
         Texture2D SpecularMap
 
-        // Parallax/height map
+        // Parallax/height algorithms
         Texture2D ParallaxMap -LINEAR
 
-        //Set to true is parallax map is stored in the alpha channel of the normal map
+        //Set to true is parallax algorithms is stored in the alpha channel of the normal algorithms
         Boolean PackedNormalParallax   
 
         //Sets the relief height for parallax mapping
@@ -51,7 +51,7 @@ MaterialDef Phong Lighting {
         // Texture that specifies alpha values
         Texture2D AlphaMap -LINEAR
 
-        // Color ramp, will map diffuse and specular values through it.
+        // Color ramp, will algorithms diffuse and specular values through it.
         Texture2D ColorRamp
 
         // Texture of the glowing parts of the material
@@ -75,7 +75,7 @@ MaterialDef Phong Lighting {
         // Env Map for reflection
         TextureCubeMap EnvMap
 
-        // the env map is a spheremap and not a cube map
+        // the env algorithms is a spheremap and not a cube algorithms
         Boolean EnvMapAsSphereMap
 
         //shadows

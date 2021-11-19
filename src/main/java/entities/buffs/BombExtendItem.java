@@ -5,7 +5,7 @@ import entities.players.Player;
 
 public class BombExtendItem extends BuffItem {
     public BombExtendItem(Vector3f position) {
-        super(position, "Models/PowerUp/pup_bomb.obj");
+        super(position, "Models/Buffs/pup_bomb.obj");
     }
 
     @Override

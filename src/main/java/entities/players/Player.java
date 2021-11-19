@@ -4,6 +4,9 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import entities.buffs.BuffItem;
+import ui.gui.LocationGui;
+import ui.gui.buffs.*;
+import ui.gui3d.StatusBarGui3d;
 import utils.LightUtils;
 import cores.Map;
 import entities.Entity;
@@ -32,10 +35,18 @@ public class Player extends Entity {
 
     protected float offsetAngle = FastMath.HALF_PI;
 
+    protected final BuffGui speedBuffGUI = new SpeedBuffGui(-1, 90);
+    protected final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
+    protected final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
+    protected final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
+
+    protected StatusBarGui3d gui3d;
+
     public Player(Vector3f position, String path) {
         super(position, path);
+        PlayerList.add(this);
         LightUtils.setSpatialLight(spatial);
-
+        gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
     }
 
     public void moveForward(float value) {
@@ -113,6 +124,10 @@ public class Player extends Entity {
         onBombBuffEffect(tpf);
         onShieldBuffEffect(tpf);
         onFlameBuffEffect(tpf);
+        gui3d.setMaxCount(bombMax);
+        gui3d.setCount(bombLeft);
+        gui3d.setCoolDown(bombCoolDownCurrent);
+        gui3d.onUpdate();
     }
 
     protected void onSpeedBuffEffect(float tpf) {
@@ -127,6 +142,7 @@ public class Player extends Entity {
             speedBuffActivated = true;
             speed *= 2;
         }
+        LocationGui.centerXObject(speedBuffGUI.getText(), speedBuffGUI.getBackground(), speedBuffGUI.getText().getPosY());
     }
 
     protected void onBombBuffEffect(float tpf) {
@@ -143,6 +159,7 @@ public class Player extends Entity {
             bombLeft += 1;
             bombMax += 1;
         }
+        LocationGui.centerXObject(bombExtendBuffGui.getText(), bombExtendBuffGui.getBackground(), bombExtendBuffGui.getText().getPosY());
     }
 
     protected void onShieldBuffEffect(float tpf) {
@@ -155,6 +172,7 @@ public class Player extends Entity {
         if (!shieldBuffActivated) {
             shieldBuffActivated = true;
         }
+        LocationGui.centerXObject(shieldBuffGUI.getText(), shieldBuffGUI.getBackground(), shieldBuffGUI.getText().getPosY());
     }
 
     protected void onFlameBuffEffect(float tpf) {
@@ -169,6 +187,7 @@ public class Player extends Entity {
             flameBuffActivated = true;
             bombExplodeLength += 1;
         }
+        LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosY());
     }
 
     protected void onCoolDownBomb(float tpf) {

@@ -27,6 +27,6 @@ void main(){
     //projCoord /= projCoord.w;
     //projCoord.xy = projCoord.xy * vec2(0.5, -0.5) + vec2(0.5);
 
-    // bias from [-1, 1] to [0, 1] for sampling shadow map
+    // bias from [-1, 1] to [0, 1] for sampling shadow algorithms
     //projCoord = (projCoord.xyzw * vec4(0.5)) + vec4(0.5);
 }

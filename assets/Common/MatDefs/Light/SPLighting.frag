@@ -110,18 +110,18 @@ void main(){
      
        #ifdef STEEP_PARALLAX
            #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                newTexCoord = steepParallaxOffset(m_NormalMap, viewDir, texCoord, m_ParallaxHeight);
            #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                newTexCoord = steepParallaxOffset(m_ParallaxMap, viewDir, texCoord, m_ParallaxHeight);         
            #endif
        #else
            #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                newTexCoord = classicParallaxOffset(m_NormalMap, viewDir, texCoord, m_ParallaxHeight);
            #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                newTexCoord = classicParallaxOffset(m_ParallaxMap, viewDir, texCoord, m_ParallaxHeight);
            #endif
        #endif
@@ -152,7 +152,7 @@ void main(){
     // ***********************
     #if defined(NORMALMAP) && !defined(VERTEX_LIGHTING)
       vec4 normalHeight = texture2D(m_NormalMap, newTexCoord);
-      //Note the -2.0 and -1.0. We invert the green channel of the normal map, 
+      //Note the -2.0 and -1.0. We invert the green channel of the normal algorithms,
       //as it's complient with normal maps generated with blender.
       //see http://hub.jmonkeyengine.org/forum/topic/parallax-mapping-fundamental-bug/#post-256898
       //for more explanation.
@@ -214,10 +214,10 @@ void main(){
             #endif
          
             #ifdef NORMALMAP         
-                //Normal map -> lighting is computed in tangent space
+                //Normal algorithms -> lighting is computed in tangent space
                 lightDir.xyz = normalize(lightDir.xyz * tbnMat);                
             #else
-                //no Normal map -> lighting is computed in view space
+                //no Normal algorithms -> lighting is computed in view space
                 lightDir.xyz = normalize(lightDir.xyz);                
             #endif
 
@@ -227,7 +227,7 @@ void main(){
             vec4 SpecularSum2 = vec4(SpecularSum, 1.0);
             #ifdef USE_REFLECTION                    
                  // Interpolate light specularity toward reflection color
-                 // Multiply result by specular map
+                 // Multiply result by specular algorithms
                  specularColor = mix(SpecularSum2 * light.y, refColor, refVec.w) * specularColor;
 
                  SpecularSum2 = vec4(1.0);

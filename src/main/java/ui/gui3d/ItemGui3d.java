@@ -12,13 +12,13 @@ public class ItemGui3d {
         screenCoords = Main.CAM.getScreenCoordinates(link.getWorldTranslation());
         if (screenCoords.z > 1) screenCoords.x = screenCoords.y = -10000;
         screenCoords.x -= 30;
-        screenCoords.y += 75;
+        screenCoords.y += 70;
     }
 
     public void onUpdate() {
         screenCoords = Main.CAM.getScreenCoordinates(link.getWorldTranslation());
         if (screenCoords.z > 1) screenCoords.x = screenCoords.y = -10000;
         screenCoords.x -= 30;
-        screenCoords.y += 75;
+        screenCoords.y += 70;
     }
 }

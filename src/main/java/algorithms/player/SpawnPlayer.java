@@ -1,7 +1,7 @@
-package player;
+package algorithms.player;
 
 import java.util.ArrayList;
-import map.RandomMap;
+import algorithms.RandomizeMap;
 
 public class SpawnPlayer extends Pair{
 
@@ -15,7 +15,7 @@ public class SpawnPlayer extends Pair{
     int cntPlayer = 0;
     while (cntPlayer < numPlayer) {
       boolean isNear = false;
-      int radomInt = RandomMap.radomInt(N);
+      int radomInt = RandomizeMap.radomInt(N);
       int U = ((radomInt - 1) / N) + 1;
       int V = ((radomInt - 1) % N) + 1;
       if (map[U][V] == 0) {

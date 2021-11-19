@@ -18,16 +18,16 @@ MaterialDef PBR Lighting {
         // the emissive intensity
         Float EmissiveIntensity : 2.0
 
-        // BaseColor map
+        // BaseColor algorithms
         Texture2D BaseColorMap
 
-        // Metallic map
+        // Metallic algorithms
         Texture2D MetallicMap -LINEAR
         
         // Roughness Map
         Texture2D RoughnessMap -LINEAR
 
-        //Metallic and Roughness are packed respectively in the b and g channel of a single map
+        //Metallic and Roughness are packed respectively in the b and g channel of a single algorithms
         // r: unspecified
         // g: Roughness
         // b: Metallic
@@ -36,10 +36,10 @@ MaterialDef PBR Lighting {
         // Texture of the emissive parts of the material
         Texture2D EmissiveMap
 
-        // Normal map
+        // Normal algorithms
         Texture2D NormalMap -LINEAR
 
-        //The type of normal map: -1.0 (DirectX), 1.0 (OpenGl)
+        //The type of normal algorithms: -1.0 (DirectX), 1.0 (OpenGl)
         Float NormalType : -1.0
 
         // For Spec gloss pipeline
@@ -50,10 +50,10 @@ MaterialDef PBR Lighting {
         Color Specular : 1.0 1.0 1.0 1.0
         Float Glossiness : 1.0
 
-        // Parallax/height map
+        // Parallax/height algorithms
         Texture2D ParallaxMap -LINEAR
 
-        //Set to true if parallax map is stored in the alpha channel of the normal map
+        //Set to true if parallax algorithms is stored in the alpha channel of the normal algorithms
         Boolean PackedNormalParallax   
 
         //Sets the relief height for parallax mapping
@@ -70,7 +70,7 @@ MaterialDef PBR Lighting {
 
         // Set to use TexCoord2 for the lightmap sampling
         Boolean SeparateTexCoord
-        // the light map is a grayscale ao map, only the r channel will be read.
+        // the light algorithms is a grayscale ao algorithms, only the r channel will be read.
         Boolean LightMapAsAOMap
         Boolean AoPackedInMRMap
         //shadows

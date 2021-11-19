@@ -109,18 +109,18 @@ void main(){
        vec3 vViewDir =  viewDir * tbnMat;  
        #ifdef STEEP_PARALLAX
            #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                newTexCoord = steepParallaxOffset(m_NormalMap, vViewDir, texCoord, m_ParallaxHeight);
            #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                newTexCoord = steepParallaxOffset(m_ParallaxMap, vViewDir, texCoord, m_ParallaxHeight);         
            #endif
        #else
            #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                newTexCoord = classicParallaxOffset(m_NormalMap, vViewDir, texCoord, m_ParallaxHeight);
            #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                newTexCoord = classicParallaxOffset(m_ParallaxMap, vViewDir, texCoord, m_ParallaxHeight);
            #endif
        #endif
@@ -166,7 +166,7 @@ void main(){
     // ***********************
     #if defined(NORMALMAP)
       vec4 normalHeight = texture2D(m_NormalMap, newTexCoord);
-      //Note the -2.0 and -1.0. We invert the green channel of the normal map, 
+      //Note the -2.0 and -1.0. We invert the green channel of the normal algorithms,
       //as it's complient with normal maps generated with blender.
       //see http://hub.jmonkeyengine.org/forum/topic/parallax-mapping-fundamental-bug/#post-256898
       //for more explanation.

@@ -14,7 +14,7 @@ public class BuffGui {
     private final float posY;
 
     public BuffGui(float posX, float posY, String path) {
-        background = new ItemGui(64, 64, "Textures/PowerUp/background.png");
+        background = new ItemGui(64, 64, "Textures/Buffs/background.png");
         item = new ItemGui(56, 56, path);
         textGui = new TextGui("0.0s", 16, ColorRGBA.White, posX, posY);
         this.posX = posX;

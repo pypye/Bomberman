@@ -35,10 +35,10 @@
             
            
            #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                fCurrHeight = texture2D( parallaxMap, vTexCurrentOffset).a; 
            #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                fCurrHeight = texture2D( parallaxMap, vTexCurrentOffset).r;                
            #endif
            
@@ -62,10 +62,10 @@
     vec2 classicParallaxOffset(sampler2D parallaxMap, vec3 vViewDir,vec2 texCoord,float parallaxScale){ 
        float h;
        #ifdef NORMALMAP_PARALLAX
-               //parallax map is stored in the alpha channel of the normal map         
+               //parallax algorithms is stored in the alpha channel of the normal algorithms
                h = texture2D(parallaxMap, texCoord).a;               
        #else
-               //parallax map is a texture
+               //parallax algorithms is a texture
                h = texture2D(parallaxMap, texCoord).r;
        #endif
        float heightScale = parallaxScale;

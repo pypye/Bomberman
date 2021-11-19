@@ -1,6 +1,7 @@
-package entities.players;
+package entities.players.enemies;
 
 import com.jme3.math.Vector3f;
+import entities.players.Player;
 
 public class Oneal extends Player {
 
