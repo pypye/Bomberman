@@ -43,14 +43,14 @@ public class Map {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
-                setObject(i, j, map[i+1][j+1], null);
+                setObject(i, j, map[i][j], null);
             }
         }
         ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 5);
-        Player a = new MainPlayer(new Vector3f((player.get(0).getX()-1) * 2f, 1, (player.get(0).getY()-1) * 2f));
+        Player a = new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
         System.out.println(a.getPosition());
-        for(int i = 1; i < player.size(); ++i){
-            Player b = new Mushroom(new Vector3f((player.get(i).getX()-1) * 2f, 1, (player.get(i).getY()-1) * 2f));
+        for (int i = 1; i < player.size(); ++i) {
+            Player b = new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
             System.out.println(b.getPosition());
         }
         setObject(0, 0, GRASS, null);
@@ -108,7 +108,7 @@ public class Map {
         return entity[x][y] != null && entity[x][y].isBlocked();
     }
 
-    public static Entity getEntity(int x, int y){
+    public static Entity getEntity(int x, int y) {
         return entity[x][y];
     }
 }
