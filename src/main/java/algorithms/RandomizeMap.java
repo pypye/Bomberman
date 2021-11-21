@@ -16,21 +16,6 @@ public class RandomizeMap {
     return (u * N) + v + 1;
   }
 
-  public static boolean cntEmpty(int u, int v, int[][] map, int limit) {
-    int cnt = 0;
-    for (int i = 0; i < 8; i++) {
-      int U = u + Pair.dx[i];
-      int V = v + Pair.dy[i];
-      if (U < 0 || V < 0 || U >= N || V >= N) {
-        continue;
-      }
-      if (map[U][V] == 0) {
-        cnt++;
-      }
-    }
-    return cnt >= limit;
-  }
-
   public static int[][] randomMaze(int nContainer, int nRock) {
     int[] maze1D = new int[N * N + 1];
     int[][] maze2D = new int[N][N];

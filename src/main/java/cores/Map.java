@@ -19,12 +19,17 @@ import entities.buffs.FlameItem;
 import entities.buffs.ShieldItem;
 import entities.buffs.SpeedItem;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Map {
     private static final int[][] object = new int[20][20];
     private static final Entity[][] entity = new Entity[20][20];
+
+    private static int level;
 
     public static final int GRASS = 0;
     public static final int ROCK = 1;
@@ -35,6 +40,62 @@ public class Map {
     public static final int FLAME_ITEM = 6;
     public static final int BOMB_EX_ITEM = 7;
     public static final int SHIELD_ITEM = 8;
+    public static final int BOMBER = -1;
+    public static final int MUSHROOM = -2;
+    public static final int ONEAL = -3;
+
+    public static int toInt(String input) {
+        int output = 0;
+        for(int i = 0; i < input.length(); i++) {
+          output = output * 10 + (int) (input.charAt(i) - '0');
+        }
+        return output;
+    }
+
+    public static int[][] insertFromFile() throws FileNotFoundException {
+        char[] Tiles = new char[] {'#', '*', '~', 'x'};
+        char[] Character = new char[] {'2', '1', 'p'};
+        char[] Items = new char[] {'s', 'f', 'b'};
+        String url = "src\\main\\java\\cores\\input.txt";
+        FileInputStream fileInputStream = new FileInputStream(url);
+        Scanner sc = new Scanner(fileInputStream);
+        String Input = sc.nextLine();
+
+        level = toInt(Input.split(" ")[0]) ;
+        int R = toInt(Input.split(" ")[1]) ;
+        int C = toInt(Input.split(" ")[2]) ;
+
+        int[][] map = new int[R][C];
+        int r = 0;
+        while (sc.hasNextLine()) {
+          Input = sc.nextLine();
+          for(int i = 0; i < Input.length(); i++) {
+            boolean ok = false;
+            char here = Input.charAt(i);
+            for(int Til = 0; Til < 4; Til++) {
+              if(here == Tiles[Til]) {
+                map[r][i] = Til + 1;
+                ok = true;
+              }
+            }
+            for(int Char = 0; Char < 3; Char++) {
+              if(here == Character[Char]) {
+                map[r][i] = Char - 3;
+                ok = true;
+              }
+            }
+            for(int Ite = 0; Ite < 3; Ite++) {
+              if(here == Items[Ite]) {
+                map[r][i] = Ite + 5;
+                ok = true;
+              }
+            }
+            if(!ok) map[r][i] = 0;
+          }
+          r++;
+        }
+        return map;
+    }
 
     public static void init() {
         //Random r = new Random();
@@ -109,5 +170,10 @@ public class Map {
 
     public static Entity getEntity(int x, int y) {
         return entity[x][y];
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+      int[][] demo = insertFromFile();
+      int t = 3;
     }
 }
