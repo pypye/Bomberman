@@ -1,7 +1,6 @@
 package cores;
 
 import algorithms.RandomizeMap;
-import algorithms.player.Pair;
 import algorithms.player.SpawnPlayer;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -47,7 +46,7 @@ public class Map {
             }
         }
         ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 5);
-        Player a = new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
+        Player a = new MainPlayer(new Vector3f(0, 1, 0));
         System.out.println(a.getPosition());
         for (int i = 1; i < player.size(); ++i) {
             Player b = new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));

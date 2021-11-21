@@ -6,7 +6,6 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
-import entities.players.Player;
 
 import java.util.HashSet;
 

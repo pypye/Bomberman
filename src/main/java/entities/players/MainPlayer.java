@@ -6,6 +6,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import cores.Main;
+import entities.bombs.Bomb;
 import events.PlayerInput;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
@@ -14,7 +15,7 @@ import utils.AnimUtils;
 
 public class MainPlayer extends Player {
     private final AnimComposer composer;
-    private Spatial child;
+    private final Spatial child;
     public MainPlayer(Vector3f position) {
         super(position, "Models/Player/player.gltf");
         child = AnimUtils.getAnimRoot(spatial);
@@ -100,6 +101,7 @@ public class MainPlayer extends Player {
             if (BuffListGui.getBuffList().contains(flameBuffGui)) {
                 BuffListGui.removeBuff(flameBuffGui);
             }
+            Bomb.path = Bomb.BOMB_DEFAULT;
             flameBuffActivated = false;
             flameBuffDuration = 0;
             bombExplodeLength = DEFAULT_BOMB_LENGTH;
@@ -107,6 +109,7 @@ public class MainPlayer extends Player {
         }
         if (!flameBuffActivated) {
             BuffListGui.addBuff(flameBuffGui);
+            Bomb.path = Bomb.BOMB_UPGRADE;
             flameBuffActivated = true;
             bombExplodeLength += 1;
         }

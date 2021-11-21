@@ -67,6 +67,4 @@ public class BombList {
             BombList.remove(bomb);
         }
     }
-
-
 }

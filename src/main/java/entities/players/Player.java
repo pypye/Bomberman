@@ -3,10 +3,12 @@ package entities.players;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Spatial;
+import entities.bombs.Bomb;
 import entities.buffs.BuffItem;
+import particles.SpeedParticle;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
+import ui.gui3d.ShieldGui3d;
 import ui.gui3d.StatusBarGui3d;
 import utils.LightUtils;
 import cores.Map;
@@ -15,7 +17,7 @@ import entities.Entity;
 public class Player extends Entity {
     public static final float OFFSET = 0.5f;
     public static final float DEFAULT_SPEED = 3f;
-    public static final int DEFAULT_BOMB_LENGTH = 1;
+    public static final int DEFAULT_BOMB_LENGTH = 2;
     public static final int DEFAULT_BOMB_MAX = 3;
 
     protected float speed = DEFAULT_SPEED;
@@ -41,12 +43,16 @@ public class Player extends Entity {
     protected final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
     protected final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
     protected StatusBarGui3d gui3d;
+    protected ShieldGui3d shieldGui3d;
+    protected SpeedParticle speedParticle;
 
     public Player(Vector3f position, String path) {
         super(position, path);
         PlayerList.add(this);
         LightUtils.setSpatialLight(spatial);
         gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
+        shieldGui3d = new ShieldGui3d(spatial);
+        speedParticle = new SpeedParticle(spatial);
     }
 
     public void moveForward(float value) {
@@ -128,6 +134,8 @@ public class Player extends Entity {
         gui3d.setCount(bombLeft);
         gui3d.setCoolDown(bombCoolDownCurrent);
         gui3d.onUpdate();
+        shieldGui3d.onUpdate(shieldBuffActivated);
+        speedParticle.onUpdate(speedBuffActivated);
     }
 
     protected void onSpeedBuffEffect(float tpf) {
@@ -196,7 +204,7 @@ public class Player extends Entity {
             return;
         }
         bombCoolDownCurrent += tpf;
-        if (bombCoolDownCurrent >= 4) {
+        if (bombCoolDownCurrent >= Bomb.COOL_DOWN) {
             bombCoolDownCurrent = 0;
             bombLeft++;
         }

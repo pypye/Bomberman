@@ -4,14 +4,10 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import entities.bombs.BombList;
-import entities.players.MainPlayer;
-import entities.players.enemies.Mushroom;
-import entities.players.Player;
 import entities.players.PlayerList;
 import events.PlayerInput;
 import particles.BombExplodeParticleList;
@@ -54,7 +50,6 @@ public class Main extends SimpleApplication {
         assetManager.registerLocator("assets", FileLocator.class);
         Environment.init();
         Map.init();
-
         //x = new Mushroom(new Vector3f(0, 1, 0));
         //PlayerList.add(x);
     }
