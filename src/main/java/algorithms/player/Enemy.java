@@ -29,9 +29,7 @@ public class Enemy extends Pair {
 
   public static ArrayList<Enemy> enemyList = new ArrayList<>();
 
-  public static boolean isOut(int u, int v) {
-    return u >= 1 && v >= 1 && u <= N && v <= N;
-  }
+
 
   public boolean compare(Enemy u) {
     return this.getX() == u.getX() && this.getY() == u.getY();

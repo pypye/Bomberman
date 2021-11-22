@@ -5,7 +5,6 @@ import com.jme3.math.Vector3f;
 
 public class Oneal extends Enemy {
     private boolean isChasingPlayer = false;
-    private Vector2f randomTargetPoint;
 
     public Oneal(Vector3f position) {
         super(position, "Models/Oneal/oneal.gltf");
@@ -14,7 +13,7 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    public int nextMove() {
+    public int nextMove(Vector2f enemy, int[][] map) {
         if (isChasingPlayer) {
             //TODO: a function that chase player
             //Like finding path
