@@ -1,10 +1,9 @@
-package algorithms.player;
+package algorithms.players;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import algorithms.RandomizeMap;
-import com.jme3.math.Vector2f;
 
 public class Oneal extends Enemy {
 

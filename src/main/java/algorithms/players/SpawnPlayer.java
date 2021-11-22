@@ -1,4 +1,4 @@
-package algorithms.player;
+package algorithms.players;
 
 import com.jme3.math.Vector2f;
 import java.util.ArrayList;

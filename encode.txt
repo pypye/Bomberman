@@ -4,11 +4,11 @@ Encode:
 2 - container (breakable, drop random item)
 3 - boom
 4 - portal (for completed an level, jump to portal to end this level)
-5 - speeditem (speed up algorithms.player for %f second)
+5 - speeditem (speed up algorithms.players for %f second)
 6 - flameitem (extend boom flame size)
 7 - bombitem (more bomb in backpack)
 8 - shielditem (protect)
 ... - add more buff item
 
 
-algorithms.player algorithms as a ArrayList<>
+algorithms.players algorithms as a ArrayList<>

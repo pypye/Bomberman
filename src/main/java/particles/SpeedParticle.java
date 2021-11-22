@@ -36,17 +36,24 @@ public class SpeedParticle {
     public void onUpdate(boolean speedBuffActivated) {
         if (speedBuffActivated) {
             particleEmitter.setLocalTranslation(link.getLocalTranslation().x, 1, link.getLocalTranslation().z);
-            if (!Main.ROOT_NODE.hasChild(particleEmitter)) {
-                particleEmitter.emitAllParticles();
-                Main.ROOT_NODE.attachChild(particleEmitter);
-            }
+            show();
         } else {
-            if (Main.ROOT_NODE.hasChild(particleEmitter)) {
-                particleEmitter.killAllParticles();
-                Main.ROOT_NODE.detachChild(particleEmitter);
-            }
+            hide();
         }
+    }
 
+    public void show() {
+        if (!Main.ROOT_NODE.hasChild(particleEmitter)) {
+            particleEmitter.emitAllParticles();
+            Main.ROOT_NODE.attachChild(particleEmitter);
+        }
+    }
+
+    public void hide() {
+        if (Main.ROOT_NODE.hasChild(particleEmitter)) {
+            particleEmitter.killAllParticles();
+            Main.ROOT_NODE.detachChild(particleEmitter);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package algorithms.player;
+package algorithms.players;
 
 import java.util.ArrayList;
 
