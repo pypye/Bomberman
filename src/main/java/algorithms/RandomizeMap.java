@@ -1,10 +1,16 @@
 package algorithms;
 
-import algorithms.player.Pair;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class RandomizeMap {
-
+  public static final int BOMBER = -1;
+  public static final int MUSHROOM = -2;
+  public static final int ONEAL = -3;
   public static final int N = 20; //size of Maze
+
+  private static int level;
 
   public static int randomInt(int limit) {
     double randomDouble = Math.random();
@@ -100,9 +106,62 @@ public class RandomizeMap {
     }
   }
 
-  public static void main(String[] args) {
-    int[][] demo = randomMaze(0, 10);
-    show(demo);
+  public static int toInt(String input) {
+    int output = 0;
+    for(int i = 0; i < input.length(); i++) {
+      output = output * 10 + (int) (input.charAt(i) - '0');
+    }
+    return output;
   }
 
+  public static int[][] insertFromFile() throws FileNotFoundException {
+    char[] Tiles = new char[] {'#', '*', '~', 'x'};
+    char[] Character = new char[] {'2', '1', 'p'};
+    char[] Items = new char[] {'s', 'f', 'b'};
+    String url = "src\\main\\java\\cores\\input.txt";
+    FileInputStream fileInputStream = new FileInputStream(url);
+    Scanner sc = new Scanner(fileInputStream);
+    String Input = sc.nextLine();
+
+    level = toInt(Input.split(" ")[0]) ;
+    int R = toInt(Input.split(" ")[1]) ;
+    int C = toInt(Input.split(" ")[2]) ;
+
+    int[][] map = new int[R][C];
+    int r = 0;
+    while (sc.hasNextLine()) {
+      Input = sc.nextLine();
+      for(int i = 0; i < Input.length(); i++) {
+        boolean ok = false;
+        char here = Input.charAt(i);
+        for(int Til = 0; Til < 4; Til++) {
+          if(here == Tiles[Til]) {
+            map[r][i] = Til + 1;
+            ok = true;
+          }
+        }
+        for(int Char = 0; Char < 3; Char++) {
+          if(here == Character[Char]) {
+            map[r][i] = Char - 3;
+            ok = true;
+          }
+        }
+        for(int Ite = 0; Ite < 3; Ite++) {
+          if(here == Items[Ite]) {
+            map[r][i] = Ite + 5;
+            ok = true;
+          }
+        }
+        if(!ok) map[r][i] = 0;
+      }
+      r++;
+    }
+    return map;
+  }
+  public static void main(String[] args) throws FileNotFoundException {
+//    int[][] demo = randomMaze(0, 10);
+//    show(demo);
+    int[][] demo = insertFromFile();
+    int t = 3;
+  }
 }
