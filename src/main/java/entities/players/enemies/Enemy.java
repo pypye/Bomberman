@@ -15,6 +15,7 @@ public abstract class Enemy extends Player {
   public static final int Right = 1;
   public static final int UP = 2;
   public static final int DOWN = 3;
+
   public static final int[] dx = {0, 0, -1, 1, -1, -1, 1, 1};
   public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
 
@@ -24,7 +25,7 @@ public abstract class Enemy extends Player {
     super(position, path);
   }
 
-  public abstract int nextMove(Vector2f enemy, int[][] map);
+  public abstract int nextMove(Vector2f enemy, Vector2f player, int[][] map);
 
   public Vector2f getRandomTargetPoint() {
     return randomTargetPoint;
@@ -71,7 +72,8 @@ public abstract class Enemy extends Player {
       }
     }
     int randomInt = algorithms.RandomizeMap.randomInt((int) Math.sqrt(ans.size()));
-    this.randomTargetPoint = ans.get(randomInt);
+    if(!ans.isEmpty()) randomTargetPoint = ans.get(randomInt);
+    else randomTargetPoint = null;
   }
 
   public static int nextMoveBase(Vector2f start, Vector2f finish ,int[][] map) {

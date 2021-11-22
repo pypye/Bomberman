@@ -196,7 +196,7 @@ public class RandomizeMap {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        RandomizeMap randomizeMap = new RandomizeMap(10, 10);
+        RandomizeMap randomizeMap = new RandomizeMap(150, 50);
         //int[][] demo = insertFromFile();
         int[][] demo = randomizeMap.getRandomizeMap();
         int t = 3;

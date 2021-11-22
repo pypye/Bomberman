@@ -13,13 +13,22 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    public int nextMove(Vector2f enemy, int[][] map) {
+    public int nextMove(Vector2f enemy, Vector2f player, int[][] map) {
         if (isChasingPlayer) {
-            //TODO: a function that chase player
-            //Like finding path
+            int ans = nextMoveBase(enemy, player, map);
+            if(ans == -1) isChasingPlayer = false;
+            else return ans;
         } else {
-            //TODO: make random move
+            Vector2f targetPoint = getRandomTargetPoint();
+            if (targetPoint == null
+                || (int) enemy.getX() == (int) targetPoint.getX()
+                || (int) enemy.getY() == (int) targetPoint.getY()) {
+                setRandomTargetPoint(enemy, map, 5);
+                if(getRandomTargetPoint() == null) setRandomTargetPoint(enemy, map, 1);
+            }
+            targetPoint = getRandomTargetPoint();
+            return nextMoveBase(enemy, targetPoint, map);
         }
-        return 0;
+        return -1;
     }
 }

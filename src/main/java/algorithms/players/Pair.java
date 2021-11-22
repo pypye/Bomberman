@@ -8,7 +8,6 @@ public class Pair {
 
   private int x;
   private int y;
-  private int direction;
 
   public Pair() {
   }
@@ -16,13 +15,11 @@ public class Pair {
   public Pair(int x, int y) {
     this.x = x;
     this.y = y;
-    this.direction = 3;
   }
 
   public Pair(int x, int y, int direction) {
     this.x = x;
     this.y = y;
-    this.direction = direction;
   }
 
   public int getX() {
@@ -39,14 +36,6 @@ public class Pair {
 
   public void setY(int y) {
     this.y = y;
-  }
-
-  public int getDirection() {
-    return direction;
-  }
-
-  public void setDirection(int direction) {
-    this.direction = direction;
   }
 
   public boolean compare(Pair u) {
