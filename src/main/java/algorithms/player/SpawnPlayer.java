@@ -53,7 +53,8 @@ public class SpawnPlayer extends Pair {
   }
 
   public static void main(String[] args) {
-    int[][] demo = RandomizeMap.randomMaze(5, 10);
+    RandomizeMap randomizeMap = new RandomizeMap(5, 10);
+    int[][] demo = randomizeMap.getRandomizeMap();
     //RandomizeMap.show(demo);
     ArrayList<Vector2f> he = spawn(demo, 4, 2);
     int a = 1;

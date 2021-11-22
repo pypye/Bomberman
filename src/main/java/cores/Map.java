@@ -36,7 +36,8 @@ public class Map {
     public static final int SHIELD_ITEM = 8;
 
     public static void init() {
-        int[][] map = RandomizeMap.randomMaze(50, 150);
+        RandomizeMap randomizeMap = new RandomizeMap(50, 100);
+        int[][] map = randomizeMap.getRandomizeMap();
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
