@@ -124,9 +124,9 @@ public abstract class Enemy extends Player {
   public static void main(String[] args) {
     RandomizeMap demo = new RandomizeMap(50, 50);
     int[][] dem = demo.getRandomizeMap();
-    demo.showBoard();
-    ArrayList<Vector2f> de = algorithms.player.SpawnPlayer.spawn(dem, 1, 0);
+    //demo.showBoard();
+    ArrayList<Vector2f> de = algorithms.players.SpawnPlayer.spawn(dem, 1, 0);
     int ans = nextMoveBase(de.get(0), new Vector2f(0, 0), dem);
-    System.out.print(ans);
+    //System.out.print(ans);
   }
 }

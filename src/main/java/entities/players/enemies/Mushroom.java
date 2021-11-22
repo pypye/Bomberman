@@ -19,6 +19,5 @@ public class Mushroom extends Enemy {
         }
         targetPoint = getRandomTargetPoint();
         return nextMoveBase(enemy, targetPoint, map);
-        //hint: bfs to a point
     }
 }
