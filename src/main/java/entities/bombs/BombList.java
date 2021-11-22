@@ -21,32 +21,24 @@ public class BombList {
         int cordY = (int) bomb.getCord().y;
         BombExplodeParticleList.add(new BombExplodeParticle(cordX, cordY));
         for (int i = Math.max(0, cordX - 1); i >= Math.max(0, cordX - bomb.getOwner().getBombExplodeLength()); --i) {
+            checkKillPlayer(i, cordY);
             if (explosion(i, cordY)) break;
         }
         for (int i = Math.min(cordX + 1, 20); i <= Math.min(cordX + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
+            checkKillPlayer(i, cordY);
             if (explosion(i, cordY)) break;
         }
         for (int i = Math.max(0, cordY - 1); i >= Math.max(0, cordY - bomb.getOwner().getBombExplodeLength()); --i) {
+            checkKillPlayer(cordX, i);
             if (explosion(cordX, i)) break;
         }
         for (int i = Math.min(cordY + 1, 20); i <= Math.min(cordY + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
+            checkKillPlayer(cordX, i);
             if (explosion(cordX, i)) break;
         }
         Map.setObject(cordX, cordY, Map.GRASS, null);
         bomb.getSpark().remove();
         bombs.remove(bomb);
-    }
-
-    private static boolean explosion(int x, int y) {
-        if (Map.getObject(x, y) != Map.GRASS) {
-            if (Map.getObject(x, y) == Map.CONTAINER) {
-                BombExplodeParticleList.add(new BombExplodeParticle(x, y));
-                BuffItem.generateBuffItem(x, y);
-            }
-            return true;
-        }
-        BombExplodeParticleList.add(new BombExplodeParticle(x, y));
-        return false;
     }
 
     public static void onUpdate() {
@@ -65,6 +57,30 @@ public class BombList {
         }
         for (Bomb bomb : removeList) {
             BombList.remove(bomb);
+        }
+    }
+
+    private static boolean explosion(int x, int y) {
+        if (Map.getObject(x, y) != Map.GRASS) {
+            if (Map.getObject(x, y) == Map.CONTAINER) {
+                BombExplodeParticleList.add(new BombExplodeParticle(x, y));
+                BuffItem.generateBuffItem(x, y);
+            }
+            return true;
+        }
+        BombExplodeParticleList.add(new BombExplodeParticle(x, y));
+        return false;
+    }
+
+    private static void checkKillPlayer(int x, int y) {
+        ArrayList<Player> removeList = new ArrayList<>();
+        for (Player player : PlayerList.players) {
+            if (player.getCord().x == x && player.getCord().y == y) {
+                removeList.add(player);
+            }
+        }
+        for (Player player : removeList) {
+            PlayerList.remove(player);
         }
     }
 }

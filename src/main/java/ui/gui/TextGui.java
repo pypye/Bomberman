@@ -8,16 +8,16 @@ import cores.Main;
 public class TextGui extends ItemGui {
     private final BitmapText hudText;
 
-    public TextGui(String text, int size, ColorRGBA color, float x, float y) {
-        super(x, y);
+    public TextGui(String text, ColorRGBA color, float posX, float posY) {
         BitmapFont guiFont = Main.ASSET_MANAGER.loadFont("Fonts/debussy.ttf.fnt");
         hudText = new BitmapText(guiFont, false);
-        hudText.setSize(size);
+        hudText.setSize(16);
         hudText.setColor(color);
         hudText.setText(text);
-        hudText.setLocalTranslation(x, y, 0);
-        this.x = hudText.getLineWidth();
-        this.y = hudText.getLineHeight();
+        hudText.setLocalTranslation(posX, posY, 0);
+        this.sizeX = hudText.getLineWidth();
+        this.sizeY = hudText.getLineHeight();
+        setPosition(posX, posY);
     }
 
     @Override
@@ -30,33 +30,32 @@ public class TextGui extends ItemGui {
         Main.GUI_NODE.detachChild(hudText);
     }
 
+    @Override
+    public void setSizeX(float sizeX) {
+    }
+
+    @Override
+    public void setSizeY(float sizeY) {
+    }
+
     public void setText(String text) {
         hudText.setText(text);
     }
 
     @Override
-    public void setX(float x) {
-    }
-
-    @Override
-    public void setY(float y) {
-    }
-
-    @Override
-    public float getX() {
+    public float getSizeX() {
         return hudText.getLineWidth();
     }
 
     @Override
-    public float getY() {
+    public float getSizeY() {
         return hudText.getLineHeight();
     }
 
     @Override
-    public void setPosition(float x, float y) {
-        this.posX = x;
-        this.posY = y;
-        hudText.setLocalTranslation(x, y, 0);
+    public void setPosition(float posX, float posY) {
+        super.setPosition(posX, posY);
+        hudText.setLocalTranslation(posX, posY, 0);
     }
 
 }

@@ -3,6 +3,7 @@ package entities.players;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import cores.Main;
 import entities.bombs.Bomb;
 import entities.buffs.BuffItem;
 import particles.SpeedParticle;
@@ -42,7 +43,7 @@ public class Player extends Entity {
     protected final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
     protected final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
     protected final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
-    protected StatusBarGui3d gui3d;
+    protected StatusBarGui3d statusBarGui3d;
     protected ShieldGui3d shieldGui3d;
     protected SpeedParticle speedParticle;
 
@@ -50,9 +51,16 @@ public class Player extends Entity {
         super(position, path);
         PlayerList.add(this);
         LightUtils.setSpatialLight(spatial);
-        gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
+        statusBarGui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
         shieldGui3d = new ShieldGui3d(spatial);
         speedParticle = new SpeedParticle(spatial);
+    }
+
+    public void dead() {
+        Main.ROOT_NODE.detachChild(spatial);
+        statusBarGui3d.hide();
+        shieldGui3d.hide();
+        speedParticle.hide();
     }
 
     public void moveForward(float value) {
@@ -130,10 +138,10 @@ public class Player extends Entity {
         onBombBuffEffect(tpf);
         onShieldBuffEffect(tpf);
         onFlameBuffEffect(tpf);
-        gui3d.setMaxCount(bombMax);
-        gui3d.setCount(bombLeft);
-        gui3d.setCoolDown(bombCoolDownCurrent);
-        gui3d.onUpdate();
+        statusBarGui3d.setMaxCount(bombMax);
+        statusBarGui3d.setCount(bombLeft);
+        statusBarGui3d.setCoolDown(bombCoolDownCurrent);
+        statusBarGui3d.onUpdate();
         shieldGui3d.onUpdate(shieldBuffActivated);
         speedParticle.onUpdate(speedBuffActivated);
     }

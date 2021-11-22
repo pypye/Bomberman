@@ -52,4 +52,9 @@ public class PlayerInput {
             player.getComposer().setCurrentAction("stand");
         }
     }
+
+    public static void destroyKeys() {
+        Main.INPUT_MANAGER.removeListener(actionListener);
+        Main.INPUT_MANAGER.removeListener(analogListener);
+    }
 }

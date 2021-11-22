@@ -135,7 +135,7 @@ public class RandomizeMap {
         char[] Tiles = new char[]{'#', '*', '~', 'x'};
         char[] Character = new char[]{'2', '1', 'p'};
         char[] Items = new char[]{'s', 'f', 'b'};
-        String url = "src\\main\\java\\cores\\input.txt";
+        String url = "src\\main\\java\\algorithms\\levels\\input.txt";
         FileInputStream fileInputStream = new FileInputStream(url);
         Scanner sc = new Scanner(fileInputStream);
         String Input = sc.nextLine();

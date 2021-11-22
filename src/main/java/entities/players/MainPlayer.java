@@ -15,10 +15,10 @@ import utils.AnimUtils;
 
 public class MainPlayer extends Player {
     private final AnimComposer composer;
-    private final Spatial child;
+
     public MainPlayer(Vector3f position) {
         super(position, "Models/Player/player.gltf");
-        child = AnimUtils.getAnimRoot(spatial);
+        Spatial child = AnimUtils.getAnimRoot(spatial);
         composer = child.getControl(AnimComposer.class);
         composer.setCurrentAction("stand");
         PlayerInput.initKeys(this);
@@ -29,8 +29,9 @@ public class MainPlayer extends Player {
         chaseCam.setMinDistance(10);
         chaseCam.setMaxDistance(20);
         chaseCam.setZoomSensitivity(0.25f);
-        gui3d.unlink();
-        gui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
+        chaseCam.cleanupWithInput(Main.INPUT_MANAGER);
+        statusBarGui3d.hide();
+        statusBarGui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
     }
 
     public AnimComposer getComposer() {

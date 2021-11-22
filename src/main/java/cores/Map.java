@@ -1,7 +1,7 @@
 package cores;
 
 import algorithms.RandomizeMap;
-import algorithms.player.SpawnPlayer;
+import algorithms.players.SpawnPlayer;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.*;
@@ -18,6 +18,7 @@ import entities.buffs.BombExtendItem;
 import entities.buffs.FlameItem;
 import entities.buffs.ShieldItem;
 import entities.buffs.SpeedItem;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,8 +37,7 @@ public class Map {
     public static final int SHIELD_ITEM = 8;
 
     public static void init() {
-        RandomizeMap randomizeMap = new RandomizeMap(50, 100);
-        int[][] map = randomizeMap.getRandomizeMap();
+        int[][] map = new RandomizeMap(50, 100).getRandomizeMap();
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
@@ -45,9 +45,9 @@ public class Map {
             }
         }
         ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 3);
-        Player a = new MainPlayer(new Vector3f(0, 1, 0));
+        new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
         for (int i = 1; i < player.size(); ++i) {
-            Player b = new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
+            new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
         }
         setObject(0, 0, GRASS, null);
         setObject(0, 1, GRASS, null);
@@ -107,6 +107,4 @@ public class Map {
     public static Entity getEntity(int x, int y) {
         return entity[x][y];
     }
-
-
 }

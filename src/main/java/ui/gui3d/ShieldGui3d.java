@@ -1,6 +1,7 @@
 package ui.gui3d;
 
 import com.jme3.scene.Spatial;
+import ui.gui.ImageGui;
 import ui.gui.ItemGui;
 
 public class ShieldGui3d extends ItemGui3d {
@@ -8,8 +9,16 @@ public class ShieldGui3d extends ItemGui3d {
 
     public ShieldGui3d(Spatial link) {
         super(link);
-        shield = new ItemGui(120, 120, "Textures/Buffs/shield_active.png");
+        shield = new ImageGui(120, 120, "Textures/Buffs/shield_active.png");
+        show();
+    }
+
+    public void show() {
         shield.show();
+    }
+
+    public void hide() {
+        shield.hide();
     }
 
     public void onUpdate(boolean shieldBuffActivated) {
