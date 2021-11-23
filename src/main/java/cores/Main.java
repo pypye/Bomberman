@@ -12,6 +12,9 @@ import entities.players.PlayerList;
 import events.Input;
 import events.PlayerInput;
 import particles.BombExplodeParticleList;
+import scenes.Game;
+import scenes.Menu;
+import scenes.SceneController;
 import ui.gui.ButtonGui;
 import ui.gui.menu.MenuGui;
 
@@ -48,18 +51,12 @@ public class Main extends SimpleApplication {
         cam.setPlaneState(0);
         flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
-        Environment.init();
-        Map.init();
-        //Input.init();
-        //new MenuGui();
-
+        Input.init();
+        SceneController.setScene(new Menu());
     }
 
     @Override
     public void simpleUpdate(float tpf) {
-        BombList.onUpdate();
-        BombExplodeParticleList.onUpdate();
-        PlayerInput.onUpdate();
-        PlayerList.onUpdate(tpf);
+        SceneController.update(tpf);
     }
 }

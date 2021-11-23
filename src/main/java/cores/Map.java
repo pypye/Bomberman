@@ -113,4 +113,16 @@ public class Map {
     public static Entity getEntity(int x, int y) {
         return entity[x][y];
     }
+
+    public static void hide() {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (entity[i][j] != null) {
+                    entity[i][j].remove();
+                    entity[i][j] = null;
+                }
+                object[i][j] = 0;
+            }
+        }
+    }
 }

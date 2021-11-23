@@ -1,16 +1,11 @@
 package ui.gui;
 
-import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
-import com.jme3.input.controls.AnalogListener;
-import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
-import com.jme3.math.Vector3f;
 import cores.Main;
-import org.lwjgl.Sys;
 
-public class ButtonGui extends ItemGui {
+public abstract class ButtonGui extends ItemGui {
     private final TextGui text;
     private final ImageGui button;
 
@@ -18,6 +13,7 @@ public class ButtonGui extends ItemGui {
         text = new TextGui(_text, ColorRGBA.Black, posX, posY);
         button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/button_long.png");
         setPosition(posX, posY);
+        Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
     public ButtonGui(float posX, float posY, String _text, int sizeX, int sizeY) {
@@ -26,24 +22,25 @@ public class ButtonGui extends ItemGui {
         if (sizeX >= 0) setSizeX(sizeX);
         if (sizeY >= 0) setSizeY(sizeY);
         setPosition(posX, posY);
-        ActionListener actionListener = new ActionListener() {
-            @Override
-            public void onAction(String name, boolean keyPressed, float tpf) {
-                if (keyPressed) {
-                    Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
-                    if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
-                            && getPosX() + getSizeX() >= mousePos.x
-                            && getPosY() + getSizeY() >= mousePos.y) {
-                        onClick();
-                        System.out.println("Clicked " + this);
-                    }
-                }
-            }
-        };
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
-    public void onClick(){};
+    private final ActionListener actionListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (keyPressed) {
+                Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
+                if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
+                        && getPosX() + getSizeX() >= mousePos.x
+                        && getPosY() + getSizeY() >= mousePos.y) {
+                    onClick();
+                    System.out.println("Clicked " + this);
+                }
+            }
+        }
+    };
+
+    public abstract void onClick();
 
 
     @Override
@@ -56,6 +53,7 @@ public class ButtonGui extends ItemGui {
     public void hide() {
         button.hide();
         text.hide();
+        Main.INPUT_MANAGER.removeListener(actionListener);
     }
 
     @Override
