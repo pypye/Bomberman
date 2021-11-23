@@ -52,7 +52,7 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
         Input.init();
-        SceneController.setScene(new Menu());
+        SceneController.setScene(new Game());
     }
 
     @Override

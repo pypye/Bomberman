@@ -14,8 +14,8 @@ public abstract class Enemy extends Player {
     public static final int N = 20;
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
-    public static final int UP = 2;
-    public static final int DOWN = 3;
+    public static final int UP = 3;
+    public static final int DOWN = 2;
 
     public static final int[] dx = {0, 0, -1, 1, -1, -1, 1, 1};
     public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
@@ -43,13 +43,13 @@ public abstract class Enemy extends Player {
         int u = (int) enemyPoint.getX();
         int v = (int) enemyPoint.getY();
 
-        boolean[][] visted = new boolean[N + 1][N + 1];
+        boolean[][] visited = new boolean[N + 1][N + 1];
         int[][] step = new int[N + 1][N + 1];
         Queue<Vector2f> queue = new LinkedList<>();
         ArrayList<Vector2f> ans = new ArrayList<>();
 
         queue.add(new Vector2f(u, v));
-        visted[u][v] = true;
+        visited[u][v] = true;
         step[u][v] = 0;
 
         while (!queue.isEmpty()) {
@@ -67,10 +67,10 @@ public abstract class Enemy extends Player {
             for (int i = 0; i < 4; i++) {
                 int adjx = x + dx[i];
                 int adjy = y + dy[i];
-                if (isIn(adjx, adjy) && !visted[adjx][adjy] && (map[adjx][adjy] == 0
+                if (isIn(adjx, adjy) && !visited[adjx][adjy] && (map[adjx][adjy] == 0
                         || map[adjx][adjy] == -1)) {
                     queue.add(new Vector2f(adjx, adjy));
-                    visted[adjx][adjy] = true;
+                    visited[adjx][adjy] = true;
                     step[adjx][adjy] = st + 1;
                 }
             }
@@ -85,14 +85,14 @@ public abstract class Enemy extends Player {
         int u = (int) start.getX();
         int v = (int) start.getY();
 
-        boolean[][] visted = new boolean[N + 1][N + 1];
+        boolean[][] visited = new boolean[N + 1][N + 1];
         int[][] direction = new int[N + 1][N + 1];
         Vector2f[][] parent = new Vector2f[N + 1][N + 1];
         Queue<Vector2f> queue = new LinkedList<>();
         ArrayList<Integer> ans = new ArrayList<>();
 
         queue.add(new Vector2f(u, v));
-        visted[u][v] = true;
+        visited[u][v] = true;
         parent[u][v] = new Vector2f(u, v);
         direction[u][v] = -1;
 
@@ -115,10 +115,10 @@ public abstract class Enemy extends Player {
             for (int i = 0; i < 4; i++) {
                 int adjx = x + dx[i];
                 int adjy = y + dy[i];
-                if (isIn(adjx, adjy) && !visted[adjx][adjy]
+                if (isIn(adjx, adjy) && !visited[adjx][adjy]
                         && (map[adjx][adjy] == 0 || map[adjx][adjy] == -1)) {
                     queue.add(new Vector2f(adjx, adjy));
-                    visted[adjx][adjy] = true;
+                    visited[adjx][adjy] = true;
                     parent[adjx][adjy] = new Vector2f(x, y);
                     direction[adjx][adjy] = i;
                 }

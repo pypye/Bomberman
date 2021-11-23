@@ -13,8 +13,8 @@ public class Mushroom extends Enemy {
     public int nextMove(Vector2f enemy, Vector2f player, int[][] map) {
         Vector2f targetPoint = getRandomTargetPoint();
         if (targetPoint == null
-            || (int) enemy.getX() == (int) targetPoint.getX()
-            || (int) enemy.getY() == (int) targetPoint.getY()) {
+                || (enemy.getX() == targetPoint.getX()
+                && enemy.getY() ==  targetPoint.getY())) {
             setRandomTargetPoint(enemy, map, 3);
             if(getRandomTargetPoint() == null) setRandomTargetPoint(enemy, map, 1);
         }
