@@ -45,10 +45,12 @@ public class Map {
             }
         }
         ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 3);
-        new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
-        for (int i = 1; i < player.size(); ++i) {
-            new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
-        }
+        //new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
+        new MainPlayer(new Vector3f(2, 1, 2));
+//        for (int i = 1; i < player.size(); ++i) {
+//            new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
+//        }
+        new Mushroom(new Vector3f(0, 1, 0));
         setObject(0, 0, GRASS, null);
         setObject(0, 1, GRASS, null);
         setObject(1, 0, GRASS, null);

@@ -36,15 +36,16 @@ public class PlayerList {
             player.onUpdate(tpf);
             if (player instanceof Enemy) {
                 Enemy enemy = (Enemy) player;
-                Vector2f enemyPos = new Vector2f(enemy.getCord().x, enemy.getCord().y);
-                Vector2f playerPos = new Vector2f(players.get(0).getCord().x, players.get(0).getCord().y);
+                Vector2f enemyCord = new Vector2f(enemy.getCord().x, enemy.getCord().y);
+                Vector2f enemyPos = new Vector2f(enemy.getPosition().x, enemy.getPosition().z);
+                System.out.println(enemyPos);
+                Vector2f playerCord = new Vector2f(players.get(0).getCord().x, players.get(0).getCord().y);
                 if (!enemy.isMoving()) {
-                    System.out.println(enemyPos + " " + playerPos);
-                    int nextMove = enemy.nextMove(enemyPos, playerPos, Map.getMap());
+                    int nextMove = enemy.nextMove(enemyCord, playerCord, Map.getMap());
                     enemy.setNextMove(nextMove);
                     enemy.setMoving(true);
                 }
-                if(enemy.isMoving()) {
+                if (enemy.isMoving()) {
                     switch (enemy.getNextMove()) {
                         case Enemy.LEFT:
                             enemy.moveLeft(0.01f);
@@ -59,11 +60,18 @@ public class PlayerList {
                             enemy.moveBackward(0.01f);
                             break;
                     }
-                    enemyPos = new Vector2f(enemy.getPosition().x, enemy.getPosition().z);
+                    Vector2f enemyNewPos = new Vector2f(enemy.getPosition().x, enemy.getPosition().z);
                     Vector2f center = Entity.getCenterCord(enemy.getCord().x, enemy.getCord().y);
+                    System.out.println("New pos" + " " + enemyNewPos);
                     float eps = 0.005f;
-                    if ((center.x - eps <= enemyPos.x && enemyPos.x <= center.x + eps)
-                            && center.y - eps <= enemyPos.y && enemyPos.y <= center.y + eps) {
+                    if (Math.abs(enemyNewPos.x - enemyPos.x) <= eps && Math.abs(enemyNewPos.y - enemyPos.y) <= eps) {
+                        //enemy.setPosition(new Vector3f(center.x, 1, center.y));
+                        enemy.setMoving(false);
+                        continue;
+                    }
+
+                    if ((center.x - eps <= enemyNewPos.x && enemyNewPos.x <= center.x + eps)
+                            && center.y - eps <= enemyNewPos.y && enemyNewPos.y <= center.y + eps) {
                         enemy.setPosition(new Vector3f(center.x, 1, center.y));
                         enemy.setMoving(false);
                     }

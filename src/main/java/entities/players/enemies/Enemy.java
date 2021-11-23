@@ -21,7 +21,7 @@ public abstract class Enemy extends Player {
     public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
 
     private boolean moving = false;
-    private int nextMove = -1;
+    private int nextMove = 3;
 
     private Vector2f randomTargetPoint = null;
 

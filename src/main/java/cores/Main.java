@@ -9,8 +9,11 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import entities.bombs.BombList;
 import entities.players.PlayerList;
+import events.Input;
 import events.PlayerInput;
 import particles.BombExplodeParticleList;
+import ui.gui.ButtonGui;
+import ui.gui.menu.MenuGui;
 
 
 public class Main extends SimpleApplication {
@@ -47,8 +50,9 @@ public class Main extends SimpleApplication {
         assetManager.registerLocator("assets", FileLocator.class);
         Environment.init();
         Map.init();
-        //new MenuBackground();
-        //new ButtonGui(50, 50, "Hello");
+        //Input.init();
+        //new MenuGui();
+
     }
 
     @Override
