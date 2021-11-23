@@ -55,6 +55,10 @@ public class Map {
         setObject(1, 1, GRASS, null);
     }
 
+    public static int[][] getMap() {
+        return object;
+    }
+
     public static void setObject(int x, int z, int value, Player owner) {
         object[x][z] = value;
         if (entity[x][z] != null) {

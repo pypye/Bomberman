@@ -15,7 +15,7 @@ public class Mushroom extends Enemy {
         if (targetPoint == null
             || (int) enemy.getX() == (int) targetPoint.getX()
             || (int) enemy.getY() == (int) targetPoint.getY()) {
-            setRandomTargetPoint(enemy, map, 5);
+            setRandomTargetPoint(enemy, map, 3);
             if(getRandomTargetPoint() == null) setRandomTargetPoint(enemy, map, 1);
         }
         targetPoint = getRandomTargetPoint();

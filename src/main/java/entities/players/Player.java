@@ -99,7 +99,6 @@ public class Player extends Entity {
         int cordZ = (int) ((v.z - value * speed - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX1, cordZ) || Map.isBlocked(cordX2, cordZ)) return;
         if (Map.getEntity(cordX, cordZ) instanceof BuffItem) ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
-
         this.setPosition(new Vector3f(v.x, v.y, v.z - value * speed));
     }
 

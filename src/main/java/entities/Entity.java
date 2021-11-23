@@ -38,6 +38,10 @@ public abstract class Entity {
         return new Vector2f(cordX, cordZ);
     }
 
+    public static Vector2f getCenterCord(float x, float y) {
+        return new Vector2f(x * 2f, y * 2f);
+    }
+
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
