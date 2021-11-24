@@ -8,7 +8,7 @@ import com.jme3.math.Vector3f;
 import cores.Main;
 
 public class BombExplodeParticle {
-    public static double DURATION = 1150;
+    public static double DURATION = 1000;
     private final double startTime;
     private final ParticleEmitter particleEmitter;
 

@@ -1,7 +1,7 @@
 package cores;
 
 import algorithms.RandomizeMap;
-import algorithms.players.SpawnPlayer;
+import algorithms.SpawnPlayer;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.*;
@@ -23,8 +23,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
-    private static final int[][] object = new int[20][20];
-    private static final Entity[][] entity = new Entity[20][20];
+    public static final int SIZE = 20;
+    private static final int[][] object = new int[SIZE][SIZE];
+    private static final Entity[][] entity = new Entity[SIZE][SIZE];
 
     public static final int GRASS = 0;
     public static final int ROCK = 1;
@@ -38,19 +39,22 @@ public class Map {
 
     public static void init() {
         int[][] map = new RandomizeMap(50, 100).getRandomizeMap();
+        System.out.println("[Debug/Map] Init Terrain");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
                 setObject(i, j, map[i][j], null);
             }
         }
-        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 3);
+
+        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 2);
+        System.out.println("[Debug/Map] Init player");
         new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
-        //new MainPlayer(new Vector3f(2, 1, 2));
         for (int i = 1; i < player.size(); ++i) {
             new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
         }
-        //new Mushroom(new Vector3f(0, 1, 0));
+//        new MainPlayer(new Vector3f(2, 1, 2));
+//        new Mushroom(new Vector3f(0, 1, 0));
         setObject(0, 0, GRASS, null);
         setObject(0, 1, GRASS, null);
         setObject(1, 0, GRASS, null);
@@ -109,6 +113,10 @@ public class Map {
 
     public static boolean isBlocked(int x, int y) {
         return entity[x][y] != null && entity[x][y].isBlocked();
+    }
+
+    public static boolean isInside(int x, int y) {
+        return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
     }
 
     public static Entity getEntity(int x, int y) {

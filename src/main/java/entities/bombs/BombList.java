@@ -24,7 +24,7 @@ public class BombList {
             checkKillPlayer(i, cordY);
             if (explosion(i, cordY)) break;
         }
-        for (int i = Math.min(cordX + 1, 20); i <= Math.min(cordX + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
+        for (int i = Math.min(cordX + 1, Map.SIZE - 1); i <= Math.min(cordX + bomb.getOwner().getBombExplodeLength(), Map.SIZE - 1); ++i) {
             checkKillPlayer(i, cordY);
             if (explosion(i, cordY)) break;
         }
@@ -32,7 +32,7 @@ public class BombList {
             checkKillPlayer(cordX, i);
             if (explosion(cordX, i)) break;
         }
-        for (int i = Math.min(cordY + 1, 20); i <= Math.min(cordY + bomb.getOwner().getBombExplodeLength(), 20); ++i) {
+        for (int i = Math.min(cordY + 1, Map.SIZE - 1); i <= Math.min(cordY + bomb.getOwner().getBombExplodeLength(), Map.SIZE - 1); ++i) {
             checkKillPlayer(cordX, i);
             if (explosion(cordX, i)) break;
         }

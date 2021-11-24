@@ -2,6 +2,8 @@ package entities.players.enemies;
 
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import entities.players.Player;
+import entities.players.PlayerList;
 
 public class Oneal extends Enemy {
     private boolean isChasingPlayer = false;
@@ -13,22 +15,19 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    public int nextMove(Vector2f enemy, Vector2f player, int[][] map) {
-        if (isChasingPlayer) {
-            int ans = nextMoveBase(enemy, player, map);
-            if(ans == -1) isChasingPlayer = false;
-            else return ans;
-        } else {
-            Vector2f targetPoint = getRandomTargetPoint();
-            if (targetPoint == null
-                || (int) enemy.getX() == (int) targetPoint.getX()
-                || (int) enemy.getY() == (int) targetPoint.getY()) {
-                setRandomTargetPoint(enemy, map, 5);
-                if(getRandomTargetPoint() == null) setRandomTargetPoint(enemy, map, 1);
-            }
-            targetPoint = getRandomTargetPoint();
-            return nextMoveBase(enemy, targetPoint, map);
+    public void setNextMove(Vector2f enemy) {
+        Player player = PlayerList.getMainPlayer();
+        if (player != null && isChasingPlayer) {
+            this.nextMove = nextMoveBase(enemy, player.getCord());
+            if (this.nextMove == -1) isChasingPlayer = false;
         }
-        return -1;
+        if (!isChasingPlayer) {
+            if (targetPoint == null || enemy.equals(targetPoint)) setTargetPoint(enemy, 3);
+            this.nextMove = nextMoveBase(enemy, targetPoint);
+            if (this.nextMove == -1) {
+                setTargetPoint(enemy, 1);
+                this.nextMove = nextMoveBase(enemy, targetPoint);
+            }
+        }
     }
 }

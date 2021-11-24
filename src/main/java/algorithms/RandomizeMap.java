@@ -1,25 +1,21 @@
 package algorithms;
 
+import cores.Map;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class RandomizeMap {
-
-    public static final int BOMBER = -1;
-    public static final int MUSHROOM = -2;
-    public static final int ONEAL = -3;
-    public static final int N = 20; //size of Maze
-
-    private final int nContainer;
-    private final int nRock;
+    private final int numContainer;
+    private final int numRock;
     private int[][] randomizeMap;
-    private static int level;
 
-    public RandomizeMap(int nContainer, int nRock) {
-        this.nContainer = nContainer;
-        this.nRock = nRock;
-        randomizeMap = new int[N][N];
+    public RandomizeMap(int numContainer, int numRock) {
+        this.numContainer = numContainer;
+        this.numRock = numRock;
+        randomizeMap = new int[Map.SIZE][Map.SIZE];
         randomizeMap = randomMaze();
     }
 
@@ -29,106 +25,83 @@ public class RandomizeMap {
         return (int) randomDouble;
     }
 
-    public static int twoForOne(int u, int v) {
-        return (u * N) + v + 1;
+    private static int twoForOne(int u, int v) {
+        return (u * Map.SIZE) + v + 1;
     }
 
     private int[][] randomMaze() {
-        int[] maze1D = new int[N * N + 1];
-        int[][] maze2D = new int[N][N];
-        int components = 0;
+        int[] maze1D = new int[Map.SIZE * Map.SIZE + 1];
+        int[][] maze2D = new int[Map.SIZE][Map.SIZE];
+        int components;
         int block = 0;
-        UnionFind unionFind;
-
-        for (int i = 0; i < N * N; i++) {
-            maze1D[i] = 0;
-        }
-
-        while (block < nRock) {
-            unionFind = new UnionFind(N * N + 1);
+        for (int i = 0; i < Map.SIZE * Map.SIZE; i++) maze1D[i] = 0;
+        while (block < numRock) {
+            UnionFind unionFind = new UnionFind(Map.SIZE * Map.SIZE + 1);
             block++;
-            int randomInt = randomInt(N) + 1;
+            int randomInt = randomInt(Map.SIZE) + 1;
             if (maze1D[randomInt] == 2) {
                 block--;
                 continue;
             }
-            int U = ((randomInt - 1) / N);
-            int V = ((randomInt - 1) % N);
+            int x = (randomInt - 1) / Map.SIZE;
+            int y = (randomInt - 1) % Map.SIZE;
             maze1D[randomInt] = 2;
-            maze2D[U][V] = 2;
-            for (int i = 1; i <= N * N; i++) {
-                if (maze1D[i] == 2) {
-                    continue;
-                }
-                int u = ((i - 1) / N);
-                int v = ((i - 1) % N);
+            maze2D[x][y] = 2;
+            for (int i = 1; i <= Map.SIZE * Map.SIZE; i++) {
+                if (maze1D[i] == 2) continue;
+                int u = (i - 1) / Map.SIZE;
+                int v = (i - 1) % Map.SIZE;
                 if (u > 0) {
                     int p = twoForOne(u - 1, v);
-                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) {
-                        unionFind.union(i, p);
-                    }
+                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) unionFind.union(i, p);
                 }
-                if (u < N - 1) {
+                if (u < Map.SIZE - 1) {
                     int p = twoForOne(u + 1, v);
-                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) {
-                        unionFind.union(i, p);
-                    }
+                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) unionFind.union(i, p);
                 }
                 if (v > 0) {
                     int p = twoForOne(u, v - 1);
-                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) {
-                        unionFind.union(i, p);
-                    }
+                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) unionFind.union(i, p);
                 }
-                if (v < N - 1) {
+                if (v < Map.SIZE - 1) {
                     int p = twoForOne(u, v + 1);
-                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) {
-                        unionFind.union(i, p);
-                    }
+                    if (!(maze1D[p] == 2 || unionFind.find(i) == unionFind.find(p))) unionFind.union(i, p);
                 }
             }
             components = unionFind.count();
             if (components - block > 2) {
                 maze1D[randomInt] = 0;
-                maze2D[U][V] = 0;
+                maze2D[x][y] = 0;
                 block--;
             }
         }
         block = 0;
-        while (block < nContainer) {
-            int randomInt = randomInt(N) + 1;
-            int U = ((randomInt - 1) / N);
-            int V = ((randomInt - 1) % N);
+        while (block < numContainer) {
+            int randomInt = randomInt(Map.SIZE) + 1;
+            int x = (randomInt - 1) / Map.SIZE;
+            int y = (randomInt - 1) % Map.SIZE;
             if (maze1D[randomInt] == 0) {
                 block++;
                 maze1D[randomInt] = 1;
-                maze2D[U][V] = 1;
+                maze2D[x][y] = 1;
             }
         }
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
+        for (int i = 0; i < Map.SIZE; i++) {
+            for (int j = 0; j < Map.SIZE; j++) {
                 getRandomizeMap()[i][j] = maze2D[i][j];
             }
         }
         return maze2D;
     }
 
-    public void showBoard() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
+    private void showBoard() {
+        for (int i = 0; i < Map.SIZE; i++) {
+            for (int j = 0; j < Map.SIZE; j++) {
                 System.out.print(getRandomizeMap()[i][j] + " ");
             }
             System.out.println();
         }
-    }
-
-    public static int toInt(String input) {
-        int output = 0;
-        for (int i = 0; i < input.length(); i++) {
-            output = output * 10 + (int) (input.charAt(i) - '0');
-        }
-        return output;
     }
 
     public static int[][] insertFromFile() throws FileNotFoundException {
@@ -140,9 +113,9 @@ public class RandomizeMap {
         Scanner sc = new Scanner(fileInputStream);
         String Input = sc.nextLine();
 
-        level = toInt(Input.split(" ")[0]);
-        int R = toInt(Input.split(" ")[1]);
-        int C = toInt(Input.split(" ")[2]);
+        int level = Integer.parseInt(Input.split(" ")[0]);
+        int R = Integer.parseInt(Input.split(" ")[1]);
+        int C = Integer.parseInt(Input.split(" ")[2]);
 
         int[][] map = new int[R][C];
         int r = 0;
@@ -169,22 +142,19 @@ public class RandomizeMap {
                         ok = true;
                     }
                 }
-                if (!ok) {
-                    map[r][i] = 0;
-                }
+                if (!ok) map[r][i] = 0;
             }
             r++;
         }
         return map;
     }
 
-
-    public int getnContainer() {
-        return nContainer;
+    public int getNumContainer() {
+        return numContainer;
     }
 
-    public int getnRock() {
-        return nRock;
+    public int getNumRock() {
+        return numRock;
     }
 
     public int[][] getRandomizeMap() {
@@ -197,9 +167,6 @@ public class RandomizeMap {
 
     public static void main(String[] args) throws FileNotFoundException {
         RandomizeMap randomizeMap = new RandomizeMap(150, 50);
-        //int[][] demo = insertFromFile();
-        int[][] demo = randomizeMap.getRandomizeMap();
-        int t = 3;
         randomizeMap.showBoard();
     }
 
