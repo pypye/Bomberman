@@ -17,7 +17,7 @@ public class SpawnPlayer {
 
     private static boolean isEmpty(int u, int v, int[][] map) {
         int cnt = 0;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
             int U = u + dx[i];
             int V = v + dy[i];
             if (U < 0 || V < 0 || U >= Map.SIZE || V >= Map.SIZE) continue;
