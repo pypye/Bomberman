@@ -21,8 +21,8 @@ public class Oneal extends Enemy {
         } else {
             Vector2f targetPoint = getRandomTargetPoint();
             if (targetPoint == null
-                || (int) enemy.getX() == (int) targetPoint.getX()
-                || (int) enemy.getY() == (int) targetPoint.getY()) {
+                || (enemy.getX() == targetPoint.getX()
+                && enemy.getY() ==  targetPoint.getY())) {
                 setRandomTargetPoint(enemy, map, 5);
                 if(getRandomTargetPoint() == null) setRandomTargetPoint(enemy, map, 1);
             }

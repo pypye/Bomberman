@@ -14,7 +14,7 @@ public class SpawnPlayer extends Pair {
 
   public static boolean cntEmpty(int u, int v, int[][] map, int limit) {
     int cnt = 0;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 4; i++) {
       int U = u + Pair.dx[i];
       int V = v + Pair.dy[i];
       if (U < 0 || V < 0 || U >= N || V >= N) {
