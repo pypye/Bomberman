@@ -47,7 +47,7 @@ public class Map {
             }
         }
 
-        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 20, 2);
+        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 50, 2);
         System.out.println("[Debug/Map] Init player");
         new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
         for (int i = 1; i < player.size(); ++i) {

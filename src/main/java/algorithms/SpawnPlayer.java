@@ -27,12 +27,22 @@ public class SpawnPlayer {
     }
 
     public static ArrayList<Vector2f> spawn(int[][] map, int num, int dist) {
+        while(true) {
+            ArrayList<Vector2f> result = preSpawn(map ,num, dist);
+            if(result != null) return result;
+        }
+    }
+
+    public static ArrayList<Vector2f> preSpawn(int[][] map, int num, int dist) {
         int cnt = 0;
+        int nCnt = 0;
         while (cnt < num) {
             boolean isNear = false;
             int randomInt = RandomizeMap.randomInt(Map.SIZE) + 1;
             int x = ((randomInt - 1) / Map.SIZE);
             int y = ((randomInt - 1) % Map.SIZE);
+            nCnt++;
+            if(nCnt == 1000000) return null;
             if (map[x][y] == 0 && isEmpty(x, y, map)) {
                 for (Vector2f player : playerList) {
                     int u = (int) player.x;
@@ -50,7 +60,7 @@ public class SpawnPlayer {
     public static void main(String[] args) {
         RandomizeMap randomizeMap = new RandomizeMap(5, 10);
         int[][] demo = randomizeMap.getRandomizeMap();
-        ArrayList<Vector2f> he = spawn(demo, 4, 2);
+        ArrayList<Vector2f> he = spawn(demo, 50, 2);
         int a = 1;
     }
 }
