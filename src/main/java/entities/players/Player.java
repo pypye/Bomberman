@@ -1,8 +1,11 @@
 package entities.players;
 
+import com.jme3.bounding.BoundingBox;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.debug.WireBox;
 import cores.Main;
 import entities.bombs.Bomb;
 import entities.buffs.BuffItem;
@@ -51,6 +54,8 @@ public class Player extends Entity {
         super(position, path);
         PlayerList.add(this);
         LightUtils.setSpatialLight(spatial);
+        spatial.setModelBound(new BoundingBox());
+        spatial.updateModelBound();
         statusBarGui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
         shieldGui3d = new ShieldGui3d(spatial);
         speedParticle = new SpeedParticle(spatial);

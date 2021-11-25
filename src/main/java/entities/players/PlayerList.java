@@ -40,7 +40,14 @@ public class PlayerList {
     public static void onUpdate(float tpf) {
         for (Player player : players) {
             player.onUpdate(tpf);
-            if (player instanceof Enemy) ((Enemy) player).onMoving();
+            if (player instanceof Enemy) {
+                Enemy enemy = (Enemy) player;
+                enemy.onMoving();
+                boolean collision = enemy.isCollisionWithMainPlayer();
+                if (collision && getMainPlayer() != null) {
+                    PlayerList.remove(getMainPlayer());
+                }
+            }
         }
     }
 }

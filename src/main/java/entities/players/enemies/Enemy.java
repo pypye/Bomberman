@@ -1,11 +1,13 @@
 package entities.players.enemies;
 
 import algorithms.RandomizeMap;
+import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import cores.Map;
 import entities.Entity;
 import entities.players.Player;
+import entities.players.PlayerList;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,11 +32,20 @@ public abstract class Enemy extends Player {
         super(position, path);
     }
 
+    public boolean isCollisionWithMainPlayer() {
+        CollisionResults results = new CollisionResults();
+        if (PlayerList.getMainPlayer() != null) {
+            PlayerList.getMainPlayer().getSpatial().getWorldBound().collideWith(getSpatial().getWorldBound(), results);
+            return results.size() > 0;
+        }
+        return false;
+    }
+
     public void onMoving() {
         if (!this.isMoving()) {
             prefMove = this.getCord();
-            System.out.println("[Debug/EnemyPosition] " + prefMove);
             this.setNextMove(prefMove);
+            System.out.println("[Debug/EnemyPosition] " + prefMove);
             System.out.println("[Debug/EnemyNextMove] " + nextMove);
             this.setMoving(true);
         }
