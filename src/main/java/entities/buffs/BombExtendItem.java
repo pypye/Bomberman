@@ -11,6 +11,7 @@ public class BombExtendItem extends BuffItem {
     @Override
     public void buff(Player player) {
         super.buff(player);
+        player.setBombLeft(Math.min(player.getBombLeft() + 1, player.getBombMax()));
         player.setBombBuffDuration(player.getBombBuffDuration() + 10);
     }
 }

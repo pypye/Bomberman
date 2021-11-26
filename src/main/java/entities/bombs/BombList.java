@@ -4,9 +4,12 @@ import cores.Map;
 import entities.buffs.BuffItem;
 import entities.players.Player;
 import entities.players.PlayerList;
+import entities.terrains.Container;
+import entities.terrains.Portal;
 import particles.BombExplodeParticle;
 import particles.BombExplodeParticleList;
 
+import javax.sound.sampled.Port;
 import java.util.ArrayList;
 
 public class BombList {
@@ -64,7 +67,17 @@ public class BombList {
         if (Map.getObject(x, y) != Map.GRASS) {
             if (Map.getObject(x, y) == Map.CONTAINER) {
                 BombExplodeParticleList.add(new BombExplodeParticle(x, y));
-                BuffItem.generateBuffItem(x, y);
+                double r = Math.random();
+                boolean generatedPortal = false;
+                if (r >= 0.5 || Container.getCount() <= 1) {
+                    if (Portal.hasRemain()) {
+                        Map.setObject(x, y, Map.PORTAL, null);
+                        generatedPortal = true;
+                    }
+                }
+                if (!generatedPortal) {
+                    BuffItem.generateBuffItem(x, y);
+                }
             }
             return true;
         }

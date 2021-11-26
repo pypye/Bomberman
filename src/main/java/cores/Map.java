@@ -10,10 +10,7 @@ import entities.bombs.BombList;
 import entities.players.MainPlayer;
 import entities.players.Player;
 import entities.players.enemies.Mushroom;
-import entities.terrains.Container;
-import entities.terrains.Grass;
-import entities.terrains.Rock;
-import entities.terrains.Tree;
+import entities.terrains.*;
 import entities.buffs.BombExtendItem;
 import entities.buffs.FlameItem;
 import entities.buffs.ShieldItem;
@@ -47,14 +44,14 @@ public class Map {
             }
         }
 
-        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 50, 2);
-        System.out.println("[Debug/Map] Init player");
-        new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
-        for (int i = 1; i < player.size(); ++i) {
-            new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
-        }
-//        new MainPlayer(new Vector3f(2, 1, 2));
-//        new Mushroom(new Vector3f(0, 1, 0));
+//        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 50, 2);
+//        System.out.println("[Debug/Map] Init player");
+//        new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
+//        for (int i = 1; i < player.size(); ++i) {
+//            new Mushroom(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
+//        }
+        new MainPlayer(new Vector3f(2, 1, 2));
+        //new Mushroom(new Vector3f(0, 1, 0));
         setObject(0, 0, GRASS, null);
         setObject(0, 1, GRASS, null);
         setObject(1, 0, GRASS, null);
@@ -84,6 +81,9 @@ public class Map {
             case BOMB:
                 entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, System.currentTimeMillis());
                 BombList.add((Bomb) entity[x][z]);
+                break;
+            case PORTAL:
+                entity[x][z] = new Portal(new Vector3f(x * 2f, 1f, z * 2f));
                 break;
             case SPEED_ITEM:
                 entity[x][z] = new SpeedItem(new Vector3f(x * 2f, 1.5f, z * 2f));

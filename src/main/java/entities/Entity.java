@@ -18,6 +18,9 @@ public abstract class Entity {
         Main.ROOT_NODE.attachChild(spatial);
         id = ++ID_COUNT;
     }
+    public Entity() {
+        id = ++ID_COUNT;
+    }
 
     public void setPosition(Vector3f position) {
         spatial.setLocalTranslation(position.x, position.y, position.z);

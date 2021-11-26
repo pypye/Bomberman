@@ -1,4 +1,4 @@
-package events;
+package input;
 
 import com.jme3.input.MouseInput;
 import com.jme3.input.controls.MouseButtonTrigger;

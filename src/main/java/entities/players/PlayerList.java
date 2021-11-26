@@ -1,7 +1,7 @@
 package entities.players;
 
 import entities.players.enemies.Enemy;
-import events.PlayerInput;
+import input.PlayerInput;
 
 import java.util.ArrayList;
 

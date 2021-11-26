@@ -7,7 +7,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import cores.Main;
 import entities.bombs.Bomb;
-import events.PlayerInput;
+import input.PlayerInput;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
 import ui.gui3d.StatusBarGui3d;

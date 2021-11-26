@@ -4,7 +4,7 @@ import cores.Environment;
 import cores.Map;
 import entities.bombs.BombList;
 import entities.players.PlayerList;
-import events.PlayerInput;
+import input.PlayerInput;
 import particles.BombExplodeParticleList;
 
 public class Game extends Scene {

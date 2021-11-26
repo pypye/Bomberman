@@ -7,16 +7,9 @@ import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
-import entities.bombs.BombList;
-import entities.players.PlayerList;
-import events.Input;
-import events.PlayerInput;
-import particles.BombExplodeParticleList;
+import input.Input;
 import scenes.Game;
-import scenes.Menu;
 import scenes.SceneController;
-import ui.gui.ButtonGui;
-import ui.gui.menu.MenuGui;
 
 
 public class Main extends SimpleApplication {
@@ -52,7 +45,7 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
         Input.init();
-        SceneController.setScene(new Menu());
+        SceneController.setScene(new Game());
     }
 
     @Override
