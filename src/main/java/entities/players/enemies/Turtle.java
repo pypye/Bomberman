@@ -8,9 +8,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Turtle extends Enemy {
+    private static int count = 0;
+
     public Turtle(Vector3f position) {
         super(position, "Models/Monster/turtle.obj");
         this.offsetAngle = 0;
+        count++;
     }
 
     @Override
@@ -66,5 +69,15 @@ public class Turtle extends Enemy {
             }
         }
         return ans;
+    }
+
+    @Override
+    public void dead() {
+        super.dead();
+        count--;
+    }
+
+    public static int getCount() {
+        return count;
     }
 }

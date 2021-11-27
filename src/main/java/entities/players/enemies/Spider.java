@@ -7,14 +7,16 @@ import entities.players.Player;
 import entities.players.PlayerList;
 
 public class Spider extends Enemy {
+    private static int count = 0;
     private static final float CHASING_DURATION = 5f;
     private static final float CHASING_COOL_DOWN_DURATION = 10f;
     private float chasingTime = 0.0f;
-    private float chasingCoolDownTime = 0.0f;
+    private float chasingCoolDownTime = (float) (Math.random() * 10f);
 
     public Spider(Vector3f position) {
         super(position, "Models/Monster/spider.obj");
         this.offsetAngle = FastMath.PI;
+        count++;
     }
 
     @Override
@@ -43,17 +45,25 @@ public class Spider extends Enemy {
             if (chasingCoolDownTime <= 0) {
                 ultimateActivated = true;
                 chasingTime = CHASING_DURATION;
-                speed += 0.5f;
                 System.out.println("[Debug/Spider] " + this + " started chasing player");
             }
         } else {
             chasingTime -= tpf;
             if (chasingTime <= 0) {
                 ultimateActivated = false;
-                speed = DEFAULT_SPEED;
                 chasingCoolDownTime = CHASING_COOL_DOWN_DURATION;
                 System.out.println("[Debug/Spider] " + this + " stopped chasing player");
             }
         }
+    }
+
+    @Override
+    public void dead() {
+        super.dead();
+        count--;
+    }
+
+    public static int getCount() {
+        return count;
     }
 }

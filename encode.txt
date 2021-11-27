@@ -13,6 +13,9 @@
 algorithms.players algorithms as a ArrayList<>
 
 <Config>
+[Settings]
+enemy lv1/lv2 spawn rate = 70%/30%
+
 [portal]
 portal spawn_rate = 25%
 portal count = 1

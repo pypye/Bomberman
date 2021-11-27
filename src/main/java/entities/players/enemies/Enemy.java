@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class Enemy extends Player {
+    private static int count = 0;
     public static final int STAND = -1;
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
@@ -22,7 +23,6 @@ public abstract class Enemy extends Player {
 
     public static final int[] dx = {0, 0, -1, 1, -1, -1, 1, 1};
     public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
-
     private boolean moving = false;
     protected int nextMove = STAND;
     protected Vector2f targetPoint = null;
@@ -30,6 +30,7 @@ public abstract class Enemy extends Player {
 
     public Enemy(Vector3f position, String path) {
         super(position, path);
+        count++;
     }
 
     public boolean isCollisionWithMainPlayer() {
@@ -157,5 +158,13 @@ public abstract class Enemy extends Player {
         this.moving = moving;
     }
 
+    @Override
+    public void dead() {
+        super.dead();
+        count--;
+    }
 
+    public static int getCount() {
+        return count;
+    }
 }

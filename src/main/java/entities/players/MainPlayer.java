@@ -3,10 +3,15 @@ package entities.players;
 import com.jme3.anim.AnimComposer;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import cores.Main;
+import cores.Map;
+import entities.Entity;
 import entities.bombs.Bomb;
+import entities.players.enemies.Enemy;
+import entities.terrains.Portal;
 import input.PlayerInput;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
@@ -43,6 +48,30 @@ public class MainPlayer extends Player {
     }
 
     @Override
+    public void moveForward(float tpf) {
+        super.moveForward(tpf);
+        checkPortal();
+    }
+
+    @Override
+    public void moveBackward(float tpf) {
+        super.moveBackward(tpf);
+        checkPortal();
+    }
+
+    @Override
+    public void moveLeft(float tpf) {
+        super.moveLeft(tpf);
+        checkPortal();
+    }
+
+    @Override
+    public void moveRight(float tpf) {
+        super.moveRight(tpf);
+        checkPortal();
+    }
+
+    @Override
     protected void onSpeedBuffEffect(float tpf) {
         if (!speedBuffActivated) {
             if (speedBuffDuration > 0) {
@@ -67,7 +96,7 @@ public class MainPlayer extends Player {
     @Override
     protected void onBombBuffEffect(float tpf) {
         if (!bombBuffActivated) {
-            if(bombBuffDuration > 0) {
+            if (bombBuffDuration > 0) {
                 BuffListGui.addBuff(bombExtendBuffGui);
                 bombBuffActivated = true;
                 bombLeft += 1;
@@ -91,7 +120,7 @@ public class MainPlayer extends Player {
     @Override
     protected void onShieldBuffEffect(float tpf) {
         if (!shieldBuffActivated) {
-            if(shieldBuffDuration > 0) {
+            if (shieldBuffDuration > 0) {
                 BuffListGui.addBuff(shieldBuffGUI);
                 shieldBuffActivated = true;
             }
@@ -111,7 +140,7 @@ public class MainPlayer extends Player {
     @Override
     protected void onFlameBuffEffect(float tpf) {
         if (!flameBuffActivated) {
-            if(flameBuffDuration > 0) {
+            if (flameBuffDuration > 0) {
                 BuffListGui.addBuff(flameBuffGui);
                 Bomb.path = Bomb.BOMB_UPGRADE;
                 flameBuffActivated = true;
@@ -132,5 +161,15 @@ public class MainPlayer extends Player {
         }
         flameBuffGui.getText().setText(String.format("%.1fs", flameBuffDuration));
         LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosY());
+    }
+
+    private void checkPortal() {
+        Vector2f a = Entity.getCordFromPosition(this.getPosition().x, this.getPosition().z);
+        if (Map.getEntity((int) a.x, (int) a.y) instanceof Portal) {
+            if (Enemy.getCount() == 0) {
+                System.out.println("[Debug/Event] You win!");
+                System.exit(1);
+            }
+        }
     }
 }
