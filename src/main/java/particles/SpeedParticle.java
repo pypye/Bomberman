@@ -37,9 +37,7 @@ public class SpeedParticle {
         if (speedBuffActivated) {
             particleEmitter.setLocalTranslation(link.getLocalTranslation().x, 1, link.getLocalTranslation().z);
             show();
-        } else {
-            hide();
-        }
+        } else hide();
     }
 
     public void show() {

@@ -1,14 +1,40 @@
-Encode:
-0 - grass (moveable)
-1 - rock (unbreakable)
-2 - container (breakable, drop random item)
-3 - boom
-4 - portal (for completed an level, jump to portal to end this level)
-5 - speeditem (speed up algorithms.players for %f second)
-6 - flameitem (extend boom flame size)
-7 - bombitem (more bomb in backpack)
-8 - shielditem (protect)
-... - add more buff item
-
+<Encode>
+0 = grass (move able)
+1 = rock (unbreakable)
+2 = container (breakable, drop random item)
+3 = boom
+4 = portal (for completed a level, jump to portal to end this level)
+5 = speed item (speed up player for %f second)
+6 = flame item (extend boom flame size)
+7 = bomb item (more bomb in backpack)
+8 = shield item (protect)
+//... - add more buff item
 
 algorithms.players algorithms as a ArrayList<>
+
+<Config>
+[portal]
+portal spawn_rate = 25%
+portal count = 1
+
+[buff]
+buff speed = x2
+buff flame = +1
+buff bomb = +1 current bomb, max bomb = 4
+buff spawn_rate = 100%
+
+[player]
+player speed = 3 (unit)
+player bomb slot = 3 (bomb)
+player bomb flame size = 2 (cell)
+player ultimate = none
+
+[spider] //level 2 - medium bot
+spider speed = 3 (unit)
+spider ultimate duration = 5 (second)
+spider ultimate cool down = 2 (second)
+spider ultimate = chasing player, speed +1
+
+[turtle] //level 1 - stupid bot
+turtle speed = 3 (unit)
+turtle ultimate = none

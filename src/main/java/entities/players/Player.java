@@ -4,14 +4,11 @@ import com.jme3.bounding.BoundingBox;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.debug.WireBox;
 import cores.Main;
 import entities.bombs.Bomb;
 import entities.buffs.BuffItem;
 import particles.SpeedParticle;
-import ui.gui.LocationGui;
-import ui.gui.buffs.*;
+import particles.UltimateParticle;
 import ui.gui3d.ShieldGui3d;
 import ui.gui3d.StatusBarGui3d;
 import utils.LightUtils;
@@ -39,16 +36,14 @@ public class Player extends Entity {
     protected boolean bombBuffActivated = false;
     protected boolean shieldBuffActivated = false;
     protected boolean flameBuffActivated = false;
+    protected boolean ultimateActivated = false;
 
     protected float offsetAngle = FastMath.HALF_PI;
 
-    protected final BuffGui speedBuffGUI = new SpeedBuffGui(-1, 90);
-    protected final BuffGui bombExtendBuffGui = new BombExtendBuffGui(-1, 90);
-    protected final BuffGui shieldBuffGUI = new ShieldBuffGui(-1, 90);
-    protected final BuffGui flameBuffGui = new FlameBuffGui(-1, 90);
     protected StatusBarGui3d statusBarGui3d;
     protected ShieldGui3d shieldGui3d;
     protected SpeedParticle speedParticle;
+    protected UltimateParticle ultimateParticle;
 
     public Player(Vector3f position, String path) {
         super(position, path);
@@ -59,6 +54,7 @@ public class Player extends Entity {
         statusBarGui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
         shieldGui3d = new ShieldGui3d(spatial);
         speedParticle = new SpeedParticle(spatial);
+        ultimateParticle = new UltimateParticle(spatial);
     }
 
     public void dead() {
@@ -66,6 +62,7 @@ public class Player extends Entity {
         statusBarGui3d.hide();
         shieldGui3d.hide();
         speedParticle.hide();
+        ultimateParticle.hide();
     }
 
     public void moveForward(float value) {
@@ -148,66 +145,71 @@ public class Player extends Entity {
         statusBarGui3d.onUpdate();
         shieldGui3d.onUpdate(shieldBuffActivated);
         speedParticle.onUpdate(speedBuffActivated);
+        ultimateParticle.onUpdate(ultimateActivated);
     }
 
     protected void onSpeedBuffEffect(float tpf) {
-        speedBuffDuration -= tpf;
-        if (speedBuffDuration <= 0) {
-            speedBuffActivated = false;
-            speedBuffDuration = 0;
-            speed = DEFAULT_SPEED;
-            return;
-        }
         if (!speedBuffActivated) {
-            speedBuffActivated = true;
-            speed *= 2;
+            if (speedBuffDuration > 0) {
+                speedBuffActivated = true;
+                speed *= 2;
+            }
+        } else {
+            speedBuffDuration -= tpf;
+            if (speedBuffDuration <= 0) {
+                speed = DEFAULT_SPEED;
+                speedBuffActivated = false;
+                speedBuffDuration = 0;
+            }
         }
-        LocationGui.centerXObject(speedBuffGUI.getText(), speedBuffGUI.getBackground(), speedBuffGUI.getText().getPosY());
     }
 
     protected void onBombBuffEffect(float tpf) {
-        bombBuffDuration -= tpf;
-        if (bombBuffDuration <= 0) {
-            bombBuffActivated = false;
-            bombBuffDuration = 0;
-            bombMax = DEFAULT_BOMB_MAX;
-            if (bombLeft > bombMax) bombLeft = bombMax;
-            return;
-        }
         if (!bombBuffActivated) {
-            bombBuffActivated = true;
-            bombLeft += 1;
-            bombMax += 1;
+            if (bombBuffDuration > 0) {
+                bombBuffActivated = true;
+                bombLeft += 1;
+                bombMax += 1;
+            }
+        } else {
+            bombBuffDuration -= tpf;
+            if (bombBuffDuration <= 0) {
+                bombBuffActivated = false;
+                bombBuffDuration = 0;
+                bombMax = DEFAULT_BOMB_MAX;
+                if (bombLeft > bombMax) bombLeft = bombMax;
+            }
         }
-        LocationGui.centerXObject(bombExtendBuffGui.getText(), bombExtendBuffGui.getBackground(), bombExtendBuffGui.getText().getPosY());
     }
 
     protected void onShieldBuffEffect(float tpf) {
-        shieldBuffDuration -= tpf;
-        if (shieldBuffDuration <= 0) {
-            shieldBuffActivated = false;
-            shieldBuffDuration = 0;
-            return;
-        }
         if (!shieldBuffActivated) {
-            shieldBuffActivated = true;
+            if (shieldBuffDuration > 0) {
+                shieldBuffActivated = true;
+            }
+        } else {
+            shieldBuffDuration -= tpf;
+            if (shieldBuffDuration <= 0) {
+                shieldBuffActivated = false;
+                shieldBuffDuration = 0;
+            }
         }
-        LocationGui.centerXObject(shieldBuffGUI.getText(), shieldBuffGUI.getBackground(), shieldBuffGUI.getText().getPosY());
     }
 
     protected void onFlameBuffEffect(float tpf) {
-        flameBuffDuration -= tpf;
-        if (flameBuffDuration <= 0) {
-            flameBuffActivated = false;
-            flameBuffDuration = 0;
-            bombExplodeLength = DEFAULT_BOMB_LENGTH;
-            return;
-        }
         if (!flameBuffActivated) {
-            flameBuffActivated = true;
-            bombExplodeLength += 1;
+            if (flameBuffDuration > 0) {
+                flameBuffActivated = true;
+                bombExplodeLength += 1;
+            }
+        } else {
+            flameBuffDuration -= tpf;
+            if (flameBuffDuration <= 0) {
+                flameBuffActivated = false;
+                flameBuffDuration = 0;
+                bombExplodeLength = DEFAULT_BOMB_LENGTH;
+            }
         }
-        LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosY());
     }
 
     protected void onCoolDownBomb(float tpf) {

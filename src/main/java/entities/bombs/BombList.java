@@ -69,7 +69,7 @@ public class BombList {
                 BombExplodeParticleList.add(new BombExplodeParticle(x, y));
                 double r = Math.random();
                 boolean generatedPortal = false;
-                if (r >= 0.5 || Container.getCount() <= 1) {
+                if (r >= 0.75 || Container.getCount() <= 1) {
                     if (Portal.hasRemain()) {
                         Map.setObject(x, y, Map.PORTAL, null);
                         generatedPortal = true;

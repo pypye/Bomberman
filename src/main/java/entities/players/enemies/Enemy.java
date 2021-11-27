@@ -52,19 +52,19 @@ public abstract class Enemy extends Player {
         if (this.isMoving()) {
             switch (this.getNextMove()) {
                 case Enemy.LEFT:
-                    this.moveLeft(0.01f);
+                    this.moveLeft(speed / 300f);
                     fixPosition(0, -1);
                     break;
                 case Enemy.RIGHT:
-                    this.moveRight(0.01f);
+                    this.moveRight(speed / 300f);
                     fixPosition(0, 1);
                     break;
                 case Enemy.UP:
-                    this.moveForward(0.01f);
+                    this.moveForward(speed / 300f);
                     fixPosition(1, 0);
                     break;
                 case Enemy.DOWN:
-                    this.moveBackward(0.01f);
+                    this.moveBackward(speed / 300f);
                     fixPosition(-1, 0);
                     break;
             }
@@ -147,51 +147,6 @@ public abstract class Enemy extends Player {
         }
         int randomInt = RandomizeMap.randomInt((int) Math.sqrt(ans.size()));
         targetPoint = ans.isEmpty() ? null : ans.get(randomInt);
-    }
-
-    public static int nextMoveBase(Vector2f start, Vector2f finish) {
-        int u = (int) start.x;
-        int v = (int) start.y;
-        int ans = STAND;
-        if (finish == null) return ans;
-
-        boolean[][] visited = new boolean[Map.SIZE][Map.SIZE];
-        Vector2f[][] parent = new Vector2f[Map.SIZE][Map.SIZE];
-        int[][] direction = new int[Map.SIZE][Map.SIZE];
-
-        Queue<Vector2f> queue = new LinkedList<>();
-        queue.add(new Vector2f(u, v));
-        parent[u][v] = new Vector2f(u, v);
-        visited[u][v] = true;
-        direction[u][v] = STAND;
-
-        while (!queue.isEmpty()) {
-            Vector2f cell = queue.peek();
-            queue.remove();
-            int x = (int) cell.x;
-            int y = (int) cell.y;
-            if (cell.equals(finish)) {
-                Vector2f par = parent[x][y];
-                while (x != (int) par.x || y != (int) par.y) {
-                    if (direction[x][y] != STAND) ans = direction[x][y];
-                    x = (int) par.x;
-                    y = (int) par.y;
-                    par = parent[x][y];
-                }
-                return ans;
-            }
-            for (int i = 0; i < 4; i++) {
-                int ax = x + dx[i];
-                int ay = y + dy[i];
-                if (Map.isInside(ax, ay) && !visited[ax][ay] && !Map.isBlocked(ax, ay)) {
-                    queue.add(new Vector2f(ax, ay));
-                    visited[ax][ay] = true;
-                    parent[ax][ay] = new Vector2f(x, y);
-                    direction[ax][ay] = i;
-                }
-            }
-        }
-        return ans;
     }
 
     public boolean isMoving() {
