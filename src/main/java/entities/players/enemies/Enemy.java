@@ -46,8 +46,8 @@ public abstract class Enemy extends Player {
         if (!this.isMoving()) {
             prefMove = this.getCord();
             this.setNextMove(prefMove);
-            System.out.println("[Debug/EnemyPosition] " + prefMove);
-            System.out.println("[Debug/EnemyNextMove] " + nextMove);
+            //System.out.println("[Debug/EnemyPosition] " + prefMove);
+            //System.out.println("[Debug/EnemyNextMove] " + nextMove);
             this.setMoving(true);
         }
         if (this.isMoving()) {

@@ -27,6 +27,8 @@ public class Game extends Scene {
     @Override
     public void hide() {
         isActive = false;
+        PlayerInput.destroyKeys();
+        PlayerList.removeAll();
         Environment.hide();
         Map.hide();
     }

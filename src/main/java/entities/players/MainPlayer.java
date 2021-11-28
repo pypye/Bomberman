@@ -13,6 +13,7 @@ import entities.bombs.Bomb;
 import entities.players.enemies.Enemy;
 import entities.terrains.Portal;
 import input.PlayerInput;
+import ui.gui.AnnouncementGui;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
 import ui.gui3d.StatusBarGui3d;
@@ -167,8 +168,7 @@ public class MainPlayer extends Player {
         Vector2f a = Entity.getCordFromPosition(this.getPosition().x, this.getPosition().z);
         if (Map.getEntity((int) a.x, (int) a.y) instanceof Portal) {
             if (Enemy.getCount() == 0) {
-                System.out.println("[Debug/Event] You win!");
-                System.exit(1);
+                new AnnouncementGui(true, 1);
             }
         }
     }

@@ -2,6 +2,7 @@ package entities.players;
 
 import entities.players.enemies.Enemy;
 import input.PlayerInput;
+import ui.gui.AnnouncementGui;
 
 import java.util.ArrayList;
 
@@ -16,15 +17,20 @@ public class PlayerList {
         if (!player.shieldBuffActivated) {
             player.dead();
             if (player instanceof MainPlayer) {
-                PlayerInput.destroyKeys();
-                System.out.println("[Debug/Event] Player died, back to main menu adding soon!");
-                System.exit(0);
+                new AnnouncementGui(false, 1);
             }
             players.remove(player);
 
         } else {
             player.shieldBuffActivated = false;
             player.shieldBuffDuration = 0;
+        }
+    }
+
+    public static void removeAll() {
+        ArrayList<Player> removeList = new ArrayList<>(players);
+        for (Player player : removeList) {
+            PlayerList.remove(player);
         }
     }
 
@@ -38,6 +44,7 @@ public class PlayerList {
     }
 
     public static void onUpdate(float tpf) {
+        ArrayList<Player> removeList = new ArrayList<>();
         for (Player player : players) {
             player.onUpdate(tpf);
             if (player instanceof Enemy) {
@@ -45,9 +52,12 @@ public class PlayerList {
                 enemy.onMoving();
                 boolean collision = enemy.isCollisionWithMainPlayer();
                 if (collision && getMainPlayer() != null) {
-                    PlayerList.remove(getMainPlayer());
+                    removeList.add(getMainPlayer());
                 }
             }
+        }
+        for (Player player : removeList) {
+            PlayerList.remove(player);
         }
     }
 }

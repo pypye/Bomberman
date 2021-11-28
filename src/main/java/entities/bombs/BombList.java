@@ -8,8 +8,6 @@ import entities.terrains.Container;
 import entities.terrains.Portal;
 import particles.BombExplodeParticle;
 import particles.BombExplodeParticleList;
-
-import javax.sound.sampled.Port;
 import java.util.ArrayList;
 
 public class BombList {
@@ -39,6 +37,7 @@ public class BombList {
             checkKillPlayer(cordX, i);
             if (explosion(cordX, i)) break;
         }
+        checkKillPlayer(cordX, cordY);
         Map.setObject(cordX, cordY, Map.GRASS, null);
         bomb.getSpark().remove();
         bombs.remove(bomb);
