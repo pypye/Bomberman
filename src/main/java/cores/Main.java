@@ -11,6 +11,7 @@ import input.Input;
 import scenes.Game;
 import scenes.Menu;
 import scenes.SceneController;
+import ui.gui.InfoGui;
 
 
 public class Main extends SimpleApplication {

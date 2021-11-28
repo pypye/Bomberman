@@ -108,7 +108,9 @@ public class Map {
     }
 
     public static void setBlocked(int x, int y, boolean value) {
-        entity[x][y].setBlocked(value);
+        if (entity[x][y] != null) {
+            entity[x][y].setBlocked(value);
+        }
     }
 
     public static boolean isBlocked(int x, int y) {

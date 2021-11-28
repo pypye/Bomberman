@@ -57,6 +57,5 @@ public abstract class Entity {
 
     public void remove() {
         Main.ROOT_NODE.detachChild(spatial);
-        spatial = null;
     }
 }

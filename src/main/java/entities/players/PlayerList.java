@@ -3,6 +3,7 @@ package entities.players;
 import entities.players.enemies.Enemy;
 import input.PlayerInput;
 import ui.gui.AnnouncementGui;
+import ui.gui.buffs.BuffListGui;
 
 import java.util.ArrayList;
 
@@ -17,20 +18,24 @@ public class PlayerList {
         if (!player.shieldBuffActivated) {
             player.dead();
             if (player instanceof MainPlayer) {
-                new AnnouncementGui(false, 1);
+                new AnnouncementGui(false);
             }
             players.remove(player);
 
         } else {
             player.shieldBuffActivated = false;
             player.shieldBuffDuration = 0;
+            if(player instanceof MainPlayer) {
+                if (BuffListGui.getBuffList().contains(((MainPlayer) player).shieldBuffGUI))
+                    BuffListGui.removeBuff(((MainPlayer) player).shieldBuffGUI);
+            }
         }
     }
 
     public static void removeAll() {
         ArrayList<Player> removeList = new ArrayList<>(players);
         for (Player player : removeList) {
-            PlayerList.remove(player);
+            remove(player);
         }
     }
 

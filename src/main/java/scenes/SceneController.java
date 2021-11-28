@@ -19,6 +19,6 @@ public class SceneController {
     }
 
     public static void update(float tpf) {
-        currentScene.update(tpf);
+        if (currentScene != null) currentScene.update(tpf);
     }
 }
