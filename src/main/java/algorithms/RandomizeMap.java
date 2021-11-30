@@ -104,51 +104,6 @@ public class RandomizeMap {
         }
     }
 
-    public static int[][] insertFromFile() throws FileNotFoundException {
-        char[] Tiles = new char[]{'#', '*', '~', 'x'};
-        char[] Character = new char[]{'2', '1', 'p'};
-        char[] Items = new char[]{'s', 'f', 'b'};
-        String url = "src\\main\\java\\algorithms\\levels\\input.txt";
-        FileInputStream fileInputStream = new FileInputStream(url);
-        Scanner sc = new Scanner(fileInputStream);
-        String Input = sc.nextLine();
-
-        int level = Integer.parseInt(Input.split(" ")[0]);
-        int R = Integer.parseInt(Input.split(" ")[1]);
-        int C = Integer.parseInt(Input.split(" ")[2]);
-
-        int[][] map = new int[R][C];
-        int r = 0;
-        while (sc.hasNextLine()) {
-            Input = sc.nextLine();
-            for (int i = 0; i < Input.length(); i++) {
-                boolean ok = false;
-                char here = Input.charAt(i);
-                for (int Til = 0; Til < 4; Til++) {
-                    if (here == Tiles[Til]) {
-                        map[r][i] = Til + 1;
-                        ok = true;
-                    }
-                }
-                for (int Char = 0; Char < 3; Char++) {
-                    if (here == Character[Char]) {
-                        map[r][i] = Char - 3;
-                        ok = true;
-                    }
-                }
-                for (int Ite = 0; Ite < 3; Ite++) {
-                    if (here == Items[Ite]) {
-                        map[r][i] = Ite + 5;
-                        ok = true;
-                    }
-                }
-                if (!ok) map[r][i] = 0;
-            }
-            r++;
-        }
-        return map;
-    }
-
     public int getNumContainer() {
         return numContainer;
     }
