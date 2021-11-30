@@ -9,9 +9,20 @@ public class TextGui extends ItemGui {
     private final BitmapText hudText;
 
     public TextGui(String text, ColorRGBA color, float posX, float posY) {
-        BitmapFont guiFont = Main.ASSET_MANAGER.loadFont("Fonts/debussy.ttf.fnt");
+        BitmapFont guiFont = Main.ASSET_MANAGER.loadFont("Fonts/debussy_small.ttf.fnt");
         hudText = new BitmapText(guiFont, false);
         hudText.setSize(16);
+        hudText.setColor(color);
+        hudText.setText(text);
+        hudText.setLocalTranslation(posX, posY, 0);
+        this.sizeX = hudText.getLineWidth();
+        this.sizeY = hudText.getLineHeight();
+        setPosition(posX, posY);
+    }
+    public TextGui(String text, ColorRGBA color, float posX, float posY, int fontSize) {
+        BitmapFont guiFont = Main.ASSET_MANAGER.loadFont("Fonts/debussy.ttf.fnt");
+        hudText = new BitmapText(guiFont, false);
+        hudText.setSize(fontSize);
         hudText.setColor(color);
         hudText.setText(text);
         hudText.setLocalTranslation(posX, posY, 0);

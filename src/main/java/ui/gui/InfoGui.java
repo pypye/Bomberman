@@ -7,13 +7,13 @@ public class InfoGui extends ItemGui {
     private final ImageGui background;
 
     public InfoGui(float posX, float posY, String _text) {
-        text = new TextGui(_text, ColorRGBA.White, posX, posY);
+        text = new TextGui(_text, ColorRGBA.White, posX, posY, 24);
         background = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/announcement_background.png");
         setPosition(posX, posY);
     }
 
     public InfoGui(float posX, float posY, String _text, int sizeX, int sizeY) {
-        text = new TextGui(_text, ColorRGBA.White, posX, posY);
+        text = new TextGui(_text, ColorRGBA.White, posX, posY, 24);
         background = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/announcement_background.png");
         if (sizeX >= 0) setSizeX(sizeX);
         if (sizeY >= 0) setSizeY(sizeY);
@@ -22,8 +22,10 @@ public class InfoGui extends ItemGui {
 
     public void setText(String _text) {
         text.setText(_text);
+        setSizeX(text.getSizeX() + LocationGui.PADDING);
+        setSizeY(text.getSizeY() + LocationGui.PADDING);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING);
+        text.setPosition(text.posX, text.posY + LocationGui.PADDING + 5);
     }
 
     @Override
@@ -55,6 +57,6 @@ public class InfoGui extends ItemGui {
         super.setPosition(posX, posY);
         background.setPosition(posX, posY);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING);
+        text.setPosition(text.posX, text.posY + LocationGui.PADDING + 5);
     }
 }
