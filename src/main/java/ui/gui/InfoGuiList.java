@@ -13,9 +13,9 @@ public class InfoGuiList {
 
     public static void init() {
         timeCount = 0f;
-        level = new InfoGui(20, Main.HEIGHT - 50, "Level: " + ((Game) SceneController.getCurrentScene()).getLevel());
-        enemy = new InfoGui(20, Main.HEIGHT - 100, "Enemy remain: " + Enemy.getCount());
-        time = new InfoGui(20, Main.HEIGHT - 150, "Time: " + (int) timeCount + 's');
+        level = new InfoGui(20, Main.HEIGHT - 70, "Level: " + ((Game) SceneController.getCurrentScene()).getLevel());
+        enemy = new InfoGui(20, Main.HEIGHT - 130, "Enemy remain: " + Enemy.getCount());
+        time = new InfoGui(20, Main.HEIGHT - 190, "Time: " + (int) timeCount + 's');
         show();
     }
 
