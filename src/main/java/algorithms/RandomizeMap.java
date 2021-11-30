@@ -165,10 +165,4 @@ public class RandomizeMap {
         this.randomizeMap = randomizeMap;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        RandomizeMap randomizeMap = new RandomizeMap(150, 50);
-        randomizeMap.showBoard();
-    }
-
-
 }
