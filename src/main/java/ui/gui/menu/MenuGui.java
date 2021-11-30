@@ -22,7 +22,7 @@ public class MenuGui {
         btnPlay = new ButtonGui(-1, -1, "Play", 200, 50) {
             @Override
             public void onClick() {
-                SceneController.setScene(new Game());
+                SceneController.setScene(new Game(1));
             }
         };
         btnAchievement = new ButtonGui(-1, -1, "Achievement", 200, 50) {

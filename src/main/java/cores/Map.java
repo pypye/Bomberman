@@ -46,7 +46,7 @@ public class Map {
         }
 
         ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 10, 3);
-        System.out.println("[Debug/Map] Init player");
+        System.out.println("[Debug/Map] Init player, with size = " + player.size());
         new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
         for (int i = 1; i < player.size(); ++i) {
             double r = Math.random();
@@ -56,13 +56,7 @@ public class Map {
                 new Spider(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
             }
         }
-//        new MainPlayer(new Vector3f(4, 1, 4));
-//        new Spider(new Vector3f(0, 1, 0));
-        setObject(0, 0, GRASS, null);
-        setObject(0, 1, GRASS, null);
-        setObject(1, 0, GRASS, null);
-        setObject(1, 1, GRASS, null);
-        setObject(3, 0, ROCK, null);
+        System.out.println("[Debug/Map] Init map complete");
     }
 
     public static int[][] getMap() {
@@ -114,7 +108,9 @@ public class Map {
     }
 
     public static void setBlocked(int x, int y, boolean value) {
-        entity[x][y].setBlocked(value);
+        if (entity[x][y] != null) {
+            entity[x][y].setBlocked(value);
+        }
     }
 
     public static boolean isBlocked(int x, int y) {

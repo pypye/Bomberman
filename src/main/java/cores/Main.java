@@ -9,7 +9,9 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import input.Input;
 import scenes.Game;
+import scenes.Menu;
 import scenes.SceneController;
+import ui.gui.InfoGui;
 
 
 public class Main extends SimpleApplication {
@@ -45,7 +47,7 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
         Input.init();
-        SceneController.setScene(new Game());
+        SceneController.setScene(new Menu());
     }
 
     @Override

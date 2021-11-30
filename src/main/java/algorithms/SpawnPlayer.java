@@ -34,6 +34,7 @@ public class SpawnPlayer {
     }
 
     public static ArrayList<Vector2f> preSpawn(int[][] map, int num, int dist) {
+        playerList.clear();
         int cnt = 0;
         int nCnt = 0;
         while (cnt < num) {

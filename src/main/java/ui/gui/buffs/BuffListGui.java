@@ -26,6 +26,18 @@ public class BuffListGui {
         reLocateBuffGUI();
     }
 
+    public static void show() {
+        for (BuffGui buff : buffList) {
+            buff.show();
+        }
+    }
+
+    public static void hide() {
+        for (BuffGui buff : buffList) {
+            buff.hide();
+        }
+    }
+
     public static ArrayList<BuffGui> getBuffList() {
         return buffList;
     }
