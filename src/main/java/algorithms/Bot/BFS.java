@@ -87,16 +87,20 @@ public class BFS {
         visited[x][y] = 1;
         path[x][y] = 0;
         queue.add(new Pair(x, y));
+        addAttribute(x, y, map);
 
         while (!queue.isEmpty()) {
             Pair pair = queue.poll();
             int u = pair.getX();
             int v = pair.getY();
-
             visited[u][v] = 1;
+
             for (int i = 0; i < 4; i++) {
                 int newX = u + dx[i];
                 int newY = v + dy[i];
+                if(checkRange(newX, newY)) {
+                    addAttribute(newX, newY, map);
+                }
                 if (checkSafePosition(newX, newY)) {
                     if (!isVisited(newX, newY) && map[newX][newY] != 3 && map[newX][newY] != 1 && map[newX][newY] != 2) {
                         path[newX][newY] = path[u][v] + 1;
@@ -109,6 +113,19 @@ public class BFS {
         }
     }
 
+    private void addAttribute(int newX, int newY, int[][] map) {
+        if (map[newX][newY] == 2) {
+            containerList.add(new Pair(newX, newY));
+        } else if (map[newX][newY] == 3) {
+            bombList.add(new Pair(newX, newY));
+        } else if (map[newX][newY] == 4) {
+            exitList.add(new Pair(newX, newY));
+        } else if (map[newX][newY] > 4 && map[newX][newY] < 9) {
+            itemList.add(new Pair(newX, newY));
+        } else if (map[newX][newY] == 9) {
+            enemyList.add(new Pair(newX, newY));
+        }
+    }
     public void showPath() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
@@ -137,17 +154,6 @@ public class BFS {
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
                 this.grid[i][j] = grid[i][j];
-                if (this.grid[i][j] == 2) {
-                    containerList.add(new Pair(i, j));
-                } else if (this.grid[i][j] == 3) {
-                    bombList.add(new Pair(i, j));
-                } else if (this.grid[i][j] == 4) {
-                    exitList.add(new Pair(i, j));
-                } else if (this.grid[i][j] > 4 && this.grid[i][j] < 7) {
-                    itemList.add(new Pair(i, j));
-                } else if (this.grid[i][j] == 7) {
-                    enemyList.add(new Pair(i, j));
-                }
                 visited[i][j] = 0;
                 path[i][j] = 1000000000;
             }
@@ -155,8 +161,10 @@ public class BFS {
 
     }
 
-    private int moveCase(int x, int y) {
+    private int moveCase(int x, int y, List<Pair> enemies) {
+
         bfs(x, y);
+        enemyList = enemies;
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
                 return 0;
@@ -184,13 +192,15 @@ public class BFS {
                 }
             }
         }
-
-
     }
 
-    public int nextMove(int x, int y) {
-        int option = moveCase(x, y);
-        int result = 0;
+    private void setEnemyList(List<Pair> enemyList) {
+        this.enemyList = enemyList;
+    }
+
+    public int nextMove(int x, int y, List<Pair> enemies) {
+        int option = moveCase(x, y, enemies);
+        int result = -1;
         switch (option) {
             case 0:
                 result = -1;
@@ -206,7 +216,13 @@ public class BFS {
                         }
                     }
                 }
-                result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+
+                if(tempPosition.getX() == -1000000000 && tempPosition.getY() == -1000000000){
+                    result = -1;
+                }
+                else {
+                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                }
                 break;
             case 2:
                 tempPath = MAX_PATH;
@@ -228,7 +244,32 @@ public class BFS {
                         tempPosition = enemy;
                     }
                 }
-                result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                if (tempPath <= 2){
+                    if(x == tempPosition.getX()) {
+                        if(Math.abs(y - tempPosition.getY()) <= 2) {
+                            result = 4;
+                        }
+                        else {
+                            result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                        }
+                    }
+
+                    else if(y == tempPosition.getY()) {
+                        if(Math.abs(x - tempPosition.getX()) <= 2) {
+                            result = 4;
+                        }
+                        else {
+                            result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                        }
+                    }
+
+                    else {
+                        result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                    }
+                }
+                else {
+                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                }
                 break;
             case 4:
                 tempPath = MAX_PATH;
@@ -245,7 +286,12 @@ public class BFS {
                         }
                     }
                 }
-                result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                if(tempPath == 0) {
+                    result = 4;
+                }
+                else {
+                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                }
                 break;
             case 5:
                 tempPath = MAX_PATH;
@@ -266,7 +312,7 @@ public class BFS {
 
     private int getDirection(int x, int y, int u, int v) {
         if (u == v && v == -1000000000) {
-            return 5;
+            return -1;
         }
         Pair move = traceBack(new Pair(x, y), new Pair(u, v));
         if (x == move.getX()) {
@@ -324,8 +370,8 @@ public class BFS {
             }
         }
         BFS bfs = new BFS(grid, 20);
-        int x = 0;
-        int y = 0;
+        int x = 1;
+        int y = 1;
         bfs.bfs(x, y);
 
         int[][] map = bfs.getGrid();
@@ -337,28 +383,11 @@ public class BFS {
         }
 
         System.out.println("-----------------------------------------------------");
-        bfs.showPath();
-        int cnt = 5;
-        while (cnt -- > 0) {
-            int move = bfs.nextMove(x, y);
-            switch (move) {
-                case 0:
-                    bfs.bfs(x, y - 1);
-                    break;
-                case 1:
-                    bfs.bfs(x, y + 1);
-                    break;
-                case 2:
-                    bfs.bfs(x - 1, y);
-                    break;
-                case 3:
-                    bfs.bfs(x + 1, y);
-                    break;
-            }
-            bfs.showPath();
-            System.out.println("-----------------------------------------------------");
-            //System.out.println(move);
-        }
+        //bfs.showPath();
+        List<Pair> enemyList = new ArrayList<>(List.of(new Pair(1, 1)));
+        int move = bfs.nextMove(x, y, enemyList);
+        System.out.println(move);
+        System.out.println(bfs.moveCase(x, y, enemyList));
         System.out.println("-----------------------------------------------------");
         //System.out.println(bfs.getDirection(0,1,1, 4));
         //System.out.println(bfs.getTrace(1, 1).getX() + " " + bfs.getTrace(1, 1).getY());

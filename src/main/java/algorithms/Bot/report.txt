@@ -20,7 +20,7 @@ int nextMove, getDirection
 2: down
 3: up
 4: bomb
-
+5: out of range
 Vector2f (double): int x, int y
 
 moveCase
@@ -28,5 +28,5 @@ moveCase
 1 : Go to a safe place
 2 : Go and take the item
 3 : Go and kill the enemy
-4 : Go and destroy the brick next to you
+4 : Go and destroy the brick nearest to you
 5 : Go to the exit
