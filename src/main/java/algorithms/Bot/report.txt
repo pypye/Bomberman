@@ -1,13 +1,16 @@
 BoomList
 Entity Players
 
-moveCase
-0 : Wait the bomb to explode.
-1 : Go to a safe place
-2 : Go and take the item
-3 : Go and kill the enemy
-4 : Go and destroy the brick next to you
-5 : Go to the exit
+Object
+Grass = 0
+ROCK = 1
+CONTAINER = 2
+BOMB = 3
+PORTAL = 4
+SPEED_Item = 5
+FLAME_Item = 6
+BOMB_Item = 7
+Shield_Item = 8
 
 
 int nextMove, getDirection
@@ -20,3 +23,10 @@ int nextMove, getDirection
 
 Vector2f (double): int x, int y
 
+moveCase
+0 : Wait the bomb to explode.
+1 : Go to a safe place
+2 : Go and take the item
+3 : Go and kill the enemy
+4 : Go and destroy the brick next to you
+5 : Go to the exit

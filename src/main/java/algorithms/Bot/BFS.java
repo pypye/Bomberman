@@ -275,8 +275,8 @@ public class BFS {
             } else {
                 return 1;
             }
-        } else if (x == move.getY()) {
-            if (y > move.getX()) {
+        } else if (y == move.getY()) {
+            if (x > move.getX()) {
                 return 3;
             } else {
                 return 2;
@@ -324,7 +324,9 @@ public class BFS {
             }
         }
         BFS bfs = new BFS(grid, 20);
-        bfs.bfs(0, 0);
+        int x = 0;
+        int y = 0;
+        bfs.bfs(x, y);
 
         int[][] map = bfs.getGrid();
         for (int i = 0; i < map.length; i++) {
@@ -336,13 +338,31 @@ public class BFS {
 
         System.out.println("-----------------------------------------------------");
         bfs.showPath();
-
-        int move = bfs.nextMove(0, 0);
-        System.out.println(move);
+        int cnt = 5;
+        while (cnt -- > 0) {
+            int move = bfs.nextMove(x, y);
+            switch (move) {
+                case 0:
+                    bfs.bfs(x, y - 1);
+                    break;
+                case 1:
+                    bfs.bfs(x, y + 1);
+                    break;
+                case 2:
+                    bfs.bfs(x - 1, y);
+                    break;
+                case 3:
+                    bfs.bfs(x + 1, y);
+                    break;
+            }
+            bfs.showPath();
+            System.out.println("-----------------------------------------------------");
+            //System.out.println(move);
+        }
         System.out.println("-----------------------------------------------------");
-        System.out.println(bfs.getDirection(0,0,1, 4));
+        //System.out.println(bfs.getDirection(0,1,1, 4));
         //System.out.println(bfs.getTrace(1, 1).getX() + " " + bfs.getTrace(1, 1).getY());
-        //System.out.println(bfs.traceBack(new Pair(0, 0), new Pair(1, 1)).getX() + " " + bfs.traceBack(new Pair(0, 0), new Pair(1, 1)).getY());
+        //System.out.println(bfs.traceBack(new Pair(0, 1), new Pair(1, 4)).getX() + " " + bfs.traceBack(new Pair(0, 1), new Pair(1, 4)).getY());
     }
 
 }
