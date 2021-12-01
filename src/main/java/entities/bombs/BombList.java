@@ -50,12 +50,8 @@ public class BombList {
             for (Player player : PlayerList.players) {
                 if (bomb.getCord().x == player.getCord().x && bomb.getCord().y == player.getCord().y) check = false;
             }
-            if (check) {
-                Map.setBlocked((int) bomb.getCord().x, (int) bomb.getCord().y, true);
-            }
-            if (System.currentTimeMillis() - bomb.getTimeStarted() >= Bomb.DURATION) {
-                removeList.add(bomb);
-            }
+            if (check) Map.setBlocked((int) bomb.getCord().x, (int) bomb.getCord().y, true);
+            if (System.currentTimeMillis() - bomb.getTimeStarted() >= Bomb.DURATION) removeList.add(bomb);
         }
         for (Bomb bomb : removeList) {
             BombList.remove(bomb);

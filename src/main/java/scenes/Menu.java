@@ -5,16 +5,15 @@ import ui.gui.menu.MenuGui;
 public class Menu extends Scene {
     @Override
     public void show() {
-        MenuGui.init();
+        MenuGui.initialize();
     }
 
     @Override
     public void update(float tpf) {
-
     }
 
     @Override
-    public void hide() {
-        MenuGui.hide();
+    public void remove() {
+        MenuGui.remove();
     }
 }

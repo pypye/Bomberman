@@ -27,10 +27,10 @@ public class BuffGui extends ItemGui {
     }
 
     @Override
-    public void hide() {
-        background.hide();
-        item.hide();
-        textGui.hide();
+    public void remove() {
+        background.remove();
+        item.remove();
+        textGui.remove();
     }
 
     @Override

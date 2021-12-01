@@ -1,7 +1,6 @@
 package cores;
 
-import algorithms.RandomizeMap;
-import algorithms.SpawnPlayer;
+import algorithms.Spawn;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.*;
@@ -17,7 +16,6 @@ import entities.buffs.FlameItem;
 import entities.buffs.ShieldItem;
 import entities.buffs.SpeedItem;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -35,8 +33,9 @@ public class Map {
     public static final int BOMB_EX_ITEM = 7;
     public static final int SHIELD_ITEM = 8;
 
-    public static void init() {
-        int[][] map = new RandomizeMap(50, 100).getRandomizeMap();
+    public static void initialize(int level) {
+        Spawn spawn = new Spawn(level);
+        int[][] map = spawn.getSpawnMap();
         System.out.println("[Debug/Map] Init Terrain");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
@@ -44,19 +43,17 @@ public class Map {
                 setObject(i, j, map[i][j], null);
             }
         }
-
-        ArrayList<Vector2f> player = SpawnPlayer.spawn(map, 10, 3);
-        System.out.println("[Debug/Map] Init player, with size = " + player.size());
-        new MainPlayer(new Vector3f(player.get(0).x * 2f, 1, player.get(0).y * 2f));
-        for (int i = 1; i < player.size(); ++i) {
-            double r = Math.random();
-            if (r >= 0.3) {
-                new Turtle(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
-            } else {
-                new Spider(new Vector3f(player.get(i).x * 2f, 1, player.get(i).y * 2f));
-            }
-        }
         System.out.println("[Debug/Map] Init map complete");
+        System.out.println("[Debug/Map] Init player");
+        Vector2f mainPlayer = spawn.getMainPlayer();
+        new MainPlayer(new Vector3f(mainPlayer.x * 2f, 1, mainPlayer.y * 2f));
+        for (int i = 0; i < spawn.getEnemy1().size(); i++) {
+            new Turtle(new Vector3f(spawn.getEnemy1().get(i).x * 2f, 1, spawn.getEnemy1().get(i).y * 2f));
+        }
+        for (int i = 0; i < spawn.getEnemy2().size(); i++) {
+            new Spider(new Vector3f(spawn.getEnemy2().get(i).x * 2f, 1, spawn.getEnemy2().get(i).y * 2f));
+        }
+        System.out.println("[Debug/Map] Init player complete");
     }
 
     public static int[][] getMap() {
@@ -125,7 +122,7 @@ public class Map {
         return entity[x][y];
     }
 
-    public static void hide() {
+    public static void remove() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 if (entity[i][j] != null) {

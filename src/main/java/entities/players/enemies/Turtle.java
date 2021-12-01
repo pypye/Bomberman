@@ -72,8 +72,8 @@ public class Turtle extends Enemy {
     }
 
     @Override
-    public void dead() {
-        super.dead();
+    public void remove() {
+        super.remove();
         count--;
     }
 

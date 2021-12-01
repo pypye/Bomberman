@@ -7,12 +7,9 @@ import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
-import input.Input;
-import scenes.Game;
+import input.SystemInput;
 import scenes.Menu;
 import scenes.SceneController;
-import ui.gui.InfoGui;
-
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -46,7 +43,7 @@ public class Main extends SimpleApplication {
         cam.setPlaneState(0);
         flyCam.setEnabled(false);
         assetManager.registerLocator("assets", FileLocator.class);
-        Input.init();
+        SystemInput.initialize();
         SceneController.setScene(new Menu());
     }
 

@@ -1,4 +1,4 @@
-package ui.gui;
+package ui.gui.game;
 
 import cores.Main;
 import entities.players.enemies.Enemy;
@@ -11,7 +11,7 @@ public class InfoGuiList {
     private static InfoGui time;
     private static double timeCount = 0f;
 
-    public static void init() {
+    public static void initialize() {
         timeCount = 0f;
         level = new InfoGui(20, Main.HEIGHT - 70, "Level: " + ((Game) SceneController.getCurrentScene()).getLevel());
         enemy = new InfoGui(20, Main.HEIGHT - 130, "Enemy remain: " + Enemy.getCount());
@@ -31,9 +31,9 @@ public class InfoGuiList {
         time.show();
     }
 
-    public static void hide() {
-        level.hide();
-        enemy.hide();
-        time.hide();
+    public static void remove() {
+        level.remove();
+        enemy.remove();
+        time.remove();
     }
 }

@@ -34,7 +34,7 @@ public abstract class ButtonGui extends ItemGui {
                         && getPosX() + getSizeX() >= mousePos.x
                         && getPosY() + getSizeY() >= mousePos.y) {
                     onClick();
-                    System.out.println("Clicked " + this);
+                    System.out.println("[Debug/Event] Clicked " + this + ": " + text.getText());
                 }
             }
         }
@@ -50,9 +50,9 @@ public abstract class ButtonGui extends ItemGui {
     }
 
     @Override
-    public void hide() {
-        button.hide();
-        text.hide();
+    public void remove() {
+        button.remove();
+        text.remove();
         Main.INPUT_MANAGER.removeListener(actionListener);
     }
 

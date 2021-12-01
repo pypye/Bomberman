@@ -159,8 +159,8 @@ public abstract class Enemy extends Player {
     }
 
     @Override
-    public void dead() {
-        super.dead();
+    public void remove() {
+        super.remove();
         count--;
     }
 

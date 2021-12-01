@@ -43,7 +43,7 @@ public class StatusBarGui3d extends ItemGui3d {
             }
         } else if (count < part.size()) {
             while (count != part.size()) {
-                part.get(part.size() - 1).hide();
+                part.get(part.size() - 1).remove();
                 part.remove(part.size() - 1);
             }
             for (ItemGui itemGui : part) {
@@ -64,7 +64,7 @@ public class StatusBarGui3d extends ItemGui3d {
             }
         } else if (count < fill.size()) {
             while (count != fill.size()) {
-                fill.get(fill.size() - 1).hide();
+                fill.get(fill.size() - 1).remove();
                 fill.remove(fill.size() - 1);
             }
         }
@@ -77,7 +77,7 @@ public class StatusBarGui3d extends ItemGui3d {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        hide();
+        remove();
         background.setPosition(screenCoords.x, screenCoords.y);
         foreground.setPosition(screenCoords.x, screenCoords.y);
         for (int i = 0; i < fill.size(); ++i) {
@@ -90,9 +90,9 @@ public class StatusBarGui3d extends ItemGui3d {
         show();
     }
 
-    private void hidePart() {
+    private void removePart() {
         for (ItemGui itemGui : part) {
-            itemGui.hide();
+            itemGui.remove();
         }
     }
 
@@ -102,9 +102,9 @@ public class StatusBarGui3d extends ItemGui3d {
         }
     }
 
-    private void hideFill() {
+    private void removeFill() {
         for (ItemGui itemGui : fill) {
-            itemGui.hide();
+            itemGui.remove();
         }
     }
 
@@ -114,12 +114,12 @@ public class StatusBarGui3d extends ItemGui3d {
         }
     }
 
-    public void hide() {
-        background.hide();
-        coolDown.hide();
-        hideFill();
-        hidePart();
-        foreground.hide();
+    public void remove() {
+        background.remove();
+        coolDown.remove();
+        removeFill();
+        removePart();
+        foreground.remove();
     }
     public void show() {
         background.show();

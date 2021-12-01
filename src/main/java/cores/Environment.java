@@ -1,7 +1,6 @@
 package cores;
 
 import com.jme3.light.AmbientLight;
-import com.jme3.light.Light;
 import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
@@ -10,7 +9,7 @@ public class Environment {
     private static Spatial sky;
     private static AmbientLight light;
 
-    public static void init() {
+    public static void initialize() {
         Texture west = Main.ASSET_MANAGER.loadTexture("Textures/Skybox/l.png");
         Texture east = Main.ASSET_MANAGER.loadTexture("Textures/Skybox/r.png");
         Texture north = Main.ASSET_MANAGER.loadTexture("Textures/Skybox/f.png");
@@ -23,7 +22,7 @@ public class Environment {
         Main.ROOT_NODE.addLight(light);
     }
 
-    public static void hide() {
+    public static void remove() {
         Main.ROOT_NODE.detachChild(sky);
         Main.ROOT_NODE.removeLight(light);
     }

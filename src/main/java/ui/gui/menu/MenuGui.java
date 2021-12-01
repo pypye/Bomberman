@@ -15,7 +15,7 @@ public class MenuGui {
     private static ButtonGui btnSettings;
     private static ButtonGui btnExit;
 
-    public static void init() {
+    public static void initialize() {
         background = new ImageGui(Main.WIDTH, Main.HEIGHT, "Textures/Menu/Lobby-Background.png");
         logo = new ImageGui(512, 206, "Textures/Menu/logo.png");
         LocationGui.centerXObject(logo, background, Main.HEIGHT - 400);
@@ -27,27 +27,21 @@ public class MenuGui {
         };
         btnAchievement = new ButtonGui(-1, -1, "Achievement", 200, 50) {
             @Override
-            public void onClick() {
-
-            }
+            public void onClick() {}
         };
         btnSettings = new ButtonGui(-1, -1, "Settings", 200, 50) {
             @Override
-            public void onClick() {
-
-            }
+            public void onClick() {}
         };
         btnExit = new ButtonGui(-1, -1, "Exit", 200, 50) {
             @Override
-            public void onClick() {
-
-            }
+            public void onClick() {}
         };
         LocationGui.centerXObject(btnPlay, background, Main.HEIGHT - 425);
         LocationGui.centerXObject(btnAchievement, background, Main.HEIGHT - 485);
         LocationGui.centerXObject(btnSettings, background, Main.HEIGHT - 545);
         LocationGui.centerXObject(btnExit, background, Main.HEIGHT - 605);
-        show();
+        MenuGui.show();
     }
 
     public static void show() {
@@ -59,12 +53,12 @@ public class MenuGui {
         btnExit.show();
     }
 
-    public static void hide() {
-        background.hide();
-        logo.hide();
-        btnPlay.hide();
-        btnAchievement.hide();
-        btnSettings.hide();
-        btnExit.hide();
+    public static void remove() {
+        background.remove();
+        logo.remove();
+        btnPlay.remove();
+        btnAchievement.remove();
+        btnSettings.remove();
+        btnExit.remove();
     }
 }

@@ -1,8 +1,7 @@
 package entities.players;
 
 import entities.players.enemies.Enemy;
-import input.PlayerInput;
-import ui.gui.AnnouncementGui;
+import ui.gui.game.AnnouncementGui;
 import ui.gui.buffs.BuffListGui;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class PlayerList {
 
     public static void remove(Player player) {
         if (!player.shieldBuffActivated) {
-            player.dead();
+            player.remove();
             if (player instanceof MainPlayer) {
                 new AnnouncementGui(false);
             }

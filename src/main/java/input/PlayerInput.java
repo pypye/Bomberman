@@ -6,15 +6,17 @@ import com.jme3.input.controls.AnalogListener;
 import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
+import entities.players.PlayerList;
 
 import java.util.HashSet;
 
 public class PlayerInput {
     public static MainPlayer player;
+    private static boolean paused = false;
     private static final HashSet<String> keys = new HashSet<>();
 
-    public static void initKeys(MainPlayer _player) {
-        player = _player;
+    public static void initialize() {
+        player = (MainPlayer) PlayerList.getMainPlayer();
         Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
         Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_S));
         Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
@@ -39,11 +41,13 @@ public class PlayerInput {
     private static final AnalogListener analogListener = new AnalogListener() {
         @Override
         public void onAnalog(String name, float value, float tpf) {
-            if (name.equals("Forward")) player.moveForward(value);
-            if (name.equals("Backward")) player.moveBackward(value);
-            if (name.equals("Left")) player.moveLeft(value);
-            if (name.equals("Right")) player.moveRight(value);
-            if (name.equals("SetBomb")) player.setBomb();
+            if(!paused){
+                if (name.equals("Forward")) player.moveForward(value);
+                if (name.equals("Backward")) player.moveBackward(value);
+                if (name.equals("Left")) player.moveLeft(value);
+                if (name.equals("Right")) player.moveRight(value);
+                if (name.equals("SetBomb")) player.setBomb();
+            }
         }
     };
 
@@ -53,8 +57,16 @@ public class PlayerInput {
         }
     }
 
-    public static void destroyKeys() {
+    public static void remove() {
         Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.removeListener(analogListener);
+    }
+
+    public static boolean isPaused() {
+        return paused;
+    }
+
+    public static void setPaused(boolean paused) {
+        PlayerInput.paused = paused;
     }
 }

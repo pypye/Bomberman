@@ -12,8 +12,7 @@ import entities.Entity;
 import entities.bombs.Bomb;
 import entities.players.enemies.Enemy;
 import entities.terrains.Portal;
-import input.PlayerInput;
-import ui.gui.AnnouncementGui;
+import ui.gui.game.AnnouncementGui;
 import ui.gui.LocationGui;
 import ui.gui.buffs.*;
 import ui.gui3d.StatusBarGui3d;
@@ -31,7 +30,6 @@ public class MainPlayer extends Player {
         Spatial child = AnimUtils.getAnimRoot(spatial);
         composer = child.getControl(AnimComposer.class);
         composer.setCurrentAction("stand");
-        PlayerInput.initKeys(this);
         ChaseCamera chaseCam = new ChaseCamera(Main.CAM, spatial, Main.INPUT_MANAGER);
         chaseCam.setDefaultHorizontalRotation(FastMath.PI);
         chaseCam.setDefaultVerticalRotation(FastMath.PI / 3);
@@ -40,7 +38,7 @@ public class MainPlayer extends Player {
         chaseCam.setMaxDistance(20);
         chaseCam.setZoomSensitivity(0.25f);
         chaseCam.cleanupWithInput(Main.INPUT_MANAGER);
-        statusBarGui3d.hide();
+        statusBarGui3d.remove();
         statusBarGui3d = new StatusBarGui3d(spatial, bombMax, bombLeft);
     }
 

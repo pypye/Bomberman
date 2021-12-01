@@ -1,6 +1,10 @@
-package ui.gui;
+package ui.gui.game;
 
 import com.jme3.math.ColorRGBA;
+import ui.gui.ImageGui;
+import ui.gui.ItemGui;
+import ui.gui.LocationGui;
+import ui.gui.TextGui;
 
 public class InfoGui extends ItemGui {
     private final TextGui text;
@@ -25,7 +29,7 @@ public class InfoGui extends ItemGui {
         setSizeX(text.getSizeX() + LocationGui.PADDING);
         setSizeY(text.getSizeY() + LocationGui.PADDING);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING + 5);
+        text.setPosition(text.getPosX(), text.getPosY() + LocationGui.PADDING + 5);
     }
 
     @Override
@@ -35,9 +39,9 @@ public class InfoGui extends ItemGui {
     }
 
     @Override
-    public void hide() {
-        background.hide();
-        text.hide();
+    public void remove() {
+        background.remove();
+        text.remove();
     }
 
     @Override
@@ -57,6 +61,6 @@ public class InfoGui extends ItemGui {
         super.setPosition(posX, posY);
         background.setPosition(posX, posY);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING + 5);
+        text.setPosition(text.getPosX(), text.getPosY() + LocationGui.PADDING + 5);
     }
 }

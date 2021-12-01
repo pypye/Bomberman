@@ -37,7 +37,7 @@ public class TextGui extends ItemGui {
     }
 
     @Override
-    public void hide() {
+    public void remove() {
         Main.GUI_NODE.detachChild(hudText);
     }
 
@@ -51,6 +51,10 @@ public class TextGui extends ItemGui {
 
     public void setText(String text) {
         hudText.setText(text);
+    }
+
+    public String getText(){
+        return hudText.getText();
     }
 
     @Override

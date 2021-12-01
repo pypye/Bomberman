@@ -17,14 +17,14 @@ public class ShieldGui3d extends ItemGui3d {
         shield.show();
     }
 
-    public void hide() {
-        shield.hide();
+    public void remove() {
+        shield.remove();
     }
 
     public void onUpdate(boolean shieldBuffActivated) {
         super.onUpdate();
         if (shieldBuffActivated) shield.show();
-        else shield.hide();
+        else shield.remove();
         screenCoords.x -= 30;
         screenCoords.y -= 100;
         shield.setPosition(screenCoords.x, screenCoords.y);

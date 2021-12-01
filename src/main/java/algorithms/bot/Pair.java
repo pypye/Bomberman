@@ -1,4 +1,4 @@
-package algorithms.Bot;
+package algorithms.bot;
 
 import java.util.Comparator;
 

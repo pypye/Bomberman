@@ -36,8 +36,8 @@ public class SpeedParticle {
     public void onUpdate(boolean speedBuffActivated) {
         if (speedBuffActivated) {
             particleEmitter.setLocalTranslation(link.getLocalTranslation().x, 1, link.getLocalTranslation().z);
-            show();
-        } else hide();
+            this.show();
+        } else this.remove();
     }
 
     public void show() {
@@ -47,7 +47,7 @@ public class SpeedParticle {
         }
     }
 
-    public void hide() {
+    public void remove() {
         if (Main.ROOT_NODE.hasChild(particleEmitter)) {
             particleEmitter.killAllParticles();
             Main.ROOT_NODE.detachChild(particleEmitter);

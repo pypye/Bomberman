@@ -8,7 +8,7 @@ public abstract class ItemGui {
 
     public abstract void show();
 
-    public abstract void hide();
+    public abstract void remove();
 
     public float getSizeX() {
         return sizeX;

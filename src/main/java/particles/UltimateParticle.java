@@ -35,8 +35,8 @@ public class UltimateParticle {
     public void onUpdate(boolean ultimateActivated) {
         if (ultimateActivated) {
             particleEmitter.setLocalTranslation(link.getLocalTranslation().x, 1, link.getLocalTranslation().z);
-            show();
-        } else hide();
+            this.show();
+        } else this.remove();
     }
 
     public void show() {
@@ -46,7 +46,7 @@ public class UltimateParticle {
         }
     }
 
-    public void hide() {
+    public void remove() {
         if (Main.ROOT_NODE.hasChild(particleEmitter)) {
             particleEmitter.killAllParticles();
             Main.ROOT_NODE.detachChild(particleEmitter);

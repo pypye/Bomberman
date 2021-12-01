@@ -22,7 +22,7 @@ public class BuffListGui {
         TOTAL_SIZE -= MARGIN;
         TOTAL_SIZE -= BuffGui.SIZE;
         if (buffList.size() == 0) TOTAL_SIZE = 0;
-        buff.hide();
+        buff.remove();
         reLocateBuffGUI();
     }
 
@@ -32,9 +32,9 @@ public class BuffListGui {
         }
     }
 
-    public static void hide() {
+    public static void remove() {
         for (BuffGui buff : buffList) {
-            buff.hide();
+            buff.remove();
         }
     }
 

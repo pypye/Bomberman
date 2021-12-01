@@ -6,7 +6,7 @@ import entities.bombs.BombList;
 import entities.players.PlayerList;
 import input.PlayerInput;
 import particles.BombExplodeParticleList;
-import ui.gui.InfoGuiList;
+import ui.gui.game.InfoGuiList;
 
 public class Game extends Scene {
     private int level;
@@ -16,16 +16,22 @@ public class Game extends Scene {
     }
 
     @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
+        PlayerInput.setPaused(!active);
+    }
+
+    @Override
     public void show() {
-        Environment.init();
-        Map.init();
-        InfoGuiList.init();
-        isActive = true;
+        setActive(true);
+        Environment.initialize();
+        Map.initialize(level);
+        PlayerInput.initialize();
+        InfoGuiList.initialize();
     }
 
     @Override
     public void update(float tpf) {
-        if (!isActive) return;
         BombList.onUpdate();
         BombExplodeParticleList.onUpdate();
         PlayerInput.onUpdate();
@@ -34,13 +40,13 @@ public class Game extends Scene {
     }
 
     @Override
-    public void hide() {
-        isActive = false;
-        PlayerInput.destroyKeys();
+    public void remove() {
+        setActive(false);
+        InfoGuiList.remove();
         PlayerList.removeAll();
-        Environment.hide();
-        Map.hide();
-        InfoGuiList.hide();
+        PlayerInput.remove();
+        Map.remove();
+        Environment.remove();
     }
 
     public void setLevel(int level) {

@@ -27,7 +27,7 @@ public class ImageGui extends ItemGui {
     }
 
     @Override
-    public void hide() {
+    public void remove() {
         Main.GUI_NODE.detachChild(item);
     }
 

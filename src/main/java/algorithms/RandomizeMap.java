@@ -2,11 +2,6 @@ package algorithms;
 
 import cores.Map;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Random;
-import java.util.Scanner;
-
 public class RandomizeMap {
     private final int numContainer;
     private final int numRock;

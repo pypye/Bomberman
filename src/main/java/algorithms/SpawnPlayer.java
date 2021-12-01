@@ -27,9 +27,9 @@ public class SpawnPlayer {
     }
 
     public static ArrayList<Vector2f> spawn(int[][] map, int num, int dist) {
-        while(true) {
-            ArrayList<Vector2f> result = preSpawn(map ,num, dist);
-            if(result != null) return result;
+        while (true) {
+            ArrayList<Vector2f> result = preSpawn(map, num, dist);
+            if (result != null) return result;
         }
     }
 
@@ -43,7 +43,7 @@ public class SpawnPlayer {
             int x = ((randomInt - 1) / Map.SIZE);
             int y = ((randomInt - 1) % Map.SIZE);
             nCnt++;
-            if(nCnt == 1000000) return null;
+            if (nCnt == 1000000) return null;
             if (map[x][y] == 0 && isEmpty(x, y, map)) {
                 for (Vector2f player : playerList) {
                     int u = (int) player.x;

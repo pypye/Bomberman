@@ -57,12 +57,13 @@ public class Player extends Entity {
         ultimateParticle = new UltimateParticle(spatial);
     }
 
-    public void dead() {
-        Main.ROOT_NODE.detachChild(spatial);
-        statusBarGui3d.hide();
-        shieldGui3d.hide();
-        speedParticle.hide();
-        ultimateParticle.hide();
+    @Override
+    public void remove() {
+        super.remove();
+        statusBarGui3d.remove();
+        shieldGui3d.remove();
+        speedParticle.remove();
+        ultimateParticle.remove();
     }
 
     public void moveForward(float value) {
