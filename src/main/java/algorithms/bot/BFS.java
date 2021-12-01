@@ -159,10 +159,10 @@ public class BFS {
 
     }
 
-    private int moveCase(int x, int y, List<Pair> enemies) {
+    private int moveCase(int x, int y, int l, int r) {
 
         bfs(x, y);
-        enemyList = enemies;
+        enemyList.add(new Pair(l, r));
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
                 return 0;
@@ -196,8 +196,8 @@ public class BFS {
         this.enemyList = enemyList;
     }
 
-    public int nextMove(int x, int y, List<Pair> enemies) {
-        int option = moveCase(x, y, enemies);
+    public int nextMove(int x, int y, int l, int r) {
+        int option = moveCase(x, y, l, r);
         int result = -1;
         switch (option) {
             case 0:
@@ -383,9 +383,9 @@ public class BFS {
         System.out.println("-----------------------------------------------------");
         //bfs.showPath();
         List<Pair> enemyList = new ArrayList<>(List.of(new Pair(1, 1)));
-        int move = bfs.nextMove(x, y, enemyList);
+        int move = bfs.nextMove(x, y, enemyList.get(0).getX(), enemyList.get(0).getY());
         System.out.println(move);
-        System.out.println(bfs.moveCase(x, y, enemyList));
+        System.out.println(bfs.moveCase(x, y, enemyList.get(0).getX(), enemyList.get(0).getY()));
         System.out.println("-----------------------------------------------------");
         //System.out.println(bfs.getDirection(0,1,1, 4));
         //System.out.println(bfs.getTrace(1, 1).getX() + " " + bfs.getTrace(1, 1).getY());
