@@ -36,6 +36,7 @@ public class Map {
     public static void initialize(int level) {
         Spawn spawn = new Spawn(level);
         int[][] map = spawn.getSpawnMap();
+        System.out.println("[Debug/Map] Init level = " + level);
         System.out.println("[Debug/Map] Init Terrain");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {

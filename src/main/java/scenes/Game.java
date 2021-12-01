@@ -23,6 +23,7 @@ public class Game extends Scene {
 
     @Override
     public void show() {
+        System.out.println("[Debug/Level] Init scene level = " + level);
         setActive(true);
         Environment.initialize();
         Map.initialize(level);
@@ -44,6 +45,7 @@ public class Game extends Scene {
         setActive(false);
         InfoGuiList.remove();
         PlayerList.removeAll();
+        BombList.removeAll();
         PlayerInput.remove();
         Map.remove();
         Environment.remove();

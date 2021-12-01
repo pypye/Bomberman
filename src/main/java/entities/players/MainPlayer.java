@@ -166,6 +166,7 @@ public class MainPlayer extends Player {
         Vector2f a = Entity.getCordFromPosition(this.getPosition().x, this.getPosition().z);
         if (Map.getEntity((int) a.x, (int) a.y) instanceof Portal) {
             if (Enemy.getCount() == 0) {
+                System.out.println("[Debug/Event] Player win");
                 new AnnouncementGui(true);
             }
         }

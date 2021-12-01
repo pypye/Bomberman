@@ -167,4 +167,8 @@ public abstract class Enemy extends Player {
     public static int getCount() {
         return count;
     }
+
+    public static void setCount(int count) {
+        Enemy.count = count;
+    }
 }

@@ -17,6 +17,7 @@ public class PlayerList {
         if (!player.shieldBuffActivated) {
             player.remove();
             if (player instanceof MainPlayer) {
+                System.out.println("[Debug/Event] Player lose!");
                 new AnnouncementGui(false);
             }
             players.remove(player);
@@ -32,10 +33,8 @@ public class PlayerList {
     }
 
     public static void removeAll() {
-        ArrayList<Player> removeList = new ArrayList<>(players);
-        for (Player player : removeList) {
-            remove(player);
-        }
+        players.clear();
+        Enemy.setCount(0);
     }
 
     public static Player getMainPlayer() {

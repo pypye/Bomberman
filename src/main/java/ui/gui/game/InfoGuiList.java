@@ -21,6 +21,7 @@ public class InfoGuiList {
 
     public static void onUpdate(float tpf) {
         timeCount += tpf;
+        level.setText("Level: " + ((Game) SceneController.getCurrentScene()).getLevel());
         enemy.setText("Enemy remain: " + Enemy.getCount());
         time.setText("Time: " + (int) timeCount + 's');
     }

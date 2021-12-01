@@ -8,6 +8,7 @@ import entities.terrains.Container;
 import entities.terrains.Portal;
 import particles.BombExplodeParticle;
 import particles.BombExplodeParticleList;
+
 import java.util.ArrayList;
 
 public class BombList {
@@ -41,6 +42,10 @@ public class BombList {
         Map.setObject(cordX, cordY, Map.GRASS, null);
         bomb.getSpark().remove();
         bombs.remove(bomb);
+    }
+
+    public static void removeAll() {
+        bombs.clear();
     }
 
     public static void onUpdate() {

@@ -28,7 +28,7 @@ public abstract class ButtonGui extends ItemGui {
     private final ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
-            if (keyPressed) {
+            if (keyPressed && name.equals("LClick")) {
                 Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
                 if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
                         && getPosX() + getSizeX() >= mousePos.x

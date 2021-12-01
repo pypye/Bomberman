@@ -24,7 +24,10 @@ public class AnnouncementGui {
             btn1 = new ButtonGui(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200, "Next to level " + nextLevel, 200, 50) {
                 @Override
                 public void onClick() {
+                    System.out.println("[Debug/Level] Win next accepted. Next level = " + nextLevel);
                     SceneController.setScene(new Game(nextLevel));
+                    this.remove();
+
                 }
             };
         } else {
@@ -32,7 +35,9 @@ public class AnnouncementGui {
             btn1 = new ButtonGui(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200, "New game", 200, 50) {
                 @Override
                 public void onClick() {
+                    System.out.println("[Debug/Level] Lose accepted. Next level = 1");
                     SceneController.setScene(new Game(1));
+                    this.remove();
                 }
             };
         }
@@ -40,6 +45,7 @@ public class AnnouncementGui {
             @Override
             public void onClick() {
                 SceneController.setScene(new Menu());
+                this.remove();
             }
         };
         InfoGuiList.remove();
