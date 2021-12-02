@@ -1,5 +1,7 @@
 package entities.players;
 
+import audio.Audio;
+import audio.AudioManager;
 import com.jme3.anim.AnimComposer;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;

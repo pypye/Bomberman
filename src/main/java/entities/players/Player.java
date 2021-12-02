@@ -1,5 +1,6 @@
 package entities.players;
 
+import audio.AudioManager;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
@@ -75,8 +76,12 @@ public class Player extends Entity {
         int cordZ1 = (int) ((v.z + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ2 = (int) ((v.z - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX, cordZ1) || Map.isBlocked(cordX, cordZ2)) return;
-        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
         this.setPosition(new Vector3f(v.x + value * speed, v.y, v.z));
+        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) {
+            ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
+            AudioManager.powerUp.setLocalTranslation(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            AudioManager.powerUp.play();
+        }
     }
 
     public void moveBackward(float value) {
@@ -88,8 +93,12 @@ public class Player extends Entity {
         int cordZ1 = (int) ((v.z - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ2 = (int) ((v.z + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX, cordZ1) || Map.isBlocked(cordX, cordZ2)) return;
-        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
         this.setPosition(new Vector3f(v.x - value * speed, v.y, v.z));
+        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) {
+            ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
+            AudioManager.powerUp.setLocalTranslation(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            AudioManager.powerUp.play();
+        }
     }
 
     public void moveLeft(float value) {
@@ -101,8 +110,12 @@ public class Player extends Entity {
         int cordX = (int) ((v.x + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ = (int) ((v.z - value * speed - OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX1, cordZ) || Map.isBlocked(cordX2, cordZ)) return;
-        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
         this.setPosition(new Vector3f(v.x, v.y, v.z - value * speed));
+        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) {
+            ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
+            AudioManager.powerUp.setLocalTranslation(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            AudioManager.powerUp.play();
+        }
     }
 
     public void moveRight(float value) {
@@ -114,8 +127,12 @@ public class Player extends Entity {
         int cordX = (int) ((v.x + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         int cordZ = (int) ((v.z + value * speed + OFFSET + Entity.BLOCK_SIZE / 2) / Entity.BLOCK_SIZE);
         if (Map.isBlocked(cordX1, cordZ) || Map.isBlocked(cordX2, cordZ)) return;
-        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
         this.setPosition(new Vector3f(v.x, v.y, v.z + value * speed));
+        if (Map.getEntity(cordX, cordZ) instanceof BuffItem) {
+            ((BuffItem) Map.getEntity(cordX, cordZ)).buff(this);
+            AudioManager.powerUp.setLocalTranslation(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            AudioManager.powerUp.play();
+        }
     }
 
     public void setBomb() {
@@ -124,6 +141,8 @@ public class Player extends Entity {
         if (Map.getObject(cordX, cordZ) != Map.GRASS) return;
         if (bombLeft > 0) {
             Map.setObject(cordX, cordZ, Map.BOMB, this);
+            AudioManager.placeBomb.setLocalTranslation(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            AudioManager.placeBomb.play();
             bombLeft--;
         }
     }
@@ -200,12 +219,14 @@ public class Player extends Entity {
     protected void onFlameBuffEffect(float tpf) {
         if (!flameBuffActivated) {
             if (flameBuffDuration > 0) {
+                Bomb.path = Bomb.BOMB_UPGRADE;
                 flameBuffActivated = true;
                 bombExplodeLength += 1;
             }
         } else {
             flameBuffDuration -= tpf;
             if (flameBuffDuration <= 0) {
+                Bomb.path = Bomb.BOMB_DEFAULT;
                 flameBuffActivated = false;
                 flameBuffDuration = 0;
                 bombExplodeLength = DEFAULT_BOMB_LENGTH;

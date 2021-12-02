@@ -1,6 +1,6 @@
 package entities.players.enemies;
 
-import algorithms.RandomizeMap;
+import algorithms.spawn.RandomizeMap;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -25,7 +25,7 @@ public abstract class Enemy extends Player {
     public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
     private boolean moving = false;
     protected int nextMove = STAND;
-    protected Vector2f targetPoint = null;
+
     private Vector2f prefMove = null;
 
     public Enemy(Vector3f position, String path) {
@@ -111,44 +111,6 @@ public abstract class Enemy extends Player {
     }
 
     public abstract void setNextMove(Vector2f enemy);
-
-    public Vector2f getTargetPoint() {
-        return targetPoint;
-    }
-
-    public void setTargetPoint(Vector2f start, int dist) {
-        int u = (int) start.x;
-        int v = (int) start.y;
-
-        boolean[][] visited = new boolean[Map.SIZE][Map.SIZE];
-        int[][] step = new int[Map.SIZE][Map.SIZE];
-        Queue<Vector2f> queue = new LinkedList<>();
-        ArrayList<Vector2f> ans = new ArrayList<>();
-        queue.add(new Vector2f(u, v));
-        visited[u][v] = true;
-        step[u][v] = 0;
-
-        while (!queue.isEmpty()) {
-            Vector2f cell = queue.peek();
-            queue.remove();
-            int x = (int) cell.x;
-            int y = (int) cell.y;
-            int st = step[x][y];
-            if (st == dist) ans.add(new Vector2f(x, y));
-            if (st > dist) continue;
-            for (int i = 0; i < 4; i++) {
-                int ax = x + dx[i];
-                int ay = y + dy[i];
-                if (Map.isInside(ax, ay) && !visited[ax][ay] && !Map.isBlocked(ax, ay)) {
-                    queue.add(new Vector2f(ax, ay));
-                    visited[ax][ay] = true;
-                    step[ax][ay] = st + 1;
-                }
-            }
-        }
-        int randomInt = RandomizeMap.randomInt((int) Math.sqrt(ans.size()));
-        targetPoint = ans.isEmpty() ? null : ans.get(randomInt);
-    }
 
     public boolean isMoving() {
         return moving;

@@ -1,9 +1,11 @@
 package scenes;
 
+import com.jme3.math.Vector3f;
 import cores.Environment;
 import cores.Map;
 import entities.bombs.BombList;
 import entities.players.PlayerList;
+import entities.players.enemies.Golem;
 import input.PlayerInput;
 import particles.BombExplodeParticleList;
 import ui.gui.game.InfoGuiList;

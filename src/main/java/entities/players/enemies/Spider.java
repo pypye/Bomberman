@@ -1,22 +1,24 @@
 package entities.players.enemies;
 
+import com.jme3.bounding.BoundingBox;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.players.Player;
 import entities.players.PlayerList;
 
+
 public class Spider extends Enemy {
-    private static int count = 0;
     private static final float CHASING_DURATION = 5f;
     private static final float CHASING_COOL_DOWN_DURATION = 10f;
+    private Vector2f targetPoint = null;
     private float chasingTime = 0.0f;
     private float chasingCoolDownTime = (float) (Math.random() * 10f);
 
     public Spider(Vector3f position) {
         super(position, "Models/Monster/spider.obj");
+        this.spatial.setModelBound(new BoundingBox());
         this.offsetAngle = FastMath.PI;
-        count++;
     }
 
     @Override
@@ -28,15 +30,18 @@ public class Spider extends Enemy {
             if (this.nextMove == -1) ultimateActivated = false;
         }
         if (!ultimateActivated) {
-            if (targetPoint == null || enemy.equals(targetPoint)) setTargetPoint(enemy, 3);
+            if (targetPoint == null || enemy.equals(targetPoint)) {
+                targetPoint = Turtle.setTargetPoint(enemy, 3);
+            }
             this.nextMove = Turtle.nextMoveBase(enemy, targetPoint);
             if (this.nextMove == -1) {
-                setTargetPoint(enemy, 1);
+                targetPoint = Turtle.setTargetPoint(enemy, 1);
                 this.nextMove = Turtle.nextMoveBase(enemy, targetPoint);
             }
         }
     }
 
+    //update particle
     @Override
     public void onUpdate(float tpf) {
         super.onUpdate(tpf);
@@ -55,15 +60,5 @@ public class Spider extends Enemy {
                 System.out.println("[Debug/Spider] " + this + " stopped chasing player");
             }
         }
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
-        count--;
-    }
-
-    public static int getCount() {
-        return count;
     }
 }

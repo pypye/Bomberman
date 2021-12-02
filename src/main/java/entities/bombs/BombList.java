@@ -1,6 +1,8 @@
 package entities.bombs;
 
+import audio.AudioManager;
 import cores.Map;
+import entities.Entity;
 import entities.buffs.BuffItem;
 import entities.players.Player;
 import entities.players.PlayerList;
@@ -40,6 +42,8 @@ public class BombList {
         }
         checkKillPlayer(cordX, cordY);
         Map.setObject(cordX, cordY, Map.GRASS, null);
+        AudioManager.explosion.setLocalTranslation(cordX * 2f, 1, cordY * 2f);
+        AudioManager.explosion.play();
         bomb.getSpark().remove();
         bombs.remove(bomb);
     }
