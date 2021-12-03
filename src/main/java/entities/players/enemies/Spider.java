@@ -4,6 +4,7 @@ import com.jme3.bounding.BoundingBox;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import cores.Debugger;
 import entities.players.Player;
 import entities.players.PlayerList;
 
@@ -50,14 +51,14 @@ public class Spider extends Enemy {
             if (chasingCoolDownTime <= 0) {
                 ultimateActivated = true;
                 chasingTime = CHASING_DURATION;
-                System.out.println("[Debug/Spider] " + this + " started chasing player");
+                Debugger.log(Debugger.ENTITY, "Spider " + this +  " started chasing player");
             }
         } else {
             chasingTime -= tpf;
             if (chasingTime <= 0) {
                 ultimateActivated = false;
                 chasingCoolDownTime = CHASING_COOL_DOWN_DURATION;
-                System.out.println("[Debug/Spider] " + this + " stopped chasing player");
+                Debugger.log(Debugger.ENTITY, "Spider " + this +  " stopped chasing player");
             }
         }
     }

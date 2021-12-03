@@ -20,6 +20,7 @@ public class Environment {
         sky = SkyFactory.createSky(Main.ASSET_MANAGER, west, east, north, south, up, down);
         Main.ROOT_NODE.attachChild(sky);
         Main.ROOT_NODE.addLight(light);
+        Debugger.log(Debugger.ENVIRONMENT, "Environment initialized");
     }
 
     public static void remove() {

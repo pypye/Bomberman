@@ -219,14 +219,12 @@ public class Player extends Entity {
     protected void onFlameBuffEffect(float tpf) {
         if (!flameBuffActivated) {
             if (flameBuffDuration > 0) {
-                Bomb.path = Bomb.BOMB_UPGRADE;
                 flameBuffActivated = true;
                 bombExplodeLength += 1;
             }
         } else {
             flameBuffDuration -= tpf;
             if (flameBuffDuration <= 0) {
-                Bomb.path = Bomb.BOMB_DEFAULT;
                 flameBuffActivated = false;
                 flameBuffDuration = 0;
                 bombExplodeLength = DEFAULT_BOMB_LENGTH;
@@ -316,5 +314,9 @@ public class Player extends Entity {
 
     public void setFlameBuffDuration(float flameBuffDuration) {
         this.flameBuffDuration = flameBuffDuration;
+    }
+
+    public boolean isFlameBuffActivated() {
+        return flameBuffActivated;
     }
 }

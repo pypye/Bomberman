@@ -1,6 +1,7 @@
 package scenes;
 
 import com.jme3.math.Vector3f;
+import cores.Debugger;
 import cores.Environment;
 import cores.Map;
 import entities.bombs.BombList;
@@ -25,7 +26,7 @@ public class Game extends Scene {
 
     @Override
     public void show() {
-        System.out.println("[Debug/Level] Init scene level = " + level);
+        Debugger.log(Debugger.GAME, "Init scene with level = " + level);
         setActive(true);
         Environment.initialize();
         Map.initialize(level);

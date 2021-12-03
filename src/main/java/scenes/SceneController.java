@@ -1,5 +1,6 @@
 package scenes;
 
+import cores.Debugger;
 import cores.Main;
 
 public class SceneController {
@@ -7,11 +8,11 @@ public class SceneController {
 
     public static void setScene(Scene scene) {
         if (currentScene != null) currentScene.remove();
-        System.out.println("[Debug/Scene] Delete all data from " + currentScene);
+        Debugger.log(Debugger.SCENE, "Delete all data from " + currentScene);
         Main.ROOT_NODE.detachAllChildren();
         Main.GUI_NODE.detachAllChildren();
-        System.out.println("[Debug/Scene] Delete all data from world");
-        System.out.println("[Debug/Scene] Set scene from " + currentScene + " to " + scene);
+        Debugger.log(Debugger.SCENE, "Delete all data from world");
+        Debugger.log(Debugger.SCENE, "Set scene from " + currentScene + " to " + scene);
         currentScene = scene;
         currentScene.show();
     }

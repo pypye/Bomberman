@@ -38,10 +38,11 @@ public class PlayerInput {
             }
         }
     };
+
     private static final AnalogListener analogListener = new AnalogListener() {
         @Override
         public void onAnalog(String name, float value, float tpf) {
-            if(!paused){
+            if (!paused) {
                 if (name.equals("Forward")) player.moveForward(value);
                 if (name.equals("Backward")) player.moveBackward(value);
                 if (name.equals("Left")) player.moveLeft(value);

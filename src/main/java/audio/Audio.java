@@ -52,23 +52,14 @@ public class Audio {
                 Vector2f audioPos = new Vector2f(audio.getLocalTranslation().x, audio.getLocalTranslation().z);
                 Vector2f playerPos = new Vector2f(PlayerList.getMainPlayer().getPosition().x, PlayerList.getMainPlayer().getPosition().z);
                 float distance = (float) Math.sqrt((audioPos.x - playerPos.x) * (audioPos.x - playerPos.x) + (audioPos.y - playerPos.y) * (audioPos.y - playerPos.y));
-                if (distance > range) {
-                    audio.setVolume(0);
-                } else {
-                    System.out.println(distance + " " + volume * (1 - distance / range));
-                    audio.setVolume(volume * (1 - distance / range));
-                }
+                if (distance > range) audio.setVolume(0);
+                else audio.setVolume(volume * (1 - distance / range));
             }
-
         }
     }
 
     public void play() {
-        if (looping) {
-            audio.play();
-        } else {
-            audio.playInstance();
-        }
-
+        if (looping) audio.play();
+        else audio.playInstance();
     }
 }

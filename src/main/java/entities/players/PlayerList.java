@@ -1,5 +1,6 @@
 package entities.players;
 
+import cores.Debugger;
 import entities.players.enemies.Enemy;
 import ui.gui.game.AnnouncementGui;
 import ui.gui.buffs.BuffListGui;
@@ -17,7 +18,7 @@ public class PlayerList {
         if (!player.shieldBuffActivated) {
             player.remove();
             if (player instanceof MainPlayer) {
-                System.out.println("[Debug/Event] Player lose!");
+                Debugger.log(Debugger.EVENT, "Player died");
                 new AnnouncementGui(false);
             }
             players.remove(player);

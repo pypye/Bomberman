@@ -5,12 +5,9 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.asset.AssetManager;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
-import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
-import entities.players.Player;
-import entities.players.PlayerList;
 import input.SystemInput;
 import org.lwjgl.openal.AL10;
 import scenes.Menu;
@@ -50,12 +47,8 @@ public class Main extends SimpleApplication {
         assetManager.registerLocator("assets", FileLocator.class);
         SystemInput.initialize();
         AudioManager.initialize();
+        Debugger.initialize(true);
         SceneController.setScene(new Menu());
-        //AudioManager.explosion.getAudio().setLocalTranslation(0, 1, 0);
-
-        //AudioManager.explosion.getAudio().play();
-        //Audio a = new LobbyAudio();
-        //a.getAudio().play();
     }
 
     @Override

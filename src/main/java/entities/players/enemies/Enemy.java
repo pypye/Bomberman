@@ -4,6 +4,7 @@ import algorithms.spawn.RandomizeMap;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import cores.Debugger;
 import cores.Map;
 import entities.Entity;
 import entities.players.Player;
@@ -46,8 +47,8 @@ public abstract class Enemy extends Player {
         if (!this.isMoving()) {
             prefMove = this.getCord();
             this.setNextMove(prefMove);
-            //System.out.println("[Debug/EnemyPosition] " + prefMove);
-            //System.out.println("[Debug/EnemyNextMove] " + nextMove);
+            //Debugger.log(Debugger.ENTITY, "Enemy " + this + " position is " + prefMove);
+            //Debugger.log(Debugger.ENTITY, "Enemy " + this + " next move is " + nextMove);
             this.setMoving(true);
         }
         if (this.isMoving()) {

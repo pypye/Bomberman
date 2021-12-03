@@ -1,5 +1,6 @@
 package ui.gui.game;
 
+import cores.Debugger;
 import cores.Main;
 import scenes.Game;
 import scenes.Menu;
@@ -24,7 +25,7 @@ public class AnnouncementGui {
             btn1 = new ButtonGui(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200, "Next to level " + nextLevel, 200, 50) {
                 @Override
                 public void onClick() {
-                    System.out.println("[Debug/Level] Win next accepted. Next level = " + nextLevel);
+                    Debugger.log(Debugger.EVENT, "Win next accepted. Next level = " + nextLevel);
                     SceneController.setScene(new Game(nextLevel));
                     this.remove();
 
@@ -35,7 +36,7 @@ public class AnnouncementGui {
             btn1 = new ButtonGui(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200, "New game", 200, 50) {
                 @Override
                 public void onClick() {
-                    System.out.println("[Debug/Level] Lose accepted. Next level = 1");
+                    Debugger.log(Debugger.EVENT, "Lose next accepted. Next level = 1");
                     SceneController.setScene(new Game(1));
                     this.remove();
                 }
@@ -44,6 +45,7 @@ public class AnnouncementGui {
         btn2 = new ButtonGui(Main.WIDTH / 2f + 10, Main.HEIGHT / 2f - 200, "Back to main menu", 200, 50) {
             @Override
             public void onClick() {
+                Debugger.log(Debugger.EVENT, "Back to main menu accepted");
                 SceneController.setScene(new Menu());
                 this.remove();
             }

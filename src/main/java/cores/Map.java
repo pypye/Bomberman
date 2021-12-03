@@ -36,16 +36,16 @@ public class Map {
     public static void initialize(int level) {
         Spawn spawn = new Spawn(level);
         int[][] map = spawn.getSpawnMap();
-        System.out.println("[Debug/Map] Init level = " + level);
-        System.out.println("[Debug/Map] Init Terrain");
+        Debugger.log(Debugger.MAP, "Level = " + level);
+        Debugger.log(Debugger.MAP, "Init map");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 new Grass(new Vector3f(i * 2f, 0f, j * 2f));
                 setObject(i, j, map[i][j], null);
             }
         }
-        System.out.println("[Debug/Map] Init map complete");
-        System.out.println("[Debug/Map] Init player");
+        Debugger.log(Debugger.MAP, "Map initialized");
+        Debugger.log(Debugger.MAP, "Init Players");
         Vector2f mainPlayer = spawn.getMainPlayer();
         new MainPlayer(new Vector3f(mainPlayer.x * 2f, 1, mainPlayer.y * 2f));
         for (int i = 0; i < spawn.getEnemy1().size(); i++) {
@@ -54,7 +54,7 @@ public class Map {
         for (int i = 0; i < spawn.getEnemy2().size(); i++) {
             new Spider(new Vector3f(spawn.getEnemy2().get(i).x * 2f, 1, spawn.getEnemy2().get(i).y * 2f));
         }
-        System.out.println("[Debug/Map] Init player complete");
+        Debugger.log(Debugger.MAP, "Players initialized");
     }
 
     public static int[][] getMap() {
@@ -77,7 +77,7 @@ public class Map {
                 else entity[x][z] = new Tree(new Vector3f(x * 2f, 1f, z * 2f));
                 break;
             case BOMB:
-                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, System.currentTimeMillis());
+                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, System.currentTimeMillis(), owner.isFlameBuffActivated());
                 BombList.add((Bomb) entity[x][z]);
                 break;
             case PORTAL:

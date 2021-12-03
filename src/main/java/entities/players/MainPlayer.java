@@ -1,17 +1,15 @@
 package entities.players;
 
-import audio.Audio;
-import audio.AudioManager;
 import com.jme3.anim.AnimComposer;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import cores.Debugger;
 import cores.Main;
 import cores.Map;
 import entities.Entity;
-import entities.bombs.Bomb;
 import entities.players.enemies.Enemy;
 import entities.terrains.Portal;
 import ui.gui.game.AnnouncementGui;
@@ -143,7 +141,6 @@ public class MainPlayer extends Player {
         if (!flameBuffActivated) {
             if (flameBuffDuration > 0) {
                 BuffListGui.addBuff(flameBuffGui);
-                Bomb.path = Bomb.BOMB_UPGRADE;
                 flameBuffActivated = true;
                 bombExplodeLength += 1;
             }
@@ -153,7 +150,6 @@ public class MainPlayer extends Player {
                 if (BuffListGui.getBuffList().contains(flameBuffGui)) {
                     BuffListGui.removeBuff(flameBuffGui);
                 }
-                Bomb.path = Bomb.BOMB_DEFAULT;
                 flameBuffActivated = false;
                 flameBuffDuration = 0;
                 bombExplodeLength = DEFAULT_BOMB_LENGTH;
@@ -168,7 +164,7 @@ public class MainPlayer extends Player {
         Vector2f a = Entity.getCordFromPosition(this.getPosition().x, this.getPosition().z);
         if (Map.getEntity((int) a.x, (int) a.y) instanceof Portal) {
             if (Enemy.getCount() == 0) {
-                System.out.println("[Debug/Event] Player win");
+                Debugger.log(Debugger.EVENT, "Player win");
                 new AnnouncementGui(true);
             }
         }

@@ -10,13 +10,12 @@ public class Bomb extends Entity {
     public static final double COOL_DOWN = 4;
     public static final String BOMB_DEFAULT = "Models/Bomb/bomb.obj";
     public static final String BOMB_UPGRADE = "Models/BombUpgrade/bomb_upgrade.obj";
-    public static String path = BOMB_DEFAULT;
     private final BombSparkParticle spark;
     private final double timeStarted;
     private final Player owner;
 
-    public Bomb(Vector3f position, Player owner, double timeStarted) {
-        super(position, path);
+    public Bomb(Vector3f position, Player owner, double timeStarted, boolean buff) {
+        super(position, buff ? BOMB_UPGRADE : BOMB_DEFAULT);
         this.spark = new BombSparkParticle(spatial);
         this.timeStarted = timeStarted;
         this.blocked = false;

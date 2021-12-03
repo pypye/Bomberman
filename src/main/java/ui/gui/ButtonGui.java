@@ -3,6 +3,7 @@ package ui.gui;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
+import cores.Debugger;
 import cores.Main;
 
 public abstract class ButtonGui extends ItemGui {
@@ -34,7 +35,7 @@ public abstract class ButtonGui extends ItemGui {
                         && getPosX() + getSizeX() >= mousePos.x
                         && getPosY() + getSizeY() >= mousePos.y) {
                     onClick();
-                    System.out.println("[Debug/Event] Clicked " + this + ": " + text.getText());
+                    Debugger.log(Debugger.EVENT, "Clicked " + this + ": " + text.getText());
                 }
             }
         }
