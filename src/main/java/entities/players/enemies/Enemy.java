@@ -21,6 +21,7 @@ public abstract class Enemy extends Player {
     public static final int RIGHT = 1;
     public static final int DOWN = 2;
     public static final int UP = 3;
+    public static final int SET_BOMB = 4;
 
     public static final int[] dx = {0, 0, -1, 1, -1, -1, 1, 1};
     public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
@@ -47,8 +48,8 @@ public abstract class Enemy extends Player {
         if (!this.isMoving()) {
             prefMove = this.getCord();
             this.setNextMove(prefMove);
-            //Debugger.log(Debugger.ENTITY, "Enemy " + this + " position is " + prefMove);
-            //Debugger.log(Debugger.ENTITY, "Enemy " + this + " next move is " + nextMove);
+            Debugger.log(Debugger.ENTITY, "Enemy " + this + " position is " + prefMove);
+            Debugger.log(Debugger.ENTITY, "Enemy " + this + " next move is " + nextMove);
             this.setMoving(true);
         }
         if (this.isMoving()) {
@@ -68,6 +69,13 @@ public abstract class Enemy extends Player {
                 case Enemy.DOWN:
                     this.moveBackward(speed / 300f);
                     fixPosition(-1, 0);
+                    break;
+                case Enemy.SET_BOMB:
+                    this.setBomb();
+                    this.setMoving(false);
+                    break;
+                case Enemy.STAND:
+                    this.setMoving(false);
                     break;
             }
         }
