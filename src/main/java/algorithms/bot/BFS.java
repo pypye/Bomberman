@@ -12,6 +12,7 @@ import java.util.Queue;
 
 
 public class BFS {
+
     private final int[][] visited;
     private final int length = 20;
     private final int[] dx = {-1, 0, 1, 0};
@@ -43,18 +44,15 @@ public class BFS {
         if (!checkRange(u, v)) {
             return false;
         }
-        long timeToGo = 700;
         for (Bomb bomb : BombList.bombs) {
-            if (System.currentTimeMillis() - bomb.getTimeStarted() + timeToGo >= Bomb.DURATION) {
-                if (bomb.getCord().x == u) {
-                    if (Math.abs(bomb.getCord().y - v) <= 2) {
-                        return false;
-                    }
+            if (bomb.getCord().x == u) {
+                if (Math.abs(bomb.getCord().y - v) <= 2) {
+                    return false;
                 }
-                if (bomb.getCord().y == v) {
-                    if (Math.abs(bomb.getCord().x - u) <= 2) {
-                        return false;
-                    }
+            }
+            if (bomb.getCord().y == v) {
+                if (Math.abs(bomb.getCord().x - u) <= 2) {
+                    return false;
                 }
             }
 
@@ -84,7 +82,7 @@ public class BFS {
                 if (checkRange(newX, newY)) {
                     addAttribute(newX, newY, map);
                 }
-                if (checkSafePosition(newX, newY)) {
+                if (checkRange(newX, newY)) {
                     if (!isVisited(newX, newY) && !Map.isBlocked(newX, newY)) {
                         path[newX][newY] = path[u][v] + 1;
                         queue.add(new Pair(newX, newY));
@@ -246,9 +244,12 @@ public class BFS {
                 for (Pair container : containerList) {
                     Pair tempPositionOfContainer;
                     for (int i = 0; i < 4; i++) {
-                        tempPositionOfContainer = new Pair(container.getX() + dx[i], container.getY() + dy[i]);
-                        if (checkSafePosition(tempPositionOfContainer.getX(), tempPositionOfContainer.getY())) {
-                            if (path[tempPositionOfContainer.getX()][tempPositionOfContainer.getY()] < tempPath) {
+                        tempPositionOfContainer = new Pair(container.getX() + dx[i],
+                                container.getY() + dy[i]);
+                        if (checkSafePosition(tempPositionOfContainer.getX(),
+                                tempPositionOfContainer.getY())) {
+                            if (path[tempPositionOfContainer.getX()][tempPositionOfContainer.getY()]
+                                    < tempPath) {
                                 tempPath = path[tempPositionOfContainer.getX()][tempPositionOfContainer.getY()];
                                 tempPosition = tempPositionOfContainer;
                             }

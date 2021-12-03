@@ -56,7 +56,7 @@ public class Map {
 //            new Spider(new Vector3f(spawn.getEnemy2().get(i).x * 2f, 1, spawn.getEnemy2().get(i).y * 2f));
 //        }
         new MainPlayer(new Vector3f(0, 1, 0));
-        new Golem(new Vector3f(0, 1, 4));
+        new Golem(new Vector3f(0, 18, 19));
         Debugger.log(Debugger.MAP, "Players initialized");
     }
 

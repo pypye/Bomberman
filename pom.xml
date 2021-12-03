@@ -49,6 +49,12 @@
             <artifactId>jme3-jogg</artifactId>
             <version>${jme3_v}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jmonkeyengine/jme3-networking -->
+        <dependency>
+            <groupId>org.jmonkeyengine</groupId>
+            <artifactId>jme3-networking</artifactId>
+            <version>3.1.0-alpha5</version>
+        </dependency>
 
     </dependencies>
 </project>
