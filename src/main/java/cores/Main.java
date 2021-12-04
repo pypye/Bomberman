@@ -22,17 +22,19 @@ public class Main extends SimpleApplication {
     public static int WIDTH = 1280;
     public static int HEIGHT = 720;
 
+    public static Main APP;
+
     public static void main(String[] args) {
-        Main app = new Main();
+        APP = new Main();
         AppSettings settings = new AppSettings(true);
         settings.setResolution(WIDTH, HEIGHT);
         settings.setTitle("Bomberman");
         settings.setFrameRate(0);
-        app.setSettings(settings);
-        app.setShowSettings(false);
-        app.setDisplayFps(false);
-        app.setDisplayStatView(false);
-        app.start();
+        APP.setSettings(settings);
+        APP.setShowSettings(false);
+        APP.setDisplayFps(false);
+        APP.setDisplayStatView(false);
+        APP.start();
     }
 
     @Override

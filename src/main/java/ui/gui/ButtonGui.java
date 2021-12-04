@@ -9,6 +9,7 @@ import cores.Main;
 public abstract class ButtonGui extends ItemGui {
     private final TextGui text;
     private final ImageGui button;
+    private boolean active = true;
 
     public ButtonGui(float posX, float posY, String _text) {
         text = new TextGui(_text, ColorRGBA.Black, posX, posY);
@@ -29,20 +30,30 @@ public abstract class ButtonGui extends ItemGui {
     private final ActionListener actionListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
-            if (keyPressed && name.equals("LClick")) {
-                Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
-                if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
-                        && getPosX() + getSizeX() >= mousePos.x
-                        && getPosY() + getSizeY() >= mousePos.y) {
-                    onClick();
-                    Debugger.log(Debugger.EVENT, "Clicked " + this + ": " + text.getText());
+            if (active) {
+                if (keyPressed && name.equals("LClick")) {
+                    Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
+                    if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
+                            && getPosX() + getSizeX() >= mousePos.x
+                            && getPosY() + getSizeY() >= mousePos.y) {
+                        onClick();
+                        Debugger.log(Debugger.EVENT, "Clicked " + this + ": " + text.getText());
+                    }
                 }
             }
+
         }
     };
 
     public abstract void onClick();
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     @Override
     public void show() {
@@ -74,6 +85,6 @@ public abstract class ButtonGui extends ItemGui {
         super.setPosition(posX, posY);
         button.setPosition(posX, posY);
         LocationGui.centerObject(text, button);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING);
+        text.setPosition(text.posX, text.posY + LocationGui.PADDING - 2.5f);
     }
 }

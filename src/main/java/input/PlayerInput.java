@@ -7,6 +7,8 @@ import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
 import entities.players.PlayerList;
+import scenes.SceneController;
+import ui.gui.settings.SettingGui;
 
 import java.util.HashSet;
 
@@ -17,11 +19,13 @@ public class PlayerInput {
 
     public static void initialize() {
         player = (MainPlayer) PlayerList.getMainPlayer();
+        Main.INPUT_MANAGER.addMapping("Setting", new KeyTrigger(KeyInput.KEY_ESCAPE));
         Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
         Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_S));
         Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         Main.INPUT_MANAGER.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
         Main.INPUT_MANAGER.addMapping("SetBomb", new KeyTrigger(KeyInput.KEY_SPACE));
+        Main.INPUT_MANAGER.addListener(settingListener, "Setting");
         Main.INPUT_MANAGER.addListener(actionListener, "Forward", "Backward", "Left", "Right");
         Main.INPUT_MANAGER.addListener(analogListener, "Forward", "Backward", "Left", "Right", "SetBomb");
     }
@@ -48,6 +52,18 @@ public class PlayerInput {
                 if (name.equals("Left")) player.moveLeft(value);
                 if (name.equals("Right")) player.moveRight(value);
                 if (name.equals("SetBomb")) player.setBomb();
+            }
+        }
+    };
+    private static final ActionListener settingListener = new ActionListener() {
+        @Override
+        public void onAction(String name, boolean keyPressed, float tpf) {
+            if (keyPressed & name.equals("Setting")) {
+                if (SettingGui.isEnabled()) {
+                    SettingGui.remove();
+                } else {
+                    SettingGui.initialize();
+                }
             }
         }
     };

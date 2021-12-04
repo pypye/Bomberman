@@ -62,4 +62,8 @@ public class Audio {
         if (looping) audio.play();
         else audio.playInstance();
     }
+
+    public void stop() {
+        audio.stop();
+    }
 }

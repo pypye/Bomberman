@@ -22,9 +22,11 @@ public class Golem extends Enemy {
     @Override
     public void setNextMove(Vector2f enemy) {
         Player player = PlayerList.getMainPlayer();
-        assert player != null;
-        BFS a = new BFS();
-        Debugger.log(Debugger.EVENT, "Golem move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y));
-        this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y);
+        if (player != null) {
+            BFS a = new BFS();
+            Debugger.log(Debugger.EVENT, "Golem move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y));
+            this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y);
+        }
+
     }
 }

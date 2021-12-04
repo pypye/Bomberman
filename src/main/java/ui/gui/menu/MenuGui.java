@@ -6,6 +6,7 @@ import scenes.SceneController;
 import ui.gui.ButtonGui;
 import ui.gui.ImageGui;
 import ui.gui.LocationGui;
+import ui.gui.settings.SettingGui;
 
 public class MenuGui {
     private static ImageGui background;
@@ -27,15 +28,21 @@ public class MenuGui {
         };
         btnAchievement = new ButtonGui(-1, -1, "Achievement", 200, 50) {
             @Override
-            public void onClick() {}
+            public void onClick() {
+            }
         };
         btnSettings = new ButtonGui(-1, -1, "Settings", 200, 50) {
             @Override
-            public void onClick() {}
+            public void onClick() {
+                SettingGui.initialize();
+                MenuGui.setActive(false);
+            }
         };
         btnExit = new ButtonGui(-1, -1, "Exit", 200, 50) {
             @Override
-            public void onClick() {}
+            public void onClick() {
+                Main.APP.stop();
+            }
         };
         LocationGui.centerXObject(btnPlay, background, Main.HEIGHT - 425);
         LocationGui.centerXObject(btnAchievement, background, Main.HEIGHT - 485);
@@ -60,5 +67,12 @@ public class MenuGui {
         btnAchievement.remove();
         btnSettings.remove();
         btnExit.remove();
+    }
+
+    public static void setActive(boolean active) {
+        btnPlay.setActive(active);
+        btnAchievement.setActive(active);
+        btnSettings.setActive(active);
+        btnExit.setActive(active);
     }
 }

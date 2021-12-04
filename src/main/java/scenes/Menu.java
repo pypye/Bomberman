@@ -1,11 +1,19 @@
 package scenes;
 
+import audio.AudioManager;
 import ui.gui.menu.MenuGui;
 
 public class Menu extends Scene {
     @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
+        MenuGui.setActive(active);
+    }
+
+    @Override
     public void show() {
         MenuGui.initialize();
+        AudioManager.lobby.play();
     }
 
     @Override
@@ -15,5 +23,6 @@ public class Menu extends Scene {
     @Override
     public void remove() {
         MenuGui.remove();
+        AudioManager.lobby.stop();
     }
 }

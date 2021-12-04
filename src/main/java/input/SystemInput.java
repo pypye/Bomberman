@@ -6,6 +6,7 @@ import cores.Main;
 
 public class SystemInput {
     public static void initialize() {
+        Main.INPUT_MANAGER.deleteMapping(Main.INPUT_MAPPING_EXIT);
         Main.INPUT_MANAGER.addMapping("LClick", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         Main.INPUT_MANAGER.addMapping("RClick", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
     }

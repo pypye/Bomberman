@@ -1,5 +1,6 @@
 package scenes;
 
+import audio.AudioManager;
 import com.jme3.math.Vector3f;
 import cores.Debugger;
 import cores.Environment;
@@ -32,6 +33,7 @@ public class Game extends Scene {
         Map.initialize(level);
         PlayerInput.initialize();
         InfoGuiList.initialize();
+        AudioManager.bgm.play();
     }
 
     @Override
@@ -52,6 +54,7 @@ public class Game extends Scene {
         PlayerInput.remove();
         Map.remove();
         Environment.remove();
+        AudioManager.bgm.stop();
     }
 
     public void setLevel(int level) {

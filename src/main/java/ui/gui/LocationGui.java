@@ -39,6 +39,11 @@ public class LocationGui {
 
     public static void centerObject(ItemGui child, ItemGui parent) {
         child.setPosition(parent.getPosX() + (parent.getSizeX() / 2 - child.getSizeX() / 2), parent.getPosY() + (parent.getSizeY() / 2 - child.getSizeY() / 2));
-
+    }
+    public static void anchorTopRightObject(ItemGui child, ItemGui parent, float x, float y) {
+        child.setPosition(parent.getPosX() + parent.getSizeX() - child.getSizeX() - x, parent.getPosY() + parent.getSizeY() - child.getSizeY() - y);
+    }
+    public static void anchorTopLeftObject(ItemGui child, ItemGui parent, float x, float y) {
+        child.setPosition(parent.getPosX() + x, parent.getPosY() + parent.getSizeY() - child.getSizeY() - y);
     }
 }
