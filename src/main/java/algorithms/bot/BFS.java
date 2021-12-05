@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 
 
 public class BFS {
@@ -46,12 +47,12 @@ public class BFS {
         }
         for (Bomb bomb : BombList.bombs) {
             if (bomb.getCord().x == u) {
-                if (Math.abs(bomb.getCord().y - v) <= 2) {
+                if (Math.abs(bomb.getCord().y - v) <= 2 && System.currentTimeMillis() - bomb.getTimeStarted() < Bomb.DURATION - 500) {
                     return false;
                 }
             }
             if (bomb.getCord().y == v) {
-                if (Math.abs(bomb.getCord().x - u) <= 2) {
+                if (Math.abs(bomb.getCord().x - u) <= 2 && System.currentTimeMillis() - bomb.getTimeStarted() < Bomb.DURATION - 500) {
                     return false;
                 }
             }
@@ -140,12 +141,33 @@ public class BFS {
         }
 
     }
+    private int randomMissRate(int result, double missRate) {
+        missRate *= 1000;
+        Random r = new Random();
+        int game = r.nextInt(100 * 1000);
+        int resultAfterMiss;
+        if (game <= missRate){
+            resultAfterMiss = r.nextInt(result);
+        }
+        else {
+            return result;
+        }
+        return resultAfterMiss;
+    }
+    private float mahattan(float x, float y, int u, int v) {
+        return Math.abs(x - u) + Math.abs(y - v);
+    }
 
     public int moveCase(int x, int y, int l, int r) {
         bfs(x, y);
         enemyList.add(new Pair(l, r));
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
+                for (Bomb bomb : BombList.bombs) {
+                    if(System.currentTimeMillis() - bomb.getTimeStarted() < Bomb.DURATION - 2000 / mahattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
+                        return 3;
+                    }
+                }
                 return 0;
             } else {
                 return 1;
@@ -171,6 +193,7 @@ public class BFS {
                 }
             }
         }
+
     }
 
     public int nextMove(int x, int y, int l, int r) {
@@ -276,7 +299,9 @@ public class BFS {
             default:
                 break;
         }
-        return result;
+
+
+        return randomMissRate(result, 0);
     }
 
     private int getDirection(int x, int y, int u, int v) {
