@@ -19,20 +19,23 @@ public class Main extends SimpleApplication {
     public static Camera CAM;
     public static Node ROOT_NODE;
     public static Node GUI_NODE;
-    public static int WIDTH = 1280;
-    public static int HEIGHT = 720;
+    public static int WIDTH = 1366;
+    public static int HEIGHT = 768;
 
     public static Main APP;
+    public static AppSettings APP_SETTINGS;
 
     public static void main(String[] args) {
         APP = new Main();
-        AppSettings settings = new AppSettings(true);
-        settings.setResolution(WIDTH, HEIGHT);
-        settings.setTitle("Bomberman");
-        settings.setFrameRate(0);
-        APP.setSettings(settings);
+        APP_SETTINGS = new AppSettings(true);
+        APP_SETTINGS.setResolution(WIDTH, HEIGHT);
+        APP_SETTINGS.setVSync(true);
+        APP_SETTINGS.setTitle("Bomberman");
+        APP_SETTINGS.setFrameRate(60);
+
+        APP.setSettings(APP_SETTINGS);
         APP.setShowSettings(false);
-        APP.setDisplayFps(false);
+        APP.setDisplayFps(true);
         APP.setDisplayStatView(false);
         APP.start();
     }

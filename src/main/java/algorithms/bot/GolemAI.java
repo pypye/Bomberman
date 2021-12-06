@@ -12,7 +12,7 @@ import java.util.Queue;
 import java.util.Random;
 
 
-public class BFS {
+public class GolemAI {
 
     private final int[][] visited;
     private final int length = 20;
@@ -27,7 +27,7 @@ public class BFS {
     private Pair[][] trace;
     private static final int MAX_PATH = 1000000000;
 
-    public BFS() {
+    public GolemAI() {
         visited = new int[length][length];
         path = new int[length][length];
     }

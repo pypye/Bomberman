@@ -2,6 +2,7 @@ package scenes;
 
 import audio.AudioManager;
 import ui.gui.menu.MenuGui;
+import ui.gui.settings.SettingGui;
 
 public class Menu extends Scene {
     @Override
@@ -24,5 +25,10 @@ public class Menu extends Scene {
     public void remove() {
         MenuGui.remove();
         AudioManager.lobby.stop();
+    }
+    @Override
+    public void restart(){
+        MenuGui.remove();
+        MenuGui.initialize();
     }
 }

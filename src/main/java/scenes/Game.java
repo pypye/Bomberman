@@ -10,7 +10,9 @@ import entities.players.PlayerList;
 import entities.players.enemies.Golem;
 import input.PlayerInput;
 import particles.BombExplodeParticleList;
+import ui.gui.buffs.BuffListGui;
 import ui.gui.game.InfoGuiList;
+import ui.gui.settings.SettingGui;
 
 public class Game extends Scene {
     private int level;
@@ -29,6 +31,7 @@ public class Game extends Scene {
     public void show() {
         Debugger.log(Debugger.GAME, "Init scene with level = " + level);
         setActive(true);
+        PlayerInput.setActive(true);
         Environment.initialize();
         Map.initialize(level);
         PlayerInput.initialize();
@@ -63,5 +66,12 @@ public class Game extends Scene {
 
     public int getLevel() {
         return level;
+    }
+
+    @Override
+    public void restart(){
+        InfoGuiList.remove();
+        InfoGuiList.initialize();
+        BuffListGui.reLocateBuffGUI();
     }
 }

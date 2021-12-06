@@ -37,9 +37,11 @@ public abstract class Enemy extends Player {
 
     public boolean isCollisionWithMainPlayer() {
         CollisionResults results = new CollisionResults();
-        if (PlayerList.getMainPlayer() != null) {
-            PlayerList.getMainPlayer().getSpatial().getWorldBound().collideWith(getSpatial().getWorldBound(), results);
-            return results.size() > 0;
+        if (this instanceof Turtle || this instanceof Spider) {
+            if (PlayerList.getMainPlayer() != null) {
+                PlayerList.getMainPlayer().getSpatial().getWorldBound().collideWith(getSpatial().getWorldBound(), results);
+                return results.size() > 0;
+            }
         }
         return false;
     }

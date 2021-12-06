@@ -2,6 +2,7 @@ package ui.gui.game;
 
 import cores.Debugger;
 import cores.Main;
+import input.PlayerInput;
 import scenes.Game;
 import scenes.Menu;
 import scenes.SceneController;
@@ -18,6 +19,7 @@ public class AnnouncementGui {
 
     public AnnouncementGui(boolean win) {
         SceneController.getCurrentScene().setActive(false); //pause game
+        PlayerInput.setActive(false); //pause input
         background = new ImageGui(1100, 600, Main.WIDTH / 2f - 550, Main.HEIGHT / 2f - 300, "Textures/Menu/announcement_background.png");
         if (win) {
             int nextLevel = ((Game) SceneController.getCurrentScene()).getLevel() + 1;

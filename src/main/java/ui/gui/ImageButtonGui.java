@@ -13,6 +13,7 @@ public abstract class ImageButtonGui extends ItemGui {
         if (sizeX >= 0) setSizeX(sizeX);
         if (sizeY >= 0) setSizeY(sizeY);
         setPosition(posX, posY);
+        Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
@@ -51,7 +52,7 @@ public abstract class ImageButtonGui extends ItemGui {
     @Override
     public void remove() {
         button.remove();
-        Main.INPUT_MANAGER.removeListener(actionListener);
+        active = false;
     }
 
     @Override

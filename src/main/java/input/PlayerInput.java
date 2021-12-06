@@ -7,7 +7,6 @@ import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
 import entities.players.PlayerList;
-import scenes.SceneController;
 import ui.gui.settings.SettingGui;
 
 import java.util.HashSet;
@@ -15,6 +14,7 @@ import java.util.HashSet;
 public class PlayerInput {
     public static MainPlayer player;
     private static boolean paused = false;
+    private static boolean active = true;
     private static final HashSet<String> keys = new HashSet<>();
 
     public static void initialize() {
@@ -58,13 +58,16 @@ public class PlayerInput {
     private static final ActionListener settingListener = new ActionListener() {
         @Override
         public void onAction(String name, boolean keyPressed, float tpf) {
-            if (keyPressed & name.equals("Setting")) {
-                if (SettingGui.isEnabled()) {
-                    SettingGui.remove();
-                } else {
-                    SettingGui.initialize();
+            if (active) {
+                if (keyPressed & name.equals("Setting")) {
+                    if (SettingGui.isEnabled()) {
+                        SettingGui.remove();
+                    } else {
+                        SettingGui.initialize();
+                    }
                 }
             }
+
         }
     };
 
@@ -85,5 +88,13 @@ public class PlayerInput {
 
     public static void setPaused(boolean paused) {
         PlayerInput.paused = paused;
+    }
+
+    public static boolean isActive() {
+        return active;
+    }
+
+    public static void setActive(boolean active) {
+        PlayerInput.active = active;
     }
 }

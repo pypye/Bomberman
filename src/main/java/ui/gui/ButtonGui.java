@@ -11,16 +11,30 @@ public abstract class ButtonGui extends ItemGui {
     private final ImageGui button;
     private boolean active = true;
 
+    public static final String BUTTON_DEFAULT = "Textures/Menu/button_long.png";
+    public static final String BUTTON_CANCEL = "Textures/Menu/button_long_cancel.png";
+    public static final String BUTTON_INPUT = "Textures/Menu/button_long_input.png";
+
+
     public ButtonGui(float posX, float posY, String _text) {
         text = new TextGui(_text, ColorRGBA.Black, posX, posY);
-        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/button_long.png");
+        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, BUTTON_DEFAULT);
         setPosition(posX, posY);
+        Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
     public ButtonGui(float posX, float posY, String _text, int sizeX, int sizeY) {
         text = new TextGui(_text, ColorRGBA.Black, posX, posY);
-        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/button_long.png");
+        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, BUTTON_DEFAULT);
+        if (sizeX >= 0) setSizeX(sizeX);
+        if (sizeY >= 0) setSizeY(sizeY);
+        setPosition(posX, posY);
+        Main.INPUT_MANAGER.addListener(actionListener, "LClick");
+    }
+    public ButtonGui(float posX, float posY, String _text, int sizeX, int sizeY, String path) {
+        text = new TextGui(_text, ColorRGBA.Black, posX, posY);
+        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, path);
         if (sizeX >= 0) setSizeX(sizeX);
         if (sizeY >= 0) setSizeY(sizeY);
         setPosition(posX, posY);
@@ -59,13 +73,14 @@ public abstract class ButtonGui extends ItemGui {
     public void show() {
         button.show();
         text.show();
+        active = true;
     }
 
     @Override
     public void remove() {
         button.remove();
         text.remove();
-        Main.INPUT_MANAGER.removeListener(actionListener);
+        active = false;
     }
 
     @Override

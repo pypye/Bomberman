@@ -19,4 +19,6 @@ public abstract class Scene {
     public abstract void show();
 
     public abstract void remove();
+
+    public abstract void restart();
 }
