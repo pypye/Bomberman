@@ -34,13 +34,18 @@ public class Spawn {
         enemy1.clear();
         enemy2.clear();
         enemy3.clear();
-//    if(level > 1000) {
-//      RandomizeMap randomizeMap = new RandomizeMap(50, 100);
-//      spawnMap =  randomizeMap.getRandomizeMap();
-//      enemy1 = SpawnPlayer.spawn(spawnMap, 10, 3);
-//      enemy2 = SpawnPlayer.spawn(spawnMap, 10, 3);
-//      enemy3 = SpawnPlayer.spawn(spawnMap, 10, 3);
-//    }
+        if(level > 1000) {
+          spawnMap =  new RandomizeMap(50, 100).getRandomizeMap();
+          ArrayList<Vector2f> input = SpawnPlayer.spawn(spawnMap, 30, 3);
+          int here = 0;
+          for(int i = 1; i <= 5; i++)
+              enemy1.add(input.get(here++));
+          for(int i = 1; i <= 10; i++)
+              enemy2.add(input.get(here++));
+          for(int i = 1; i <= 15; i++)
+              enemy3.add(input.get(here++));
+          return;
+        }
 
         FileInputStream fileInputStream = new FileInputStream(url);
         Scanner sc = new Scanner(fileInputStream);
@@ -133,7 +138,7 @@ public class Spawn {
     }
 
     public static void main(String[] agrs) throws FileNotFoundException {
-        Spawn demo = new Spawn(1);
+        Spawn demo = new Spawn(1001);
         int a = 2;
     }
 }

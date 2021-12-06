@@ -14,9 +14,9 @@ public class ExportMap {
     private final int col;
 
     private final int[] enemyTotal = new int[]{4, 6, 7, 8, 9, 11, 21};
-    private final int[] enemy1 = new int[]{3, 4, 4, 5, 4, 5, 5};
-    private final int[] enemy2 = new int[]{0, 1, 2, 2, 4, 3, 5};
-    private final int[] enemy3 = new int[]{0, 0, 0, 0, 0, 2, 10};
+    private final int[] enemy1 = new int[]{3, 3, 3, 3, 2, 3, 5};
+    private final int[] enemy2 = new int[]{0, 1, 2, 3, 4, 5, 5};
+    private final int[] enemy3 = new int[]{0, 1, 1, 1, 2, 2, 10};
 
     public ExportMap(int level, int row, int col) {
         this.level = level;
