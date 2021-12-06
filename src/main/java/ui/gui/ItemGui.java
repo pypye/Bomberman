@@ -1,41 +1,45 @@
 package ui.gui;
 
+import com.jme3.math.Vector2f;
+
 public abstract class ItemGui {
-    protected float sizeX;
-    protected float sizeY;
-    protected float posX;
-    protected float posY;
+    protected Vector2f position = new Vector2f(0, 0);
+    protected Vector2f size = new Vector2f(0, 0);
 
     public abstract void show();
 
     public abstract void remove();
 
-    public float getSizeX() {
-        return sizeX;
+    public Vector2f getSize() {
+        return size;
     }
 
     public void setSizeX(float sizeX) {
-        this.sizeX = sizeX;
-    }
-
-    public float getSizeY() {
-        return sizeY;
+        this.size.setX(sizeX);
     }
 
     public void setSizeY(float sizeY) {
-        this.sizeY = sizeY;
+        this.size.setY(sizeY);
+    }
+
+    public void setSize(float sizeX, float sizeY) {
+        this.size.setX(sizeX);
+        this.size.setY(sizeY);
+    }
+
+    public Vector2f getPosition() {
+        return position;
     }
 
     public void setPosition(float posX, float posY) {
-        this.posX = posX;
-        this.posY = posY;
+        this.position.set(posX, posY);
     }
 
-    public float getPosX() {
-        return posX;
+    public void setPositionX(float posX) {
+        this.position.setX(posX);
     }
 
-    public float getPosY() {
-        return posY;
+    public void setPositionY(float posY) {
+        this.position.setY(posY);
     }
 }

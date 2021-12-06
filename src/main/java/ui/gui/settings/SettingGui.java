@@ -3,13 +3,16 @@ package ui.gui.settings;
 import audio.Audio;
 import audio.AudioManager;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import cores.Main;
+import org.lwjgl.opengl.Display;
 import scenes.Game;
 import scenes.Menu;
 import scenes.SceneController;
 import ui.gui.*;
 import ui.gui.menu.MenuGui;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class SettingGui {
@@ -21,19 +24,19 @@ public class SettingGui {
     private static boolean enabled;
 
     public static void initialize() {
-        filter = new ImageGui(Main.WIDTH, Main.HEIGHT, "Textures/Menu/announcement_background.png");
-        background = new ImageGui((Main.WIDTH - 200), (Main.HEIGHT - 200), 100, 100, "Textures/Setting/mainwindow.png");
-        close = new ImageButtonGui(32, 32, -1, -1, "Textures/Setting/X.png") {
+        filter = new ImageGui(new Vector2f(Main.WIDTH, Main.HEIGHT), "Textures/Menu/announcement_background.png");
+        background = new ImageGui(new Vector2f(100, 100), new Vector2f((Main.WIDTH - 200), (Main.HEIGHT - 200)), "Textures/Setting/mainwindow.png");
+        close = new ImageButtonGui(new Vector2f(), new Vector2f(32, 32), "Textures/Setting/X.png") {
             @Override
             public void onClick() {
                 SettingGui.remove();
             }
         };
-        settingText = new TextGui("Settings", ColorRGBA.White, -1, -1, 32);
-        resolutionText = new TextGui("Resolution: ", ColorRGBA.White, -1, -1);
-        fullscreenText = new TextGui("Fullscreen: ", ColorRGBA.White, -1, -1);
-        bgmVolumeText = new TextGui("BGM Volume: ", ColorRGBA.White, -1, -1);
-        effectVolumeText = new TextGui("Effect Volume: ", ColorRGBA.White, -1, -1);
+        settingText = new TextGui("Settings", ColorRGBA.White, 32);
+        resolutionText = new TextGui("Resolution: ", ColorRGBA.White);
+        fullscreenText = new TextGui("Fullscreen: ", ColorRGBA.White);
+        bgmVolumeText = new TextGui("BGM Volume: ", ColorRGBA.White);
+        effectVolumeText = new TextGui("Effect Volume: ", ColorRGBA.White);
 
         LocationGui.anchorTopRightObject(close, background, 16, 16);
         LocationGui.anchorTopLeftObject(settingText, background, 64, 0);
@@ -42,16 +45,16 @@ public class SettingGui {
         LocationGui.anchorTopLeftObject(bgmVolumeText, background, 64, 240);
         LocationGui.anchorTopLeftObject(effectVolumeText, background, 64, 320);
 
-        resolutionSlider = new SliderGui(-1, -1, Arrays.asList("1024x768", "1280x720", "1366x768", "1600x900"), Main.APP_SETTINGS.getWidth() + "x" + Main.APP_SETTINGS.getHeight());
-        fullscreenSlider = new SliderGui(-1, -1, Arrays.asList("Enabled", "Disabled"), Main.APP_SETTINGS.isFullscreen() ? "Enabled" : "Disabled");
-        bgmVolumeSlider = new SliderGui(-1, -1, Arrays.asList("0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"), String.format("%.1f", AudioManager.getBGMVolume()));
-        effectVolumeSlider = new SliderGui(-1, -1, Arrays.asList("0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"), String.format("%.1f", AudioManager.getSFXVolume()));
+        resolutionSlider = new SliderGui(new Vector2f(), Arrays.asList("1024x768", "1280x720", "1366x768", "1600x900"), Main.APP_SETTINGS.getWidth() + "x" + Main.APP_SETTINGS.getHeight());
+        fullscreenSlider = new SliderGui(new Vector2f(), Arrays.asList("Disabled", "Enabled"), Main.APP_SETTINGS.isFullscreen() ? "Enabled" : "Disabled");
+        bgmVolumeSlider = new SliderGui(new Vector2f(), Arrays.asList("0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"), String.format("%.1f", AudioManager.getBGMVolume()));
+        effectVolumeSlider = new SliderGui(new Vector2f(), Arrays.asList("0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"), String.format("%.1f", AudioManager.getSFXVolume()));
         LocationGui.anchorTopLeftObject(resolutionSlider, resolutionText, 150, 20);
         LocationGui.anchorTopLeftObject(fullscreenSlider, fullscreenText, 150, 20);
         LocationGui.anchorTopLeftObject(bgmVolumeSlider, bgmVolumeText, 150, 20);
         LocationGui.anchorTopLeftObject(effectVolumeSlider, effectVolumeText, 150, 20);
 
-        returnBtn = new ButtonGui(-1, -1, "Return to main menu", 200, 50) {
+        returnBtn = new ButtonGui("Return to main menu", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 if (SceneController.getCurrentScene() instanceof Menu) {
@@ -62,7 +65,7 @@ public class SettingGui {
                 }
             }
         };
-        applyBtn = new ButtonGui(-1, -1, "Apply", 200, 50) {
+        applyBtn = new ButtonGui("Apply", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 String[] resolution = resolutionSlider.getCurrentOption().split("x");
@@ -72,6 +75,8 @@ public class SettingGui {
                 Main.APP_SETTINGS.setHeight(Main.HEIGHT);
                 Main.APP_SETTINGS.setFullscreen(fullscreenSlider.getCurrentOption().equals("Enabled"));
                 Main.APP.setSettings(Main.APP_SETTINGS);
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                Display.setLocation((int) ((screenSize.getWidth() - Main.WIDTH) / 2), (int) ((screenSize.getHeight() - Main.HEIGHT) / 2) - 25);
                 Main.APP.restart();
                 SceneController.getCurrentScene().restart();
                 AudioManager.setBGMVolume(Float.parseFloat(bgmVolumeSlider.getCurrentOption()));

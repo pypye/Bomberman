@@ -1,6 +1,7 @@
 package algorithms.bot;
 
 
+import com.jme3.math.Vector2f;
 import cores.Map;
 import entities.bombs.Bomb;
 import entities.bombs.BombList;
@@ -12,24 +13,27 @@ import java.util.Queue;
 import java.util.Random;
 
 
-public class GolemAI {
+public class FindPath {
 
     private final int[][] visited;
     private final int length = 20;
     private final int[] dx = {-1, 0, 1, 0};
     private final int[] dy = {0, 1, 0, -1};
     private final int[][] path;
-    private List<Pair> bombList;
-    private List<Pair> itemList;
-    private List<Pair> enemyList;
-    private List<Pair> exitList;
-    private List<Pair> containerList;
-    private Pair[][] trace;
+    private List<Vector2f> bombList;
+    private List<Vector2f> itemList;
+    private List<Vector2f> enemyList;
+    private List<Vector2f> exitList;
+    private List<Vector2f> containerList;
+    private Vector2f[][] trace;
     private static final int MAX_PATH = 1000000000;
 
-    public GolemAI() {
+    private final int level;
+
+    public FindPath(int level) {
         visited = new int[length][length];
         path = new int[length][length];
+        this.level = level;
     }
 
     public boolean checkRange(int u, int v) {
@@ -64,17 +68,17 @@ public class GolemAI {
     public void bfs(int x, int y) {
         int[][] map = Map.getMap();
         updateMap();
-        Queue<Pair> queue = new LinkedList<>();
+        Queue<Vector2f> queue = new LinkedList<>();
 
         visited[x][y] = 1;
         path[x][y] = 0;
-        queue.add(new Pair(x, y));
+        queue.add(new Vector2f(x, y));
         addAttribute(x, y, map);
 
         while (!queue.isEmpty()) {
-            Pair pair = queue.poll();
-            int u = pair.getX();
-            int v = pair.getY();
+            Vector2f pair = queue.poll();
+            int u = (int) pair.getX();
+            int v = (int) pair.getY();
             visited[u][v] = 1;
 
             for (int i = 0; i < 4; i++) {
@@ -86,8 +90,8 @@ public class GolemAI {
                 if (checkRange(newX, newY)) {
                     if (!isVisited(newX, newY) && !Map.isBlocked(newX, newY)) {
                         path[newX][newY] = path[u][v] + 1;
-                        queue.add(new Pair(newX, newY));
-                        trace[newX][newY] = new Pair(u, v);
+                        queue.add(new Vector2f(newX, newY));
+                        trace[newX][newY] = new Vector2f(u, v);
                         visited[newX][newY] = 1;
                     }
                 }
@@ -97,15 +101,15 @@ public class GolemAI {
 
     private void addAttribute(int newX, int newY, int[][] map) {
         if (map[newX][newY] == 2) {
-            containerList.add(new Pair(newX, newY));
+            containerList.add(new Vector2f(newX, newY));
         } else if (map[newX][newY] == 3) {
-            bombList.add(new Pair(newX, newY));
+            bombList.add(new Vector2f(newX, newY));
         } else if (map[newX][newY] == 4) {
-            exitList.add(new Pair(newX, newY));
+            exitList.add(new Vector2f(newX, newY));
         } else if (map[newX][newY] > 4 && map[newX][newY] < 9) {
-            itemList.add(new Pair(newX, newY));
+            itemList.add(new Vector2f(newX, newY));
         } else if (map[newX][newY] == 9) {
-            enemyList.add(new Pair(newX, newY));
+            enemyList.add(new Vector2f(newX, newY));
         }
     }
 
@@ -131,7 +135,7 @@ public class GolemAI {
         enemyList = new ArrayList<>();
         exitList = new ArrayList<>();
         containerList = new ArrayList<>();
-        trace = new Pair[length][length];
+        trace = new Vector2f[length][length];
 
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
@@ -141,30 +145,31 @@ public class GolemAI {
         }
 
     }
+
     private int randomMissRate(int result, double missRate) {
         missRate *= 1000;
         Random r = new Random();
         int game = r.nextInt(100 * 1000);
         int resultAfterMiss;
-        if (game <= missRate){
+        if (game <= missRate) {
             resultAfterMiss = r.nextInt(result);
-        }
-        else {
+        } else {
             return result;
         }
         return resultAfterMiss;
     }
+
     private float mahattan(float x, float y, int u, int v) {
         return Math.abs(x - u) + Math.abs(y - v);
     }
 
     public int moveCase(int x, int y, int l, int r) {
         bfs(x, y);
-        enemyList.add(new Pair(l, r));
+        enemyList.add(new Vector2f(l, r));
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
                 for (Bomb bomb : BombList.bombs) {
-                    if(System.currentTimeMillis() - bomb.getTimeStarted() < Bomb.DURATION - 2000 / mahattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
+                    if (System.currentTimeMillis() - bomb.getTimeStarted() < Bomb.DURATION - 2000 / mahattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
                         return 3;
                     }
                 }
@@ -177,8 +182,8 @@ public class GolemAI {
                 return 2;
             } else {
                 if (enemyList.size() > 0) {
-                    int u = enemyList.get(0).getX();
-                    int v = enemyList.get(0).getY();
+                    int u = (int) enemyList.get(0).getX();
+                    int v = (int) enemyList.get(0).getY();
                     if (path[u][v] >= 0 && path[u][v] < MAX_PATH) {
                         return 3;
                     } else {
@@ -204,76 +209,76 @@ public class GolemAI {
                 result = -1;
                 break;
             case 1:
-                Pair tempPosition = new Pair(-1000000000, -1000000000);
+                Vector2f tempPosition = new Vector2f(-1000000000, -1000000000);
                 int tempPath = 6;
                 for (int i = -5; i <= 5; i++) {
                     for (int j = -5; j <= 5; j++) {
                         if (checkSafePosition(x + i, y + j) && path[x + i][y + j] < tempPath) {
                             tempPath = path[x + i][y + j];
-                            tempPosition = new Pair(x + i, y + j);
+                            tempPosition = new Vector2f(x + i, y + j);
                         }
                     }
                 }
 
-                if (tempPosition.getX() == -1000000000 && tempPosition.getY() == -1000000000) {
+                if ((int) tempPosition.getX() == -1000000000 && (int) tempPosition.getY() == -1000000000) {
                     result = -1;
                 } else {
-                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 }
                 break;
             case 2:
                 tempPath = MAX_PATH;
-                tempPosition = new Pair(-1000000000, -1000000000);
-                for (Pair item : itemList) {
-                    if (path[item.getX()][item.getY()] < tempPath) {
-                        tempPath = path[item.getX()][item.getY()];
+                tempPosition = new Vector2f(-1000000000, -1000000000);
+                for (Vector2f item : itemList) {
+                    if (path[(int) item.getX()][(int) item.getY()] < tempPath) {
+                        tempPath = path[(int) item.getX()][(int) item.getY()];
                         tempPosition = item;
                     }
                 }
-                result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 break;
             case 3:
                 tempPath = MAX_PATH;
-                tempPosition = new Pair(-1000000000, -1000000000);
-                for (Pair enemy : enemyList) {
-                    if (path[enemy.getX()][enemy.getY()] < tempPath) {
-                        tempPath = path[enemy.getX()][enemy.getY()];
+                tempPosition = new Vector2f(-1000000000, -1000000000);
+                for (Vector2f enemy : enemyList) {
+                    if (path[(int) enemy.getX()][(int) enemy.getY()] < tempPath) {
+                        tempPath = path[(int) enemy.getX()][(int) enemy.getY()];
                         tempPosition = enemy;
                     }
                 }
                 if (tempPath <= 2) {
-                    if (x == tempPosition.getX()) {
-                        if (Math.abs(y - tempPosition.getY()) <= 2) {
+                    if (x == (int) tempPosition.getX()) {
+                        if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
                             result = 4;
                         } else {
-                            result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                            result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                         }
-                    } else if (y == tempPosition.getY()) {
-                        if (Math.abs(x - tempPosition.getX()) <= 2) {
+                    } else if (y == (int) tempPosition.getY()) {
+                        if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
                             result = 4;
                         } else {
-                            result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                            result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                         }
                     } else {
-                        result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                        result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                     }
                 } else {
-                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 }
                 break;
             case 4:
                 tempPath = MAX_PATH;
-                tempPosition = new Pair(-1000000000, -1000000000);
-                for (Pair container : containerList) {
-                    Pair tempPositionOfContainer;
+                tempPosition = new Vector2f(-1000000000, -1000000000);
+                for (Vector2f container : containerList) {
+                    Vector2f tempPositionOfContainer;
                     for (int i = 0; i < 4; i++) {
-                        tempPositionOfContainer = new Pair(container.getX() + dx[i],
+                        tempPositionOfContainer = new Vector2f(container.getX() + dx[i],
                                 container.getY() + dy[i]);
-                        if (checkSafePosition(tempPositionOfContainer.getX(),
-                                tempPositionOfContainer.getY())) {
-                            if (path[tempPositionOfContainer.getX()][tempPositionOfContainer.getY()]
+                        if (checkSafePosition((int) tempPositionOfContainer.getX(),
+                                (int) tempPositionOfContainer.getY())) {
+                            if (path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()]
                                     < tempPath) {
-                                tempPath = path[tempPositionOfContainer.getX()][tempPositionOfContainer.getY()];
+                                tempPath = path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()];
                                 tempPosition = tempPositionOfContainer;
                             }
                         }
@@ -282,33 +287,33 @@ public class GolemAI {
                 if (tempPath == 0) {
                     result = 4;
                 } else {
-                    result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 }
                 break;
             case 5:
                 tempPath = MAX_PATH;
-                tempPosition = new Pair(-1000000000, -1000000000);
-                for (Pair exit : exitList) {
-                    if (path[exit.getX()][exit.getY()] < tempPath) {
-                        tempPath = path[exit.getX()][exit.getY()];
+                tempPosition = new Vector2f(-1000000000, -1000000000);
+                for (Vector2f exit : exitList) {
+                    if (path[(int) exit.getX()][(int) exit.getY()] < tempPath) {
+                        tempPath = path[(int) exit.getX()][(int) exit.getY()];
                         tempPosition = exit;
                     }
                 }
-                result = getDirection(x, y, tempPosition.getX(), tempPosition.getY());
+                result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 break;
             default:
                 break;
         }
 
 
-        return randomMissRate(result, 0);
+        return randomMissRate(result, Math.min(0, 100 - level * 91));
     }
 
     private int getDirection(int x, int y, int u, int v) {
         if (u == v && v == -1000000000) {
             return -1;
         }
-        Pair move = traceBack(new Pair(x, y), new Pair(u, v));
+        Vector2f move = traceBack(new Vector2f(x, y), new Vector2f(u, v));
         if (x == move.getX()) {
             if (y > move.getY()) {
                 return 0;
@@ -326,21 +331,21 @@ public class GolemAI {
         return -1;
     }
 
-    private Pair traceBack(Pair positionOfRoot, Pair positionOfDestination) {
-        Pair result = new Pair(positionOfDestination.getX(), positionOfDestination.getY());
+    private Vector2f traceBack(Vector2f positionOfRoot, Vector2f positionOfDestination) {
+        Vector2f result = new Vector2f(positionOfDestination.getX(), positionOfDestination.getY());
         if (result.getX() == positionOfRoot.getX() && result.getY() == positionOfRoot.getY()) {
             return result;
         }
-        while (trace[result.getX()][result.getY()].getX() != positionOfRoot.getX()
-                || trace[result.getX()][result.getY()].getY() != positionOfRoot.getY()) {
-            //System.out.println(result.getX() + " " + result.getY() + " " + positionOfRoot.getX() + " " + positionOfRoot.getY());
-            result = trace[result.getX()][result.getY()];
+        while (trace[(int) result.getX()][(int) result.getY()].getX() != positionOfRoot.getX()
+                || trace[(int) result.getX()][(int) result.getY()].getY() != positionOfRoot.getY()) {
+            //System.out.println((int) result.getX() + " " + (int) result.getY() + " " + positionOfRoot.getX() + " " + positionOfRoot.getY());
+            result = trace[(int) result.getX()][(int) result.getY()];
         }
-        //System.out.println(trace[result.getX()][result.getY()].getX() + " " + trace[result.getX()][result.getY()].getY());
+        //System.out.println(trace[(int) result.getX()][(int) result.getY()].getX() + " " + trace[(int) result.getX()][(int) result.getY()].getY());
         return result;
     }
 
-    public Pair getTrace(int u, int v) {
+    public Vector2f getTrace(int u, int v) {
         return trace[u][v];
     }
 

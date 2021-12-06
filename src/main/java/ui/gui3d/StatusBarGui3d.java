@@ -1,6 +1,6 @@
 package ui.gui3d;
 
-
+import com.jme3.math.Vector2f;
 import com.jme3.scene.Spatial;
 import ui.gui.ImageGui;
 import ui.gui.ItemGui;
@@ -16,23 +16,23 @@ public class StatusBarGui3d extends ItemGui3d {
 
     public StatusBarGui3d(Spatial link, int count, int current) {
         super(link);
-        background = new ImageGui(60, 16, "Textures/Bar/Status/background.png");
+        background = new ImageGui(new Vector2f(60, 16), "Textures/Bar/Status/background.png");
         for (int i = 0; i < current; ++i) {
-            ItemGui item = new ImageGui(60f / count, 16, "Textures/Bar/Status/fill.png");
+            ItemGui item = new ImageGui(new Vector2f(60f / count, 16), "Textures/Bar/Status/fill.png");
             fill.add(item);
         }
-        coolDown = new ImageGui(0, 16, "Textures/Bar/Status/cool_down.png");
+        coolDown = new ImageGui(new Vector2f(0, 16), "Textures/Bar/Status/cool_down.png");
         for (int i = 0; i < count; ++i) {
-            ItemGui item = new ImageGui(60f / count, 16, "Textures/Bar/Status/part.png");
+            ItemGui item = new ImageGui(new Vector2f(60f / count, 16), "Textures/Bar/Status/part.png");
             part.add(item);
         }
-        foreground = new ImageGui(60, 16, "Textures/Bar/Status/border.png");
+        foreground = new ImageGui(new Vector2f(60, 16), "Textures/Bar/Status/border.png");
     }
 
     public void setMaxCount(int count) {
         if (count > part.size()) {
             while (count != part.size()) {
-                ItemGui item = new ImageGui(60f / count, 16, "Textures/Bar/Status/part.png");
+                ItemGui item = new ImageGui(new Vector2f(60f / count, 16), "Textures/Bar/Status/part.png");
                 part.add(item);
             }
             for (ItemGui itemGui : part) {
@@ -59,7 +59,7 @@ public class StatusBarGui3d extends ItemGui3d {
     public void setCount(int count) {
         if (count > fill.size()) {
             while (count != fill.size()) {
-                ItemGui item = new ImageGui(60f / part.size(), 16,"Textures/Bar/Status/fill.png");
+                ItemGui item = new ImageGui(new Vector2f(60f / part.size(), 16), "Textures/Bar/Status/fill.png");
                 fill.add(item);
             }
         } else if (count < fill.size()) {
@@ -121,6 +121,7 @@ public class StatusBarGui3d extends ItemGui3d {
         removePart();
         foreground.remove();
     }
+
     public void show() {
         background.show();
         coolDown.show();

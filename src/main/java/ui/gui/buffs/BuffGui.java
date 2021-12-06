@@ -1,6 +1,7 @@
 package ui.gui.buffs;
 
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import ui.gui.ImageGui;
 import ui.gui.ItemGui;
 import ui.gui.LocationGui;
@@ -12,11 +13,11 @@ public class BuffGui extends ItemGui {
     private final ImageGui item;
     private final TextGui textGui;
 
-    public BuffGui(float posX, float posY, String path) {
-        background = new ImageGui(64, 64, "Textures/Buffs/background.png");
-        item = new ImageGui(56, 56, path);
-        textGui = new TextGui("0.0s", ColorRGBA.White, posX, posY);
-        setPosition(posX, posY);
+    public BuffGui(Vector2f position, String path) {
+        background = new ImageGui(new Vector2f(64, 64), "Textures/Buffs/background.png");
+        item = new ImageGui(new Vector2f(56, 56), path);
+        textGui = new TextGui("0.0s", ColorRGBA.White, position);
+        setPosition(position.x, position.y);
     }
 
     @Override

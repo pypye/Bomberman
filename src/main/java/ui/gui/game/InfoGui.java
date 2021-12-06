@@ -1,6 +1,7 @@
 package ui.gui.game;
 
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 import ui.gui.ImageGui;
 import ui.gui.ItemGui;
 import ui.gui.LocationGui;
@@ -10,26 +11,22 @@ public class InfoGui extends ItemGui {
     private final TextGui text;
     private final ImageGui background;
 
-    public InfoGui(float posX, float posY, String _text) {
-        text = new TextGui(_text, ColorRGBA.White, posX, posY, 24);
-        background = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/announcement_background.png");
-        setPosition(posX, posY);
+    public InfoGui(String _text, Vector2f position) {
+        text = new TextGui(_text, ColorRGBA.White, position, 24);
+        background = new ImageGui(position, new Vector2f(text.getSize().x + LocationGui.PADDING, text.getSize().y + LocationGui.PADDING), "Textures/Menu/announcement_background.png");
+        setPosition(position.x, position.y);
     }
 
-    public InfoGui(float posX, float posY, String _text, int sizeX, int sizeY) {
-        text = new TextGui(_text, ColorRGBA.White, posX, posY, 24);
-        background = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, "Textures/Menu/announcement_background.png");
-        if (sizeX >= 0) setSizeX(sizeX);
-        if (sizeY >= 0) setSizeY(sizeY);
-        setPosition(posX, posY);
+    public InfoGui(String _text, Vector2f position, Vector2f size) {
+        this(_text, position);
+        setSize(size.x, size.y);
     }
 
     public void setText(String _text) {
         text.setText(_text);
-        setSizeX(text.getSizeX() + LocationGui.PADDING);
-        setSizeY(text.getSizeY() + LocationGui.PADDING);
+        background.setSize(text.getSize().x + LocationGui.PADDING, text.getSize().y + LocationGui.PADDING);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.getPosX(), text.getPosY() + LocationGui.PADDING + 5);
+        text.setPosition(text.getPosition().x, text.getPosition().y + text.getSize().y);
     }
 
     @Override
@@ -61,6 +58,6 @@ public class InfoGui extends ItemGui {
         super.setPosition(posX, posY);
         background.setPosition(posX, posY);
         LocationGui.centerObject(text, background);
-        text.setPosition(text.getPosX(), text.getPosY() + LocationGui.PADDING + 5);
+        text.setPosition(text.getPosition().x, text.getPosition().y + LocationGui.PADDING + 5);
     }
 }

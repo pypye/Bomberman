@@ -20,6 +20,12 @@ public class PlayerInput {
     public static void initialize() {
         player = (MainPlayer) PlayerList.getMainPlayer();
         Main.INPUT_MANAGER.addMapping("Setting", new KeyTrigger(KeyInput.KEY_ESCAPE));
+        Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_UP));
+        Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_DOWN));
+        Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT));
+        Main.INPUT_MANAGER.addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
+        Main.INPUT_MANAGER.addMapping("SetBomb", new KeyTrigger(KeyInput.KEY_RETURN));
+
         Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
         Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_S));
         Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));

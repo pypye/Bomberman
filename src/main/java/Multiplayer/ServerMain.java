@@ -1,14 +1,10 @@
-package Multiplayer;
+package multiplayer;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.AssetManager;
-import com.jme3.input.InputManager;
 import com.jme3.network.Message;
 import com.jme3.network.Network;
 import com.jme3.network.Server;
 import com.jme3.network.service.serializer.ServerSerializerRegistrationsService;
-import com.jme3.renderer.Camera;
-import com.jme3.scene.Node;
 
 import com.jme3.system.JmeContext;
 import java.io.IOException;

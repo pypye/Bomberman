@@ -45,7 +45,7 @@ public class BuffListGui {
     public static void reLocateBuffGUI() {
         int START = (int) ((Main.WIDTH - TOTAL_SIZE) / 2);
         for (BuffGui buffGui : buffList) {
-            buffGui.setPosition(START, buffGui.getPosY());
+            buffGui.setPosition(START, buffGui.getPosition().y);
             START += BuffGui.SIZE + MARGIN;
         }
     }

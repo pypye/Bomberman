@@ -10,8 +10,11 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import input.SystemInput;
 import org.lwjgl.openal.AL10;
+import org.lwjgl.opengl.Display;
 import scenes.Menu;
 import scenes.SceneController;
+
+import java.awt.*;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -21,7 +24,6 @@ public class Main extends SimpleApplication {
     public static Node GUI_NODE;
     public static int WIDTH = 1366;
     public static int HEIGHT = 768;
-
     public static Main APP;
     public static AppSettings APP_SETTINGS;
 
@@ -32,10 +34,11 @@ public class Main extends SimpleApplication {
         APP_SETTINGS.setVSync(true);
         APP_SETTINGS.setTitle("Bomberman");
         APP_SETTINGS.setFrameRate(60);
-
         APP.setSettings(APP_SETTINGS);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Display.setLocation((int) ((screenSize.getWidth() - WIDTH) / 2), (int) ((screenSize.getHeight() - HEIGHT) / 2) - 25);
         APP.setShowSettings(false);
-        APP.setDisplayFps(true);
+        APP.setDisplayFps(false);
         APP.setDisplayStatView(false);
         APP.start();
     }

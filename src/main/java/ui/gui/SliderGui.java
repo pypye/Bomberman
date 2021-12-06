@@ -1,9 +1,9 @@
 package ui.gui;
 
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector2f;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SliderGui extends ItemGui {
@@ -13,7 +13,7 @@ public class SliderGui extends ItemGui {
     private final ArrayList<String> sliderOptions;
     private int currentOption = 0;
 
-    public SliderGui(float posX, float posY, List<String> options, String curOption) {
+    public SliderGui(Vector2f position, List<String> options, String curOption) {
         sliderOptions = new ArrayList<>(options);
         for (int i = 0; i < options.size(); i++) {
             if (options.get(i).equals(curOption)) {
@@ -21,32 +21,32 @@ public class SliderGui extends ItemGui {
                 break;
             }
         }
-        sliderLeft = new ImageButtonGui(16, 16, -1, -1, "Textures/Setting/slider_left.png") {
+        sliderLeft = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Setting/slider_left.png") {
             @Override
             public void onClick() {
                 if (currentOption > 0) {
                     currentOption--;
                     sliderText.setText(sliderOptions.get(currentOption));
                     LocationGui.centerObject(sliderText, SliderGui.this);
-                    sliderText.setPosition(sliderText.posX, sliderText.posY + 15);
+                    sliderText.setPosition(sliderText.getPosition().x, sliderText.getPosition().y + 15);
                 }
             }
         };
-        sliderText = new TextGui(sliderOptions.get(currentOption), ColorRGBA.White, -1, -1);
-        sliderRight = new ImageButtonGui(16, 16, -1, -1, "Textures/Setting/slider_right.png") {
+        sliderText = new TextGui(sliderOptions.get(currentOption), ColorRGBA.White, new Vector2f());
+        sliderRight = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Setting/slider_right.png") {
             @Override
             public void onClick() {
                 if (currentOption < sliderOptions.size() - 1) {
                     currentOption++;
                     sliderText.setText(sliderOptions.get(currentOption));
                     LocationGui.centerObject(sliderText, SliderGui.this);
-                    sliderText.setPosition(sliderText.posX, sliderText.posY + 15);
+                    sliderText.setPosition(sliderText.getPosition().x, sliderText.getPosition().y + 15);
                 }
             }
         };
         this.setSizeX(216);
         this.setSizeY(16);
-        this.setPosition(posX, posY);
+        this.setPosition(position.x, position.y);
     }
 
     public void show() {
@@ -66,7 +66,7 @@ public class SliderGui extends ItemGui {
         super.setPosition(posX, posY);
         sliderLeft.setPosition(posX, posY);
         LocationGui.centerObject(sliderText, this);
-        sliderText.setPosition(sliderText.posX, sliderText.posY + 15);
+        sliderText.setPosition(sliderText.getPosition().x, sliderText.getPosition().y + 15);
         sliderRight.setPosition(posX + 200, posY);
     }
 
@@ -78,6 +78,6 @@ public class SliderGui extends ItemGui {
         currentOption = option;
         sliderText.setText(sliderOptions.get(currentOption));
         LocationGui.centerObject(sliderText, this);
-        sliderText.setPosition(sliderText.posX, sliderText.posY + 15);
+        sliderText.setPosition(sliderText.getPosition().x, sliderText.getPosition().y + 15);
     }
 }

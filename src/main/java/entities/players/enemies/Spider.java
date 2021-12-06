@@ -29,8 +29,10 @@ public class Spider extends Enemy {
         if (player != null && ultimateActivated) {
             this.nextMove = Turtle.nextMoveBase(enemy, player.getCord());
             if (this.nextMove == -1) ultimateActivated = false;
+            speed = DEFAULT_SPEED + 1f;
         }
         if (!ultimateActivated) {
+            speed = DEFAULT_SPEED;
             if (targetPoint == null || enemy.equals(targetPoint)) {
                 targetPoint = Turtle.setTargetPoint(enemy, 3);
             }

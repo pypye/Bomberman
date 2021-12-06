@@ -16,28 +16,29 @@ public abstract class ButtonGui extends ItemGui {
     public static final String BUTTON_INPUT = "Textures/Menu/button_long_input.png";
 
 
-    public ButtonGui(float posX, float posY, String _text) {
-        text = new TextGui(_text, ColorRGBA.Black, posX, posY);
-        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, BUTTON_DEFAULT);
-        setPosition(posX, posY);
+    public ButtonGui(String _text, Vector2f position) {
+        text = new TextGui(_text, ColorRGBA.Black, position);
+        button = new ImageGui(position, text.getSize().add(new Vector2f(20, 20)), BUTTON_DEFAULT);
+        setPosition(position.x, position.y);
         Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
-    public ButtonGui(float posX, float posY, String _text, int sizeX, int sizeY) {
-        text = new TextGui(_text, ColorRGBA.Black, posX, posY);
-        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, BUTTON_DEFAULT);
-        if (sizeX >= 0) setSizeX(sizeX);
-        if (sizeY >= 0) setSizeY(sizeY);
-        setPosition(posX, posY);
+    public ButtonGui(String _text, Vector2f position, Vector2f size) {
+        text = new TextGui(_text, ColorRGBA.Black, position);
+        button = new ImageGui(position, text.getSize().add(new Vector2f(20, 20)), BUTTON_DEFAULT);
+        setSize(size.x, size.y);
+        setPosition(position.x, position.y);
+        Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
-    public ButtonGui(float posX, float posY, String _text, int sizeX, int sizeY, String path) {
-        text = new TextGui(_text, ColorRGBA.Black, posX, posY);
-        button = new ImageGui(text.getSizeX() + LocationGui.PADDING, text.getSizeY() + LocationGui.PADDING, posX, posY, path);
-        if (sizeX >= 0) setSizeX(sizeX);
-        if (sizeY >= 0) setSizeY(sizeY);
-        setPosition(posX, posY);
+
+    public ButtonGui(String _text, Vector2f position, Vector2f size, String path) {
+        text = new TextGui(_text, ColorRGBA.Black, position);
+        button = new ImageGui(position, text.getSize().add(new Vector2f(20, 20)), path);
+        setSize(size.x, size.y);
+        setPosition(position.x, position.y);
+        Main.INPUT_MANAGER.removeListener(actionListener);
         Main.INPUT_MANAGER.addListener(actionListener, "LClick");
     }
 
@@ -47,15 +48,14 @@ public abstract class ButtonGui extends ItemGui {
             if (active) {
                 if (keyPressed && name.equals("LClick")) {
                     Vector2f mousePos = Main.INPUT_MANAGER.getCursorPosition();
-                    if (getPosX() <= mousePos.x && getPosY() <= mousePos.y
-                            && getPosX() + getSizeX() >= mousePos.x
-                            && getPosY() + getSizeY() >= mousePos.y) {
+                    if (getPosition().x <= mousePos.x && getPosition().y <= mousePos.y
+                            && getPosition().x + getSize().x >= mousePos.x
+                            && getPosition().y + getSize().y >= mousePos.y) {
                         onClick();
                         Debugger.log(Debugger.EVENT, "Clicked " + this + ": " + text.getText());
                     }
                 }
             }
-
         }
     };
 
@@ -84,6 +84,12 @@ public abstract class ButtonGui extends ItemGui {
     }
 
     @Override
+    public void setSize(float sizeX, float sizeY) {
+        setSizeX(sizeX);
+        setSizeY(sizeY);
+    }
+
+    @Override
     public void setSizeX(float sizeX) {
         super.setSizeX(sizeX);
         this.button.setSizeX(sizeX);
@@ -100,6 +106,6 @@ public abstract class ButtonGui extends ItemGui {
         super.setPosition(posX, posY);
         button.setPosition(posX, posY);
         LocationGui.centerObject(text, button);
-        text.setPosition(text.posX, text.posY + LocationGui.PADDING - 2.5f);
+        text.setPosition(text.getPosition().x, text.getPosition().y + text.getSize().y - 2.5f);
     }
 }

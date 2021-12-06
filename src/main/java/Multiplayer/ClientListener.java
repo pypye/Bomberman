@@ -1,4 +1,4 @@
-package Multiplayer;
+package multiplayer;
 
 import com.jme3.network.Client;
 import com.jme3.network.Message;

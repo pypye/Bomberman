@@ -1,5 +1,6 @@
 package ui.gui.menu;
 
+import com.jme3.math.Vector2f;
 import cores.Main;
 import scenes.Game;
 import scenes.SceneController;
@@ -17,28 +18,28 @@ public class MenuGui {
     private static ButtonGui btnExit;
 
     public static void initialize() {
-        background = new ImageGui(Main.WIDTH, Main.HEIGHT, "Textures/Menu/Lobby-Background.png");
-        logo = new ImageGui(512, 206, "Textures/Menu/logo.png");
+        background = new ImageGui(new Vector2f(Main.WIDTH, Main.HEIGHT), "Textures/Menu/Lobby-Background.png");
+        logo = new ImageGui(new Vector2f(512, 206), "Textures/Menu/logo.png");
         LocationGui.centerXObject(logo, background, Main.HEIGHT - 400);
-        btnPlay = new ButtonGui(-1, -1, "Play", 200, 50) {
+        btnPlay = new ButtonGui("Play", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 SceneController.setScene(new Game(1));
             }
         };
-        btnAchievement = new ButtonGui(-1, -1, "Achievement", 200, 50) {
+        btnAchievement = new ButtonGui("Achievement", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
             }
         };
-        btnSettings = new ButtonGui(-1, -1, "Settings", 200, 50) {
+        btnSettings = new ButtonGui("Settings", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 SettingGui.initialize();
                 MenuGui.setActive(false);
             }
         };
-        btnExit = new ButtonGui(-1, -1, "Exit", 200, 50) {
+        btnExit = new ButtonGui("Exit", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 Main.APP.stop();

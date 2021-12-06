@@ -89,7 +89,7 @@ public class MainPlayer extends Player {
             }
         }
         speedBuffGUI.getText().setText(String.format("%.1fs", speedBuffDuration));
-        LocationGui.centerXObject(speedBuffGUI.getText(), speedBuffGUI.getBackground(), speedBuffGUI.getText().getPosY());
+        LocationGui.centerXObject(speedBuffGUI.getText(), speedBuffGUI.getBackground(), speedBuffGUI.getText().getPosition().y);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class MainPlayer extends Player {
             }
         }
         bombExtendBuffGui.getText().setText(String.format("%.1fs", bombBuffDuration));
-        LocationGui.centerXObject(bombExtendBuffGui.getText(), bombExtendBuffGui.getBackground(), bombExtendBuffGui.getText().getPosY());
+        LocationGui.centerXObject(bombExtendBuffGui.getText(), bombExtendBuffGui.getBackground(), bombExtendBuffGui.getText().getPosition().y);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class MainPlayer extends Player {
             }
         }
         shieldBuffGUI.getText().setText(String.format("%.1fs", shieldBuffDuration));
-        LocationGui.centerXObject(shieldBuffGUI.getText(), shieldBuffGUI.getBackground(), shieldBuffGUI.getText().getPosY());
+        LocationGui.centerXObject(shieldBuffGUI.getText(), shieldBuffGUI.getBackground(), shieldBuffGUI.getText().getPosition().y);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class MainPlayer extends Player {
             }
         }
         flameBuffGui.getText().setText(String.format("%.1fs", flameBuffDuration));
-        LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosY());
+        LocationGui.centerXObject(flameBuffGui.getText(), flameBuffGui.getBackground(), flameBuffGui.getText().getPosition().y);
     }
 
     private void checkPortal() {
