@@ -1,6 +1,6 @@
 package cores;
 
-import algorithms.spawn.Spawn;
+import algorithms.Spawn;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import entities.*;
@@ -85,7 +85,7 @@ public class Map {
                 else entity[x][z] = new Tree(new Vector3f(x * 2f, 1f, z * 2f));
                 break;
             case BOMB:
-                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, System.currentTimeMillis(), owner.isFlameBuffActivated());
+                entity[x][z] = new Bomb(new Vector3f(x * 2f, 1f, z * 2f), owner, owner.isFlameBuffActivated());
                 BombList.add((Bomb) entity[x][z]);
                 break;
             case PORTAL:

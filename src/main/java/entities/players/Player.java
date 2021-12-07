@@ -17,7 +17,7 @@ import cores.Map;
 import entities.Entity;
 
 public class Player extends Entity {
-    public static final float OFFSET = 0.5f;
+    public static final float OFFSET = 0.45f;
     public static final float DEFAULT_SPEED = 3f;
     public static final int DEFAULT_BOMB_LENGTH = 2;
     public static final int DEFAULT_BOMB_MAX = 3;
@@ -25,7 +25,6 @@ public class Player extends Entity {
     protected float speed = DEFAULT_SPEED;
     protected int bombMax = DEFAULT_BOMB_MAX;
     protected int bombLeft = DEFAULT_BOMB_MAX;
-    protected int bombExplodeLength = DEFAULT_BOMB_LENGTH;
 
     protected float bombCoolDownCurrent = 0f;
     protected float speedBuffDuration = 0f;
@@ -220,14 +219,12 @@ public class Player extends Entity {
         if (!flameBuffActivated) {
             if (flameBuffDuration > 0) {
                 flameBuffActivated = true;
-                bombExplodeLength += 1;
             }
         } else {
             flameBuffDuration -= tpf;
             if (flameBuffDuration <= 0) {
                 flameBuffActivated = false;
                 flameBuffDuration = 0;
-                bombExplodeLength = DEFAULT_BOMB_LENGTH;
             }
         }
     }
@@ -266,14 +263,6 @@ public class Player extends Entity {
 
     public void setBombLeft(int bombLeft) {
         this.bombLeft = bombLeft;
-    }
-
-    public int getBombExplodeLength() {
-        return bombExplodeLength;
-    }
-
-    public void setBombExplodeLength(int bombExplodeLength) {
-        this.bombExplodeLength = bombExplodeLength;
     }
 
     public float getBombCoolDownCurrent() {

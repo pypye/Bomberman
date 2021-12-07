@@ -1,16 +1,17 @@
 package ui.gui;
 
+import cores.Config;
 import cores.Main;
 
 public class LocationGui {
     public static final int PADDING = 20;
 
     public static void centerX(ItemGui gui, float height) {
-        gui.setPosition(Main.WIDTH / 2f - gui.getSize().x / 2f, height);
+        gui.setPosition(Config.WIDTH / 2f - gui.getSize().x / 2f, height);
     }
 
     public static void centerY(ItemGui gui, float width) {
-        gui.setPosition(width, Main.HEIGHT / 2f - gui.getSize().y / 2f);
+        gui.setPosition(width, Config.HEIGHT / 2f - gui.getSize().y / 2f);
     }
 
     public static void anchorBottomLeft(ItemGui gui, float x, float y) {
@@ -18,15 +19,15 @@ public class LocationGui {
     }
 
     public static void anchorBottomRight(ItemGui gui, float x, float y) {
-        gui.setPosition(Main.WIDTH - gui.getSize().x - x, y);
+        gui.setPosition(Config.WIDTH - gui.getSize().x - x, y);
     }
 
     public static void anchorTopLeft(ItemGui gui, float x, float y) {
-        gui.setPosition(x, Main.HEIGHT - gui.getSize().y - y);
+        gui.setPosition(x, Config.HEIGHT - gui.getSize().y - y);
     }
 
     public static void anchorTopRight(ItemGui gui, float x, float y) {
-        gui.setPosition(Main.WIDTH - gui.getSize().x - x, Main.HEIGHT - gui.getSize().y - y);
+        gui.setPosition(Config.WIDTH - gui.getSize().x - x, Config.HEIGHT - gui.getSize().y - y);
     }
 
     public static void centerXObject(ItemGui child, ItemGui parent, float height) {

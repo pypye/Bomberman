@@ -1,13 +1,13 @@
 package ui.gui.menu;
 
 import com.jme3.math.Vector2f;
+import cores.Config;
 import cores.Main;
 import scenes.Game;
 import scenes.SceneController;
 import ui.gui.ButtonGui;
 import ui.gui.ImageGui;
 import ui.gui.LocationGui;
-import ui.gui.settings.SettingGui;
 
 public class MenuGui {
     private static ImageGui background;
@@ -18,9 +18,9 @@ public class MenuGui {
     private static ButtonGui btnExit;
 
     public static void initialize() {
-        background = new ImageGui(new Vector2f(Main.WIDTH, Main.HEIGHT), "Textures/Menu/Lobby-Background.png");
+        background = new ImageGui(new Vector2f(Config.WIDTH, Config.HEIGHT), "Textures/Menu/Lobby-Background.png");
         logo = new ImageGui(new Vector2f(512, 206), "Textures/Menu/logo.png");
-        LocationGui.centerXObject(logo, background, Main.HEIGHT - 400);
+        LocationGui.centerXObject(logo, background, Config.HEIGHT - 400);
         btnPlay = new ButtonGui("Play", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
@@ -45,10 +45,10 @@ public class MenuGui {
                 Main.APP.stop();
             }
         };
-        LocationGui.centerXObject(btnPlay, background, Main.HEIGHT - 425);
-        LocationGui.centerXObject(btnAchievement, background, Main.HEIGHT - 485);
-        LocationGui.centerXObject(btnSettings, background, Main.HEIGHT - 545);
-        LocationGui.centerXObject(btnExit, background, Main.HEIGHT - 605);
+        LocationGui.centerXObject(btnPlay, background, Config.HEIGHT - 425);
+        LocationGui.centerXObject(btnAchievement, background, Config.HEIGHT - 485);
+        LocationGui.centerXObject(btnSettings, background, Config.HEIGHT - 545);
+        LocationGui.centerXObject(btnExit, background, Config.HEIGHT - 605);
         MenuGui.show();
     }
 

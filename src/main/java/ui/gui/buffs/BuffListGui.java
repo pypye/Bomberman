@@ -1,5 +1,6 @@
 package ui.gui.buffs;
 
+import cores.Config;
 import cores.Main;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class BuffListGui {
     }
 
     public static void reLocateBuffGUI() {
-        int START = (int) ((Main.WIDTH - TOTAL_SIZE) / 2);
+        int START = (int) ((Config.WIDTH - TOTAL_SIZE) / 2);
         for (BuffGui buffGui : buffList) {
             buffGui.setPosition(START, buffGui.getPosition().y);
             START += BuffGui.SIZE + MARGIN;

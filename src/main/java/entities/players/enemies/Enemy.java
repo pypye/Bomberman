@@ -1,6 +1,5 @@
 package entities.players.enemies;
 
-import algorithms.spawn.RandomizeMap;
 import com.jme3.collision.CollisionResults;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -9,10 +8,6 @@ import cores.Map;
 import entities.Entity;
 import entities.players.Player;
 import entities.players.PlayerList;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public abstract class Enemy extends Player {
     private static int count = 0;

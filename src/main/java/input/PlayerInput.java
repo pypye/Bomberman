@@ -7,7 +7,7 @@ import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
 import entities.players.PlayerList;
-import ui.gui.settings.SettingGui;
+import ui.gui.menu.SettingGui;
 
 import java.util.HashSet;
 

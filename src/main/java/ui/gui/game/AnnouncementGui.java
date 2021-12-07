@@ -1,6 +1,7 @@
 package ui.gui.game;
 
 import com.jme3.math.Vector2f;
+import cores.Config;
 import cores.Debugger;
 import cores.Main;
 import input.PlayerInput;
@@ -20,11 +21,11 @@ public class AnnouncementGui {
     public AnnouncementGui(boolean win) {
         SceneController.getCurrentScene().setActive(false); //pause game
         PlayerInput.setActive(false); //pause input
-        background = new ImageGui(new Vector2f(Main.WIDTH / 2f - 550, Main.HEIGHT / 2f - 300), new Vector2f(1100, 600), "Textures/Menu/announcement_background.png");
+        background = new ImageGui(new Vector2f(Config.WIDTH / 2f - 550, Config.HEIGHT / 2f - 300), new Vector2f(1100, 600), "Textures/Menu/announcement_background.png");
         if (win) {
             int nextLevel = ((Game) SceneController.getCurrentScene()).getLevel() + 1;
-            image = new ImageGui(new Vector2f(Main.WIDTH / 2f - 500, Main.HEIGHT / 2f - 160), new Vector2f(1000, 414), "Textures/Menu/win.png");
-            btn1 = new ButtonGui("Next to level " + nextLevel, new Vector2f(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
+            image = new ImageGui(new Vector2f(Config.WIDTH / 2f - 500, Config.HEIGHT / 2f - 160), new Vector2f(1000, 414), "Textures/Menu/win.png");
+            btn1 = new ButtonGui("Next to level " + nextLevel, new Vector2f(Config.WIDTH / 2f - 210, Config.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
                 @Override
                 public void onClick() {
                     Debugger.log(Debugger.EVENT, "Win next accepted. Next level = " + nextLevel);
@@ -34,8 +35,8 @@ public class AnnouncementGui {
                 }
             };
         } else {
-            image = new ImageGui(new Vector2f(Main.WIDTH / 2f - 382, Main.HEIGHT / 2f - 120), new Vector2f(764, 373), "Textures/Menu/lose.png");
-            btn1 = new ButtonGui("New game", new Vector2f(Main.WIDTH / 2f - 210, Main.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
+            image = new ImageGui(new Vector2f(Config.WIDTH / 2f - 382, Config.HEIGHT / 2f - 120), new Vector2f(764, 373), "Textures/Menu/lose.png");
+            btn1 = new ButtonGui("New game", new Vector2f(Config.WIDTH / 2f - 210, Config.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
                 @Override
                 public void onClick() {
                     Debugger.log(Debugger.EVENT, "Lose next accepted. Next level = 1");
@@ -44,7 +45,7 @@ public class AnnouncementGui {
                 }
             };
         }
-        btn2 = new ButtonGui("Back to main menu", new Vector2f(Main.WIDTH / 2f + 10, Main.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
+        btn2 = new ButtonGui("Back to main menu", new Vector2f(Config.WIDTH / 2f + 10, Config.HEIGHT / 2f - 200), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
                 Debugger.log(Debugger.EVENT, "Back to main menu accepted");

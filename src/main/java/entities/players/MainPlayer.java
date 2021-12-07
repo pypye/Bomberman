@@ -142,7 +142,6 @@ public class MainPlayer extends Player {
             if (flameBuffDuration > 0) {
                 BuffListGui.addBuff(flameBuffGui);
                 flameBuffActivated = true;
-                bombExplodeLength += 1;
             }
         } else {
             flameBuffDuration -= tpf;
@@ -152,7 +151,6 @@ public class MainPlayer extends Player {
                 }
                 flameBuffActivated = false;
                 flameBuffDuration = 0;
-                bombExplodeLength = DEFAULT_BOMB_LENGTH;
                 return;
             }
         }

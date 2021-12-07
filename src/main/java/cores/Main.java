@@ -22,21 +22,22 @@ public class Main extends SimpleApplication {
     public static Camera CAM;
     public static Node ROOT_NODE;
     public static Node GUI_NODE;
-    public static int WIDTH = 1366;
-    public static int HEIGHT = 768;
     public static Main APP;
     public static AppSettings APP_SETTINGS;
 
     public static void main(String[] args) {
+        Config.importConfig();
         APP = new Main();
         APP_SETTINGS = new AppSettings(true);
-        APP_SETTINGS.setResolution(WIDTH, HEIGHT);
+        APP_SETTINGS.setResolution(Config.WIDTH, Config.HEIGHT);
         APP_SETTINGS.setVSync(true);
         APP_SETTINGS.setTitle("Bomberman");
         APP_SETTINGS.setFrameRate(60);
         APP.setSettings(APP_SETTINGS);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Display.setLocation((int) ((screenSize.getWidth() - WIDTH) / 2), (int) ((screenSize.getHeight() - HEIGHT) / 2) - 25);
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        int width = gd.getDisplayMode().getWidth();
+        int height = gd.getDisplayMode().getHeight();
+        Display.setLocation((width - Config.WIDTH) / 2, (height - Config.HEIGHT) / 2 - 25);
         APP.setShowSettings(false);
         APP.setDisplayFps(false);
         APP.setDisplayStatView(false);
@@ -62,5 +63,12 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         SceneController.update(tpf);
+    }
+
+    @Override
+    public void destroy() {
+        Debugger.log(Debugger.EVENT, "Application closed");
+        Config.exportConfig();
+        super.destroy();
     }
 }

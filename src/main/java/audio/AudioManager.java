@@ -1,5 +1,7 @@
 package audio;
 
+import cores.Config;
+
 public class AudioManager {
     public static Audio lobby;
     public static Audio placeBomb;
@@ -15,6 +17,8 @@ public class AudioManager {
         explosion = new Audio("Sounds/Explosion.ogg", true, false, 2);
         powerUp = new Audio("Sounds/Powerup.ogg", true, false, 1);
         bgm = new Audio("Sounds/BGM.wav", false, true, 0.2f);
+        setBGMVolume(Config.BGM_VOLUME);
+        setSFXVolume(Config.SFX_VOLUME);
     }
 
     public static void setBGMVolume(float volume) {

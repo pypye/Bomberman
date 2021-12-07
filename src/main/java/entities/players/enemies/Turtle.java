@@ -1,6 +1,6 @@
 package entities.players.enemies;
 
-import algorithms.spawn.RandomizeMap;
+import algorithms.RandomizeMap;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
