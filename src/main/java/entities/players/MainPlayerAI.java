@@ -1,6 +1,7 @@
 package entities.players;
 
 import algorithms.FindPathAI;
+import algorithms.FindPathMainPlayerAI;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import cores.Debugger;
@@ -94,13 +95,12 @@ public class MainPlayerAI extends MainPlayer {
     }
 
     public void setNextMove() {
-        Player player = PlayerList.getMainPlayer();
-        if (player == this) player = PlayerList.players.get(1);
-        if (player != null) {
-            FindPathAI a = new FindPathAI(SceneController.getCurrentScene().getLevel());
-            Debugger.log(Debugger.EVENT, "AI move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y));
-            this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y);
-        }
+        FindPathMainPlayerAI a = new FindPathMainPlayerAI(
+                SceneController.getCurrentScene().getLevel());
+        Debugger.log(Debugger.EVENT,
+                "AI move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y));
+        this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y);
+
     }
 
     public boolean isMoving() {
