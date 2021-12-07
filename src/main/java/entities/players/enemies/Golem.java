@@ -11,7 +11,6 @@ import scenes.Game;
 import scenes.SceneController;
 
 public class Golem extends Enemy {
-
     public Golem(Vector3f position) {
         super(position, "Models/Monster/golem.obj");
         this.spatial.setLocalScale(0.7f, 0.7f, 0.7f);
@@ -23,7 +22,7 @@ public class Golem extends Enemy {
     public void setNextMove(Vector2f enemy) {
         Player player = PlayerList.getMainPlayer();
         if (player != null) {
-            FindPathAI a = new FindPathAI(((Game) SceneController.getCurrentScene()).getLevel());
+            FindPathAI a = new FindPathAI(SceneController.getCurrentScene().getLevel());
             Debugger.log(Debugger.EVENT, "Golem move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y));
             this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y);
         }

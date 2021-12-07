@@ -8,13 +8,12 @@
 6 = flame item (extend boom flame size)
 7 = bomb item (more bomb in backpack)
 8 = shield item (protect)
-//... - add more buff item
 
-algorithms.players algorithms as a ArrayList<>
+players as a ArrayList<Player>
 
 <Config>
 [Settings]
-enemy lv1/lv2 spawn rate = 70%/30%
+enemy lv1/lv2/lv3 spawn rate = as config_map.txt
 
 [portal]
 portal spawn_rate = 25%
@@ -24,7 +23,7 @@ portal count = 1
 buff speed = x2
 buff flame = +1
 buff bomb = +1 current bomb, max bomb = 4
-buff spawn_rate = 100%
+buff spawn_rate = 55%
 
 [player]
 player speed = 3 (unit)
@@ -37,7 +36,14 @@ spider speed = 3 (unit)
 spider ultimate duration = 5 (second)
 spider ultimate cool down = 2 (second)
 spider ultimate = chasing player, speed +1
+collision make player dead = true
 
 [turtle] //level 1 - stupid bot
 turtle speed = 3 (unit)
 turtle ultimate = none
+collision make player dead = true
+
+[golem]
+golem speed = 3 (unit)
+golem ultimate = none
+collision make player dead = false

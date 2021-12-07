@@ -1,54 +1,29 @@
-package entities.players.enemies;
+package entities.players;
 
-import com.jme3.collision.CollisionResults;
+import algorithms.FindPathAI;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import cores.Debugger;
 import cores.Map;
 import entities.Entity;
-import entities.players.Player;
-import entities.players.PlayerList;
-import scenes.GameAI;
+import entities.players.enemies.Enemy;
 import scenes.SceneController;
 
-public abstract class Enemy extends Player {
-    private static int count = 0;
-    public static final int STAND = -1;
-    public static final int LEFT = 0;
-    public static final int RIGHT = 1;
-    public static final int DOWN = 2;
-    public static final int UP = 3;
-    public static final int SET_BOMB = 4;
-
-    public static final int[] dx = {0, 0, -1, 1, -1, -1, 1, 1};
-    public static final int[] dy = {-1, 1, 0, 0, -1, 1, -1, 1};
+public class MainPlayerAI extends MainPlayer {
     private boolean moving = false;
-    protected int nextMove = STAND;
-
+    protected int nextMove = Enemy.STAND;
     private Vector2f prefMove = null;
 
-    public Enemy(Vector3f position, String path) {
-        super(position, path);
-        count++;
-    }
-
-    public boolean isCollisionWithMainPlayer() {
-        CollisionResults results = new CollisionResults();
-        if (this instanceof Turtle || this instanceof Spider) {
-            if (PlayerList.getMainPlayer() != null) {
-                PlayerList.getMainPlayer().getSpatial().getWorldBound().collideWith(getSpatial().getWorldBound(), results);
-                return results.size() > 0;
-            }
-        }
-        return false;
+    public MainPlayerAI(Vector3f position) {
+        super(position);
     }
 
     public void onMoving() {
         if (!this.isMoving()) {
             prefMove = this.getCord();
-            this.setNextMove(prefMove);
-            Debugger.log(Debugger.ENTITY, "Enemy " + this + " position is " + prefMove);
-            Debugger.log(Debugger.ENTITY, "Enemy " + this + " next move is " + nextMove);
+            this.setNextMove();
+            Debugger.log(Debugger.ENTITY, "AI " + this + " position is " + prefMove);
+            Debugger.log(Debugger.ENTITY, "AI " + this + " next move is " + nextMove);
             this.setMoving(true);
         }
         if (this.isMoving()) {
@@ -118,7 +93,15 @@ public abstract class Enemy extends Player {
         return nextMove;
     }
 
-    public abstract void setNextMove(Vector2f enemy);
+    public void setNextMove() {
+        Player player = PlayerList.getMainPlayer();
+        if (player == this) player = PlayerList.players.get(1);
+        if (player != null) {
+            FindPathAI a = new FindPathAI(SceneController.getCurrentScene().getLevel());
+            Debugger.log(Debugger.EVENT, "AI move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y));
+            this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y, (int) player.getCord().x, (int) player.getCord().y);
+        }
+    }
 
     public boolean isMoving() {
         return moving;
@@ -126,20 +109,5 @@ public abstract class Enemy extends Player {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
-        count--;
-    }
-
-    public static int getCount() {
-        if (SceneController.getCurrentScene() instanceof GameAI) return count - 1;
-        else return count;
-    }
-
-    public static void setCount(int count) {
-        Enemy.count = count;
     }
 }

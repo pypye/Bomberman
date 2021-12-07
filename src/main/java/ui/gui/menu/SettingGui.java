@@ -24,8 +24,8 @@ public class SettingGui {
 
     public static void initialize() {
         filter = new ImageGui(new Vector2f(Config.WIDTH, Config.HEIGHT), "Textures/Menu/announcement_background.png");
-        background = new ImageGui(new Vector2f(100, 100), new Vector2f((Config.WIDTH - 200), (Config.HEIGHT - 200)), "Textures/Setting/mainwindow.png");
-        close = new ImageButtonGui(new Vector2f(), new Vector2f(32, 32), "Textures/Setting/X.png") {
+        background = new ImageGui(new Vector2f(100, 100), new Vector2f((Config.WIDTH - 200), (Config.HEIGHT - 200)), "Textures/Settings/mainwindow.png");
+        close = new ImageButtonGui(new Vector2f(), new Vector2f(32, 32), "Textures/Settings/X.png") {
             @Override
             public void onClick() {
                 SettingGui.remove();
@@ -70,11 +70,12 @@ public class SettingGui {
                 String[] resolution = resolutionSlider.getCurrentOption().split("x");
                 Config.WIDTH = Integer.parseInt(resolution[0]);
                 Config.HEIGHT = Integer.parseInt(resolution[1]);
+                Config.FULLSCREEN = fullscreenSlider.getCurrentOption().equals("Enabled") ? 1 : 0;
                 Config.BGM_VOLUME = Float.parseFloat(bgmVolumeSlider.getCurrentOption());
                 Config.SFX_VOLUME = Float.parseFloat(effectVolumeSlider.getCurrentOption());
                 Main.APP_SETTINGS.setWidth(Config.WIDTH);
                 Main.APP_SETTINGS.setHeight(Config.HEIGHT);
-                Main.APP_SETTINGS.setFullscreen(fullscreenSlider.getCurrentOption().equals("Enabled"));
+                Main.APP_SETTINGS.setFullscreen(Config.FULLSCREEN != 0);
                 Main.APP.setSettings(Main.APP_SETTINGS);
                 GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
                 int width = gd.getDisplayMode().getWidth();

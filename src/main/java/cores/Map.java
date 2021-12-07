@@ -7,6 +7,7 @@ import entities.*;
 import entities.bombs.Bomb;
 import entities.bombs.BombList;
 import entities.players.MainPlayer;
+import entities.players.MainPlayerAI;
 import entities.players.Player;
 import entities.players.enemies.Golem;
 import entities.players.enemies.Spider;
@@ -34,7 +35,7 @@ public class Map {
     public static final int BOMB_EX_ITEM = 7;
     public static final int SHIELD_ITEM = 8;
 
-    public static void initialize(int level) {
+    public static void initialize(int level, boolean AI) {
         Spawn spawn = new Spawn(level);
         int[][] map = spawn.getSpawnMap();
         Debugger.log(Debugger.MAP, "Level = " + level);
@@ -48,7 +49,12 @@ public class Map {
         Debugger.log(Debugger.MAP, "Map initialized");
         Debugger.log(Debugger.MAP, "Init Players");
         Vector2f mainPlayer = spawn.getMainPlayer();
-        new MainPlayer(new Vector3f(mainPlayer.x * 2f, 1, mainPlayer.y * 2f));
+        if (AI) {
+            new MainPlayerAI(new Vector3f(mainPlayer.x * 2f, 1f, mainPlayer.y * 2f));
+        } else {
+            new MainPlayer(new Vector3f(mainPlayer.x * 2f, 1, mainPlayer.y * 2f));
+        }
+
         for (int i = 0; i < spawn.getEnemy1().size(); i++) {
             new Turtle(new Vector3f(spawn.getEnemy1().get(i).x * 2f, 1, spawn.getEnemy1().get(i).y * 2f));
         }

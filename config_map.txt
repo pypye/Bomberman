@@ -1,0 +1,34 @@
+[Map]
+size = 20
+
+[Level 1]
+enemy spawn count = 3
+level 1/2/3 bot rate = 100%/0%/0%
+
+[Level 2]
+enemy spawn count = 5
+level 1/2/3 bot rate = 60%/20%/20%
+
+[Level 3]
+enemy spawn count = 6
+level 1/2/3 bot rate = 50%/30%/20%
+
+[Level 4]
+enemy spawn count = 7
+level 1/2/3 bot rate = 40%/40%/20%
+
+[Level 5-10]
+enemy spawn count = 8
+level 1/2/3 bot rate = 30%/50%/20%
+
+[Level 10-100]
+enemy spawn count = 10
+level 1/2/3 bot rate = 25%/50%/25%
+
+[Level 100-1k]
+enemy spawn count = 20
+level 1/2/3 bot rate = 25%/25%/50%
+
+[Level >1k] => use random (not use file)
+enemy spawn count = 30
+level 1/2/3 bot rate = 15%/35%/50%

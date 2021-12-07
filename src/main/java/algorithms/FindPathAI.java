@@ -51,12 +51,12 @@ public class FindPathAI {
         }
         for (Bomb bomb : BombList.bombs) {
             if (bomb.getCord().x == u) {
-                if (Math.abs(bomb.getCord().y - v) <= 2 && bomb.getTimeElapsed() < Bomb.DURATION - 500) {
+                if (Math.abs(bomb.getCord().y - v) <= 2 && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                     return false;
                 }
             }
             if (bomb.getCord().y == v) {
-                if (Math.abs(bomb.getCord().x - u) <= 2 && bomb.getTimeElapsed() < Bomb.DURATION - 500) {
+                if (Math.abs(bomb.getCord().x - u) <= 2 && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                     return false;
                 }
             }
@@ -169,7 +169,7 @@ public class FindPathAI {
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2000 / Manhattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
+                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
                         return 3;
                     }
                 }

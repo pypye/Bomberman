@@ -31,6 +31,7 @@ public class Main extends SimpleApplication {
         APP_SETTINGS = new AppSettings(true);
         APP_SETTINGS.setResolution(Config.WIDTH, Config.HEIGHT);
         APP_SETTINGS.setVSync(true);
+        APP_SETTINGS.setFullscreen(Config.FULLSCREEN != 0);
         APP_SETTINGS.setTitle("Bomberman");
         APP_SETTINGS.setFrameRate(60);
         APP.setSettings(APP_SETTINGS);

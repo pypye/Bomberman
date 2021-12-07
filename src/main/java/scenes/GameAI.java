@@ -12,18 +12,13 @@ import particles.BombExplodeParticleList;
 import ui.gui.buffs.BuffListGui;
 import ui.gui.game.InfoGuiList;
 
-public class Game extends Scene {
+public class GameAI extends Scene{
     private int level;
 
-    public Game(int level) {
+    public GameAI(int level) {
         this.level = level;
     }
 
-    @Override
-    public void setActive(boolean active) {
-        super.setActive(active);
-        PlayerInput.setPaused(!active);
-    }
 
     @Override
     public void show() {
@@ -31,8 +26,7 @@ public class Game extends Scene {
         setActive(true);
         SystemInput.setActive(true);
         Environment.initialize();
-        Map.initialize(level, false);
-        PlayerInput.initialize();
+        Map.initialize(level, true);
         InfoGuiList.initialize();
         AudioManager.bgm.play();
     }
@@ -41,7 +35,6 @@ public class Game extends Scene {
     public void update(float tpf) {
         BombList.onUpdate(tpf);
         BombExplodeParticleList.onUpdate();
-        PlayerInput.onUpdate();
         PlayerList.onUpdate(tpf);
         InfoGuiList.onUpdate(tpf);
     }
@@ -52,7 +45,6 @@ public class Game extends Scene {
         InfoGuiList.remove();
         PlayerList.removeAll();
         BombList.removeAll();
-        PlayerInput.remove();
         Map.remove();
         Environment.remove();
         AudioManager.bgm.stop();
@@ -67,7 +59,7 @@ public class Game extends Scene {
     }
 
     @Override
-    public void restart() {
+    public void restart(){
         InfoGuiList.remove();
         InfoGuiList.initialize();
         BuffListGui.reLocateBuffGUI();

@@ -26,7 +26,7 @@ public class Turtle extends Enemy {
         }
         this.nextMove = nextMoveBase(enemy, targetPoint);
         if (this.nextMove == -1) {
-            setTargetPoint(enemy, 1);
+            targetPoint = setTargetPoint(enemy, 1);
             this.nextMove = nextMoveBase(enemy, targetPoint);
         }
     }

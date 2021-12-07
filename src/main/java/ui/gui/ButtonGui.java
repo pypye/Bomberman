@@ -12,9 +12,6 @@ public abstract class ButtonGui extends ItemGui {
     private boolean active = true;
 
     public static final String BUTTON_DEFAULT = "Textures/Menu/button_long.png";
-    public static final String BUTTON_CANCEL = "Textures/Menu/button_long_cancel.png";
-    public static final String BUTTON_INPUT = "Textures/Menu/button_long_input.png";
-
 
     public ButtonGui(String _text, Vector2f position) {
         text = new TextGui(_text, ColorRGBA.Black, position);
@@ -27,15 +24,6 @@ public abstract class ButtonGui extends ItemGui {
     public ButtonGui(String _text, Vector2f position, Vector2f size) {
         text = new TextGui(_text, ColorRGBA.Black, position);
         button = new ImageGui(position, text.getSize().add(new Vector2f(20, 20)), BUTTON_DEFAULT);
-        setSize(size.x, size.y);
-        setPosition(position.x, position.y);
-        Main.INPUT_MANAGER.removeListener(actionListener);
-        Main.INPUT_MANAGER.addListener(actionListener, "LClick");
-    }
-
-    public ButtonGui(String _text, Vector2f position, Vector2f size, String path) {
-        text = new TextGui(_text, ColorRGBA.Black, position);
-        button = new ImageGui(position, text.getSize().add(new Vector2f(20, 20)), path);
         setSize(size.x, size.y);
         setPosition(position.x, position.y);
         Main.INPUT_MANAGER.removeListener(actionListener);

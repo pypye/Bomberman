@@ -21,7 +21,7 @@ public class SliderGui extends ItemGui {
                 break;
             }
         }
-        sliderLeft = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Setting/slider_left.png") {
+        sliderLeft = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Settings/slider_left.png") {
             @Override
             public void onClick() {
                 if (currentOption > 0) {
@@ -33,7 +33,7 @@ public class SliderGui extends ItemGui {
             }
         };
         sliderText = new TextGui(sliderOptions.get(currentOption), ColorRGBA.White, new Vector2f());
-        sliderRight = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Setting/slider_right.png") {
+        sliderRight = new ImageButtonGui(new Vector2f(), new Vector2f(16, 16), "Textures/Settings/slider_right.png") {
             @Override
             public void onClick() {
                 if (currentOption < sliderOptions.size() - 1) {

@@ -20,6 +20,7 @@ import java.util.Random;
 public class BuffItem extends Entity {
     private final BuffItemParticle buffEffect;
     private Spatial shadow;
+
     public BuffItem(Vector3f position, String path) {
         super(position, path);
         Quaternion rot = spatial.getLocalRotation();
@@ -40,7 +41,13 @@ public class BuffItem extends Entity {
     public static void generateBuffItem(int cordX, int cordY) {
         Random random = new Random();
         int lower = 5, upper = 9;
-        Map.setObject(cordX, cordY, random.nextInt(upper - lower) + lower, null);
+        double r = Math.random();
+        if (r <= 0.55) {
+            Map.setObject(cordX, cordY, random.nextInt(upper - lower) + lower, null);
+        } else {
+            Map.setObject(cordX, cordY, Map.GRASS, null);
+        }
+
     }
 
     public void buff(Player player) {

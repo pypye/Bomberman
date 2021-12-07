@@ -15,7 +15,7 @@ public class InfoGuiList {
 
     public static void initialize() {
         timeCount = 0f;
-        level = new InfoGui("Level: " + ((Game) SceneController.getCurrentScene()).getLevel(), new Vector2f(20, Config.HEIGHT - 70));
+        level = new InfoGui("Level: " + SceneController.getCurrentScene().getLevel(), new Vector2f(20, Config.HEIGHT - 70));
         enemy = new InfoGui("Enemy remain: " + Enemy.getCount(), new Vector2f(20, Config.HEIGHT - 130));
         time = new InfoGui("Time: " + (int) timeCount + 's', new Vector2f(20, Config.HEIGHT - 190));
         show();
@@ -23,7 +23,7 @@ public class InfoGuiList {
 
     public static void onUpdate(float tpf) {
         timeCount += tpf;
-        level.setText("Level: " + ((Game) SceneController.getCurrentScene()).getLevel());
+        level.setText("Level: " + SceneController.getCurrentScene().getLevel());
         enemy.setText("Enemy remain: " + Enemy.getCount());
         time.setText("Time: " + (int) timeCount + 's');
     }
@@ -38,5 +38,9 @@ public class InfoGuiList {
         level.remove();
         enemy.remove();
         time.remove();
+    }
+
+    public static double getTimeCount() {
+        return timeCount;
     }
 }

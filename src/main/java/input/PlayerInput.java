@@ -7,33 +7,26 @@ import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
 import entities.players.PlayerList;
-import ui.gui.menu.SettingGui;
 
 import java.util.HashSet;
 
 public class PlayerInput {
     public static MainPlayer player;
     private static boolean paused = false;
-    private static boolean active = true;
+
     private static final HashSet<String> keys = new HashSet<>();
 
     public static void initialize() {
         player = (MainPlayer) PlayerList.getMainPlayer();
-        Main.INPUT_MANAGER.addMapping("Setting", new KeyTrigger(KeyInput.KEY_ESCAPE));
-        Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_UP));
-        Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_DOWN));
-        Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_LEFT));
-        Main.INPUT_MANAGER.addMapping("Right", new KeyTrigger(KeyInput.KEY_RIGHT));
-        Main.INPUT_MANAGER.addMapping("SetBomb", new KeyTrigger(KeyInput.KEY_RETURN));
-
         Main.INPUT_MANAGER.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
         Main.INPUT_MANAGER.addMapping("Backward", new KeyTrigger(KeyInput.KEY_S));
         Main.INPUT_MANAGER.addMapping("Left", new KeyTrigger(KeyInput.KEY_A));
         Main.INPUT_MANAGER.addMapping("Right", new KeyTrigger(KeyInput.KEY_D));
         Main.INPUT_MANAGER.addMapping("SetBomb", new KeyTrigger(KeyInput.KEY_SPACE));
-        Main.INPUT_MANAGER.addListener(settingListener, "Setting");
+
         Main.INPUT_MANAGER.addListener(actionListener, "Forward", "Backward", "Left", "Right");
         Main.INPUT_MANAGER.addListener(analogListener, "Forward", "Backward", "Left", "Right", "SetBomb");
+
     }
 
     private static final ActionListener actionListener = new ActionListener() {
@@ -61,21 +54,7 @@ public class PlayerInput {
             }
         }
     };
-    private static final ActionListener settingListener = new ActionListener() {
-        @Override
-        public void onAction(String name, boolean keyPressed, float tpf) {
-            if (active) {
-                if (keyPressed & name.equals("Setting")) {
-                    if (SettingGui.isEnabled()) {
-                        SettingGui.remove();
-                    } else {
-                        SettingGui.initialize();
-                    }
-                }
-            }
 
-        }
-    };
 
     public static void onUpdate() {
         if (keys.size() == 0) {
@@ -96,11 +75,5 @@ public class PlayerInput {
         PlayerInput.paused = paused;
     }
 
-    public static boolean isActive() {
-        return active;
-    }
 
-    public static void setActive(boolean active) {
-        PlayerInput.active = active;
-    }
 }

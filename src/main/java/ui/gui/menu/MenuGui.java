@@ -24,12 +24,16 @@ public class MenuGui {
         btnPlay = new ButtonGui("Play", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
-                SceneController.setScene(new Game(1));
+                PlayGui.initialize();
+                MenuGui.setActive(false);
+                //SceneController.setScene(new Game(1));
             }
         };
         btnAchievement = new ButtonGui("Achievement", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
+                AchievementGui.initialize();
+                MenuGui.setActive(false);
             }
         };
         btnSettings = new ButtonGui("Settings", new Vector2f(), new Vector2f(200, 50)) {

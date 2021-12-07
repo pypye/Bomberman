@@ -21,4 +21,8 @@ public abstract class Scene {
     public abstract void remove();
 
     public abstract void restart();
+
+    public int getLevel(){
+        return 0;
+    }
 }

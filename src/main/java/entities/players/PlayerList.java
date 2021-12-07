@@ -2,6 +2,9 @@ package entities.players;
 
 import cores.Debugger;
 import entities.players.enemies.Enemy;
+import scenes.GameAI;
+import scenes.Scene;
+import scenes.SceneController;
 import ui.gui.game.AnnouncementGui;
 import ui.gui.buffs.BuffListGui;
 
@@ -26,7 +29,7 @@ public class PlayerList {
         } else {
             player.shieldBuffActivated = false;
             player.shieldBuffDuration = 0;
-            if(player instanceof MainPlayer) {
+            if (player instanceof MainPlayer) {
                 if (BuffListGui.getBuffList().contains(((MainPlayer) player).shieldBuffGUI))
                     BuffListGui.removeBuff(((MainPlayer) player).shieldBuffGUI);
             }
@@ -51,6 +54,9 @@ public class PlayerList {
         ArrayList<Player> removeList = new ArrayList<>();
         for (Player player : players) {
             player.onUpdate(tpf);
+            if(player instanceof MainPlayerAI) {
+                ((MainPlayerAI) player).onMoving();
+            }
             if (player instanceof Enemy) {
                 Enemy enemy = (Enemy) player;
                 enemy.onMoving();
