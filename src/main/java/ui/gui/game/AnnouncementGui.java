@@ -33,7 +33,7 @@ public class AnnouncementGui {
             Config.LEVEL_PLAYED = nextLevel - 1;
             Config.TIME_PLAYED = timeElapsed;
         } else if (nextLevel - 1 == Config.LEVEL_PLAYED) {
-            if (timeElapsed > Config.TIME_PLAYED) {
+            if (timeElapsed < Config.TIME_PLAYED) {
                 Config.TIME_PLAYED = timeElapsed;
             }
         }
@@ -71,6 +71,7 @@ public class AnnouncementGui {
                     } else if (SceneController.getCurrentScene() instanceof GameAI) {
                         SceneController.setScene(new GameAI(1));
                     }
+                    InfoGuiList.setTimeCount(0);
                     this.remove();
                 }
             };

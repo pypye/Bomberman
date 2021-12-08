@@ -2,9 +2,7 @@ package ui.gui.game;
 
 import com.jme3.math.Vector2f;
 import cores.Config;
-import cores.Main;
 import entities.players.enemies.Enemy;
-import scenes.Game;
 import scenes.SceneController;
 
 public class InfoGuiList {
@@ -14,7 +12,6 @@ public class InfoGuiList {
     private static double timeCount = 0f;
 
     public static void initialize() {
-        timeCount = 0f;
         level = new InfoGui("Level: " + SceneController.getCurrentScene().getLevel(), new Vector2f(20, Config.HEIGHT - 70));
         enemy = new InfoGui("Enemy remain: " + Enemy.getCount(), new Vector2f(20, Config.HEIGHT - 130));
         time = new InfoGui("Time: " + (int) timeCount + 's', new Vector2f(20, Config.HEIGHT - 190));
@@ -42,5 +39,9 @@ public class InfoGuiList {
 
     public static double getTimeCount() {
         return timeCount;
+    }
+
+    public static void setTimeCount(double timeCount) {
+        InfoGuiList.timeCount = timeCount;
     }
 }
