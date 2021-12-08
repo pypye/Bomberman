@@ -135,8 +135,7 @@ public abstract class Enemy extends Player {
     }
 
     public static int getCount() {
-        if (SceneController.getCurrentScene() instanceof GameAI) return count - 1;
-        else return count;
+        return count;
     }
 
     public static void setCount(int count) {
