@@ -148,11 +148,12 @@ public class FindPathAI {
 
     private int randomMissRate(int result, double missRate) {
         missRate *= 1000;
-        Random r = new Random();
-        int game = r.nextInt(100 * 1000);
-        int resultAfterMiss;
-        if (game <= missRate) {
-            resultAfterMiss = r.nextInt(result);
+
+        int range = 100001;
+        int rand = (int) (Math.random() * range) + 1;
+        int resultAfterMiss =  -1;
+        if (rand <= missRate) {
+            resultAfterMiss = (int) (Math.random() * 6) - 1;
         } else {
             return result;
         }
@@ -203,6 +204,7 @@ public class FindPathAI {
 
     public int nextMove(int x, int y, int l, int r) {
         int option = moveCase(x, y, l, r);
+        option = randomMissRate(option, 100 - 15 * level);
         int result = -1;
         switch (option) {
             case 0:
@@ -304,7 +306,7 @@ public class FindPathAI {
         }
 
 
-        return randomMissRate(result, Math.max(0, 100 - level * 91));
+        return result;
     }
 
     private int getDirection(int x, int y, int u, int v) {
