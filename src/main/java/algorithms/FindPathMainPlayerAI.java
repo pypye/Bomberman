@@ -92,10 +92,7 @@ public class FindPathMainPlayerAI {
                 if (
                         Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
                                     (int) position.x, (int) position.y) < 1
-                        && Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                (int) position.x + corX[moveOfEnemy + 1], (int) position.y + corY[moveOfEnemy + 1]) < 2
-                        && !Map.isBlocked((int) position.x + corX[moveOfEnemy + 1], (int) position.y + corY[moveOfEnemy + 1])
-                        && !Map.isBlocked( (int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])) {
+                ) {
                     return false;
                 }
             }
@@ -197,7 +194,7 @@ public class FindPathMainPlayerAI {
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() < Bomb.DURATION - 1.75 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         return 3;
                     }
