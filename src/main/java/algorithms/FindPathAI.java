@@ -304,7 +304,7 @@ public class FindPathAI {
         }
 
 
-        return randomMissRate(result, Math.min(0, 100 - level * 91));
+        return randomMissRate(result, Math.max(0, 100 - level * 91));
     }
 
     private int getDirection(int x, int y, int u, int v) {
