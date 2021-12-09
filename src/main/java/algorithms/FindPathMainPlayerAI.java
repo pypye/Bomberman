@@ -57,41 +57,51 @@ public class FindPathMainPlayerAI {
         if (!checkRange(u, v)) {
             return false;
         }
-        for (Player player : PlayerList.players) {
-            if (player instanceof MainPlayerAI) {
-                for (Bomb bomb : BombList.bombs) {
-                    if(player.getShieldBuffDuration() > bomb.getTimeElapsed() ) {
-                        continue;
-                    }
-                    if (bomb.getCord().x == u) {
-                        if (Math.abs(bomb.getCord().y - v) <= 2
-                                && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
-                            return false;
-                        }
-                    }
-                    if (bomb.getCord().y == v) {
-                        if (Math.abs(bomb.getCord().x - u) <= 2
-                                && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
-                            return false;
-                        }
-                    }
+        for (Bomb bomb : BombList.bombs) {
+            if (bomb.getCord().x == u) {
+                if (Math.abs(bomb.getCord().y - v) <= 2
+                        && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
+                    return false;
+                }
+            }
+            if (bomb.getCord().y == v) {
+                if (Math.abs(bomb.getCord().x - u) <= 2
+                        && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
+                    return false;
                 }
             }
         }
         return true;
     }
 
+    private boolean hasShield(Player player) {
+        if (player instanceof MainPlayerAI) {
+            return player.getShieldBuffDuration() > 0.3f;
+        }
+        return false;
+    }
     private boolean checkNearEnemy(Vector2f position) {
         int[] corX = {0, 0, 0, -1, 1};
         int[] corY = {0, -1, 1, 0, 0};
 
         for (Player player : PlayerList.players) {
-            if (player instanceof Spider || player instanceof Turtle || player instanceof Golem) {
-                int moveOfEnemy = ((Enemy) player).getNextMove();
-                Vector2f playerCord = player.getCord();
+            if (player instanceof MainPlayerAI) {
+                continue;
+            }
+            int moveOfEnemy = ((Enemy) player).getNextMove();
+            Vector2f playerCord = player.getCord();
+            if (player instanceof Spider || player instanceof Golem) {
                 if (
                         Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                    (int) position.x, (int) position.y) < 1
+                                    (int) position.x, (int) position.y) <= 1
+                ) {
+                    return false;
+                }
+            }
+            if (player instanceof Turtle) {
+                if (
+                        Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
+                                (int) position.x, (int) position.y) <= 1
                 ) {
                     return false;
                 }
@@ -165,18 +175,6 @@ public class FindPathMainPlayerAI {
 
     }
 
-    private int randomMissRate(int result, double missRate) {
-        missRate *= 1000;
-        Random r = new Random();
-        int game = r.nextInt(100 * 1000);
-        int resultAfterMiss;
-        if (game <= missRate) {
-            resultAfterMiss = r.nextInt(result);
-        } else {
-            return result;
-        }
-        return resultAfterMiss;
-    }
 
     private float Manhattan(float x, float y, int u, int v) {
         return Math.abs(x - u) + Math.abs(y - v);
@@ -184,17 +182,19 @@ public class FindPathMainPlayerAI {
 
     public int moveCase(int x, int y) {
         bfs(x, y);
+        boolean checkHasShield = false;
         for (Player player : PlayerList.players) {
             if (player instanceof MainPlayerAI) {
+                checkHasShield = hasShield(player);
                 continue;
             }
             Vector2f playerPos = player.getCord();
             enemyList.add(playerPos);
         }
-        if (bombList.size() > 0) {
-            if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
+        if (bombList.size() > 0 && !checkHasShield) {
+            if (checkSafePosition(x, y)) {
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() < Bomb.DURATION - 1.75 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         return 3;
                     }
@@ -256,8 +256,9 @@ public class FindPathMainPlayerAI {
                 }
 
                 if ((int) tempPosition.getX() == -1000000000
-                        && (int) tempPosition.getY() == -1000000000)
-                    ;
+                        && (int) tempPosition.getY() == -1000000000) {
+                    result = -1;
+                }
                 else {
                     result = getDirection(x, y, (int) tempPosition.getX(),
                             (int) tempPosition.getY());
@@ -317,8 +318,7 @@ public class FindPathMainPlayerAI {
                         tempPositionOfContainer = new Vector2f(container.getX() + dx[i],
                                 container.getY() + dy[i]);
                         if (checkSafePosition((int) tempPositionOfContainer.getX(),
-                                (int) tempPositionOfContainer.getY()) && checkNearEnemy(
-                                container)) {
+                                (int) tempPositionOfContainer.getY())) {
                             if (path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()]
                                     < tempPath) {
                                 tempPath = path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()];
