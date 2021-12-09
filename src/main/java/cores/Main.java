@@ -9,12 +9,15 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import input.SystemInput;
+import io.socket.emitter.Emitter;
+import multiplayer.SocketIO;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
 import scenes.Menu;
 import scenes.SceneController;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -59,6 +62,20 @@ public class Main extends SimpleApplication {
         AudioManager.initialize();
         Debugger.initialize(true);
         SceneController.setScene(new Menu());
+        SocketIO.initialize();
+        SocketIO.getSocket().emit("getAllRoomExists", "None");
+        SocketIO.getSocket().on("sendAllRoomExists", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                System.out.println(Arrays.toString(args));
+            }
+        });
+        SocketIO.getSocket().on("notification", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                System.out.println(args[0]);
+            }
+        });
     }
 
     @Override

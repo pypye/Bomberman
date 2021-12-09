@@ -49,11 +49,16 @@
             <artifactId>jme3-jogg</artifactId>
             <version>${jme3_v}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jmonkeyengine/jme3-networking -->
         <dependency>
             <groupId>org.jmonkeyengine</groupId>
             <artifactId>jme3-networking</artifactId>
             <version>3.1.0-alpha5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.socket</groupId>
+            <artifactId>socket.io-client</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
     </dependencies>

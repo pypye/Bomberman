@@ -3,10 +3,13 @@ package ui.gui.menu;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import cores.Config;
+import multiplayer.SocketIO;
 import scenes.Game;
 import scenes.GameAI;
 import scenes.SceneController;
 import ui.gui.*;
+
+import java.net.Socket;
 
 public class PlayGui {
     private static ImageGui filter, background;
@@ -154,7 +157,7 @@ public class PlayGui {
         playMultiplayerCreateBtn = new ButtonGui("Create", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-
+                SocketIO.getSocket().emit("create", SocketIO.getSocket().id());
             }
         };
         LocationGui.anchorTopRightObject(playMultiplayerCreateBtn, playMultiplayerCreate, 32, 0);
@@ -171,7 +174,7 @@ public class PlayGui {
         playMultiplayerJoinBtn = new ButtonGui("Join", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-
+                SocketIO.getSocket().emit("join", SocketIO.getSocket().id(), SocketIO.getSocket().id());
             }
         };
         LocationGui.anchorTopRightObject(playMultiplayerJoinBtn, playMultiplayerJoin, 32, 0);
