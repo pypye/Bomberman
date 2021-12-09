@@ -64,10 +64,6 @@ public class Map {
         for (int i = 0; i < spawn.getEnemy3().size(); i++) {
             new Golem(new Vector3f(spawn.getEnemy3().get(i).x * 2f, 1, spawn.getEnemy3().get(i).y * 2f));
         }
-        //new MainPlayer(new Vector3f(0, 1, 0));
-        //new Golem(new Vector3f(0, 1, 19));
-        //new Golem(new Vector3f(19, 18, 19));
-        //new Golem(new Vector3f(1, 1, 19));
         Debugger.log(Debugger.MAP, "Players initialized");
     }
 

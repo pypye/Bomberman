@@ -27,7 +27,9 @@ io.on("connection", socket => {
     })
 
     socket.on("getAllRoomExists", (data) => {
-        io.emit("sendAllRoomExists", io.sockets.adapter.rooms);
+        var rooms = Array.from(io.sockets.adapter.rooms);
+        console.log(rooms)
+        io.emit("sendAllRoomExists", rooms)
     })
 
     socket.on("getSetBomb", (id, room, cordX, cordY) => {

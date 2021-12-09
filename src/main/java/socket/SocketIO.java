@@ -1,4 +1,4 @@
-package multiplayer;
+package socket;
 
 import cores.Debugger;
 import io.socket.client.IO;
@@ -12,7 +12,7 @@ public class SocketIO {
     public static void initialize() {
         try {
             IO.Options options = IO.Options.builder().build();
-            socket = IO.socket("ws://localhost:3000", options);
+            socket = IO.socket("ws://bomberman-server.herokuapp.com/", options);
             socket.connect();
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                 @Override
