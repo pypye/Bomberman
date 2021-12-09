@@ -18,7 +18,6 @@ public class PlayGui {
     private static TextGui playNormalText, playAIModeText, playMultiplayerCreateText, playMultiplayerJoinText;
     private static TextGui playNormalDescription, playAIModeDescription, playMultiplayerCreateDescription, playMultiplayerJoinDescription;
     private static ButtonGui playNormalBtn, playAIModeBtn, playMultiplayerCreateBtn, playMultiplayerJoinBtn;
-    private static boolean enabled;
 
     public static void initialize() {
         filter = new ImageGui(new Vector2f(Config.WIDTH, Config.HEIGHT), "Textures/Menu/announcement_background.png");
@@ -29,6 +28,9 @@ public class PlayGui {
                 PlayGui.remove();
             }
         };
+        playText = new TextGui("Play", ColorRGBA.White, 32);
+        LocationGui.anchorTopRightObject(close, background, 16, 16);
+        LocationGui.anchorTopLeftObject(playText, background, 64, 0);
         createNormal();
         createAIMode();
         createMultiplayerCreate();
@@ -42,7 +44,6 @@ public class PlayGui {
         };
         LocationGui.anchorBottomRightObject(returnBtn, background, 32, 16);
         show();
-        enabled = true;
         SceneController.getCurrentScene().setActive(false);
     }
 
@@ -100,18 +101,10 @@ public class PlayGui {
         playMultiplayerJoinBtn.remove();
 
         returnBtn.remove();
-        enabled = false;
         SceneController.getCurrentScene().setActive(true);
     }
 
-    public static boolean isEnabled() {
-        return enabled;
-    }
-
     private static void createNormal() {
-        playText = new TextGui("Play", ColorRGBA.White, 32);
-        LocationGui.anchorTopRightObject(close, background, 16, 16);
-        LocationGui.anchorTopLeftObject(playText, background, 64, 0);
         playNormal = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
         LocationGui.anchorTopLeftObject(playNormal, background, 64, 80);
         playNormalText = new TextGui("Normal mode", ColorRGBA.White, 32);
@@ -155,7 +148,14 @@ public class PlayGui {
         playMultiplayerCreateBtn = new ButtonGui("Create", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-                SocketIO.getSocket().emit("create", SocketIO.getSocket().id());
+                if(SocketIO.getSocket().id() != null){
+                    SocketIO.getSocket().emit("create", SocketIO.getSocket().id());
+                    PlayCreateMultiGui.initialize(SocketIO.getSocket().id());
+                    PlayGui.remove();
+                }
+
+
+
             }
         };
         LocationGui.anchorTopRightObject(playMultiplayerCreateBtn, playMultiplayerCreate, 32, 0);

@@ -1,6 +1,7 @@
 package scenes;
 
 import audio.AudioManager;
+import input.SystemInput;
 import ui.gui.game.InfoGuiList;
 import ui.gui.menu.MenuGui;
 
@@ -14,6 +15,7 @@ public class Menu extends Scene {
     @Override
     public void show() {
         MenuGui.initialize();
+        SystemInput.setActive(false);
         InfoGuiList.setTimeCount(0);
         AudioManager.lobby.play();
     }

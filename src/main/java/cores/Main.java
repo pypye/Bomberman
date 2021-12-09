@@ -63,18 +63,7 @@ public class Main extends SimpleApplication {
         Debugger.initialize(true);
         SceneController.setScene(new Menu());
         SocketIO.initialize();
-        SocketIO.getSocket().on("sendAllRoomExists", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                System.out.println(args[0]);
-            }
-        });
-        SocketIO.getSocket().on("notification", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                System.out.println(args[0]);
-            }
-        });
+
     }
 
     @Override
@@ -87,5 +76,6 @@ public class Main extends SimpleApplication {
         Debugger.log(Debugger.EVENT, "Application closed");
         Config.exportConfig();
         super.destroy();
+        System.exit(0);
     }
 }
