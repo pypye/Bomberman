@@ -29,7 +29,7 @@ public class Spider extends Enemy {
         if (player != null && ultimateActivated) {
             this.nextMove = Turtle.nextMoveBase(enemy, player.getCord());
             if (this.nextMove == -1) ultimateActivated = false;
-            speed = DEFAULT_SPEED + 1f;
+            speed = DEFAULT_SPEED + 0.5f;
         }
         if (!ultimateActivated) {
             speed = DEFAULT_SPEED;
@@ -42,6 +42,10 @@ public class Spider extends Enemy {
                 this.nextMove = Turtle.nextMoveBase(enemy, targetPoint);
             }
         }
+    }
+
+    public boolean checkUltimateActivated() {
+        return ultimateActivated;
     }
 
     //update particle

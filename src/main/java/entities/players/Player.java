@@ -8,6 +8,7 @@ import com.jme3.math.Vector3f;
 import cores.Main;
 import entities.bombs.Bomb;
 import entities.buffs.BuffItem;
+import entities.players.enemies.Spider;
 import particles.SpeedParticle;
 import particles.UltimateParticle;
 import ui.gui3d.ShieldGui3d;
@@ -307,5 +308,8 @@ public class Player extends Entity {
 
     public boolean isFlameBuffActivated() {
         return flameBuffActivated;
+    }
+    public boolean isUltimateActivated() {
+        return ultimateActivated;
     }
 }

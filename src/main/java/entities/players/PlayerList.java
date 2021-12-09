@@ -2,6 +2,8 @@ package entities.players;
 
 import cores.Debugger;
 import entities.players.enemies.Enemy;
+import entities.players.enemies.Spider;
+import entities.players.enemies.Turtle;
 import scenes.GameAI;
 import scenes.Scene;
 import scenes.SceneController;
@@ -44,6 +46,33 @@ public class PlayerList {
     public static Player getMainPlayer() {
         for (Player player : players) {
             if (player instanceof MainPlayer) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static Player getMainPlayerAI() {
+        for (Player player : players) {
+            if (player instanceof MainPlayerAI) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static Player getSpider() {
+        for (Player player : players) {
+            if (player instanceof Spider) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public static Player getTurtle() {
+        for (Player player : players) {
+            if (player instanceof Turtle) {
                 return player;
             }
         }
