@@ -227,7 +227,7 @@ public class FindPathMainPlayerAI {
             if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
                 boolean check = true;
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2.5 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         check = false;
                         break;
@@ -293,9 +293,10 @@ public class FindPathMainPlayerAI {
                         }
                     }
                 }
-
-                result = getDirection(x, y, (int) tempPosition.getX(),
-                        (int) tempPosition.getY());
+                if(checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) && checkNearEnemy(tempPosition)) {
+                    result = getDirection(x, y, (int) tempPosition.getX(),
+                            (int) tempPosition.getY());
+                }
 
                 break;
             case 2:
@@ -308,7 +309,10 @@ public class FindPathMainPlayerAI {
                         tempPosition = item;
                     }
                 }
-                result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
+                if(checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) && checkNearEnemy(tempPosition)) {
+                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
+                }
+
                 break;
             case 3:
                 tempPath = MAX_PATH;
@@ -329,21 +333,25 @@ public class FindPathMainPlayerAI {
                         }
                     }
                     else {
-                        if (x == (int) tempPosition.getX()) {
-                            if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
-                                result = 4;
-                            } else {
-                                result = getDirection(x, y, (int) tempPosition.getX(),
-                                        (int) tempPosition.getY());
-                            }
-                        } else if (y == (int) tempPosition.getY()) {
-                            if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
-                                result = 4;
-                            } else {
-                                result = getDirection(x, y, (int) tempPosition.getX(),
-                                        (int) tempPosition.getY());
-                            }
-                        } else {
+                        if (Manhattan(x, y, (int) tempPosition.getX(), (int) tempPosition.getY()) <= 2) {
+                            result = 4;
+                        }
+//                        if (x == (int) tempPosition.getX()) {
+//                            if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
+//                                result = 4;
+//                            } else {
+//                                result = getDirection(x, y, (int) tempPosition.getX(),
+//                                        (int) tempPosition.getY());
+//                            }
+//                        } else if (y == (int) tempPosition.getY()) {
+//                            if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
+//                                result = 4;
+//                            } else {
+//                                result = getDirection(x, y, (int) tempPosition.getX(),
+//                                        (int) tempPosition.getY());
+//                            }
+//                        }
+                        else {
                             result = getDirection(x, y, (int) tempPosition.getX(),
                                     (int) tempPosition.getY());
                         }
