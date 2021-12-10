@@ -8,7 +8,6 @@ import entities.bombs.Bomb;
 import entities.bombs.BombList;
 import entities.players.MainPlayer;
 import entities.players.MainPlayerAI;
-import entities.players.MainPlayerOther;
 import entities.players.Player;
 import entities.players.enemies.Golem;
 import entities.players.enemies.Spider;
@@ -18,13 +17,6 @@ import entities.buffs.BombExtendItem;
 import entities.buffs.FlameItem;
 import entities.buffs.ShieldItem;
 import entities.buffs.SpeedItem;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import socket.SocketIO;
-
-import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -72,38 +64,6 @@ public class Map {
             new Golem(new Vector3f(spawn.getEnemy3().get(i).x * 2f, 1, spawn.getEnemy3().get(i).y * 2f));
         }
         Debugger.log(Debugger.MAP, "Players initialized");
-    }
-
-    public static void initializeMulti(JSONArray map, JSONArray players) {
-        Debugger.log(Debugger.MAP, "Init map multi-mode");
-        for(int i = 0; i < 20; i++){
-            try {
-                JSONArray line = map.getJSONArray(i);
-                for(int j = 0; j < 20; j++){
-                    int type = line.getInt(j);
-                    new Grass(new Vector3f(i * 2f, 0f, j * 2f));
-                    setObject(i, j, type, null);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        Debugger.log(Debugger.MAP, "Map initialized");
-        Debugger.log(Debugger.MAP, "Init Players multi-mode");
-        for (int i = 0; i < players.length(); i++) {
-            try {
-                JSONObject playerInfo = players.getJSONObject(i);
-                if (playerInfo.getString("id").equals(SocketIO.getSocket().id())) {
-                    Player a = new MainPlayer(new Vector3f(playerInfo.getInt("x") * 2f, 1, playerInfo.getInt("y") * 2f));
-                    a.id = playerInfo.getString("id");
-                } else {
-                    Player a = new MainPlayerOther(new Vector3f(playerInfo.getInt("x") * 2f, 1, playerInfo.getInt("y") * 2f));
-                    a.id = playerInfo.getString("id");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public static int[][] getMap() {
@@ -161,7 +121,7 @@ public class Map {
     }
 
     public static boolean isBlocked(int x, int y) {
-        return entity[x][y] != null && entity[x][y].isBlocked();
+        return isInside(x, y) && entity[x][y] != null && entity[x][y].isBlocked();
     }
 
     public static boolean isInside(int x, int y) {

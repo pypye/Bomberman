@@ -4,7 +4,6 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import cores.Config;
 import cores.Debugger;
-import input.PlayerInput;
 import input.SystemInput;
 import scenes.Game;
 import scenes.GameAI;

@@ -9,17 +9,11 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import input.SystemInput;
-import io.socket.emitter.Emitter;
-import org.json.JSONArray;
-import scenes.GameMulti;
-import socket.SocketIO;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
 import scenes.Menu;
 import scenes.SceneController;
-
 import java.awt.*;
-import java.util.Arrays;
 
 public class Main extends SimpleApplication {
     public static AssetManager ASSET_MANAGER;
@@ -64,14 +58,11 @@ public class Main extends SimpleApplication {
         AudioManager.initialize();
         Debugger.initialize(true);
         SceneController.setScene(new Menu());
-        SocketIO.initialize();
-
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         SceneController.update(tpf);
-
     }
 
     @Override

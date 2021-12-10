@@ -3,7 +3,6 @@ package ui.gui.menu;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import cores.Config;
-import socket.SocketIO;
 import scenes.Game;
 import scenes.GameAI;
 import scenes.SceneController;
@@ -14,10 +13,10 @@ public class PlayGui {
     private static ImageButtonGui close;
     private static TextGui playText;
     private static ButtonGui returnBtn;
-    private static ImageGui playNormal, playAIMode, playMultiplayerCreate, playMultiplayerJoin;
-    private static TextGui playNormalText, playAIModeText, playMultiplayerCreateText, playMultiplayerJoinText;
-    private static TextGui playNormalDescription, playAIModeDescription, playMultiplayerCreateDescription, playMultiplayerJoinDescription;
-    private static ButtonGui playNormalBtn, playAIModeBtn, playMultiplayerCreateBtn, playMultiplayerJoinBtn;
+    private static ImageGui playNormal, playAIMode;
+    private static TextGui playNormalText, playAIModeText;
+    private static TextGui playNormalDescription, playAIModeDescription;
+    private static ButtonGui playNormalBtn, playAIModeBtn;
 
     public static void initialize() {
         filter = new ImageGui(new Vector2f(Config.WIDTH, Config.HEIGHT), "Textures/Menu/announcement_background.png");
@@ -33,8 +32,6 @@ public class PlayGui {
         LocationGui.anchorTopLeftObject(playText, background, 64, 0);
         createNormal();
         createAIMode();
-        createMultiplayerCreate();
-        createMultiplayerJoin();
 
         returnBtn = new ButtonGui("Return to main menu", new Vector2f(), new Vector2f(200, 50)) {
             @Override
@@ -62,16 +59,6 @@ public class PlayGui {
         playAIModeDescription.show();
         playAIModeBtn.show();
 
-        playMultiplayerCreate.show();
-        playMultiplayerCreateText.show();
-        playMultiplayerCreateDescription.show();
-        playMultiplayerCreateBtn.show();
-
-        playMultiplayerJoin.show();
-        playMultiplayerJoinText.show();
-        playMultiplayerJoinDescription.show();
-        playMultiplayerJoinBtn.show();
-
         returnBtn.show();
     }
 
@@ -89,16 +76,6 @@ public class PlayGui {
         playAIModeText.remove();
         playAIModeDescription.remove();
         playAIModeBtn.remove();
-
-        playMultiplayerCreate.remove();
-        playMultiplayerCreateText.remove();
-        playMultiplayerCreateDescription.remove();
-        playMultiplayerCreateBtn.remove();
-
-        playMultiplayerJoin.remove();
-        playMultiplayerJoinText.remove();
-        playMultiplayerJoinDescription.remove();
-        playMultiplayerJoinBtn.remove();
 
         returnBtn.remove();
         SceneController.getCurrentScene().setActive(true);
@@ -136,46 +113,5 @@ public class PlayGui {
         };
         LocationGui.anchorTopRightObject(playAIModeBtn, playAIMode, 32, 0);
         LocationGui.centerYObject(playAIModeBtn, playAIMode, playAIModeBtn.getPosition().x);
-    }
-
-    private static void createMultiplayerCreate(){
-        playMultiplayerCreate = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
-        LocationGui.anchorTopLeftObject(playMultiplayerCreate, background, 64, 252);
-        playMultiplayerCreateText = new TextGui("Create room", ColorRGBA.White, 32);
-        LocationGui.anchorTopLeftObject(playMultiplayerCreateText, playMultiplayerCreate, 16, -32);
-        playMultiplayerCreateDescription = new TextGui("Create a new multiplayer game", ColorRGBA.White);
-        LocationGui.anchorTopLeftObject(playMultiplayerCreateDescription, playMultiplayerCreate, 16, 32);
-        playMultiplayerCreateBtn = new ButtonGui("Create", new Vector2f(), new Vector2f(100, 50)) {
-            @Override
-            public void onClick() {
-                if(SocketIO.getSocket().id() != null){
-                    SocketIO.getSocket().emit("create", "room_" + SocketIO.getSocket().id());
-                    PlayCreateMultiGui.initialize(SocketIO.getSocket().id(), "room_" + SocketIO.getSocket().id());
-                    PlayGui.remove();
-                }
-            }
-        };
-        LocationGui.anchorTopRightObject(playMultiplayerCreateBtn, playMultiplayerCreate, 32, 0);
-        LocationGui.centerYObject(playMultiplayerCreateBtn, playMultiplayerCreate, playMultiplayerCreateBtn.getPosition().x);
-    }
-
-    private static void createMultiplayerJoin(){
-        playMultiplayerJoin = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
-        LocationGui.anchorTopLeftObject(playMultiplayerJoin, background, 64, 342);
-        playMultiplayerJoinText = new TextGui("Join room", ColorRGBA.White, 32);
-        LocationGui.anchorTopLeftObject(playMultiplayerJoinText, playMultiplayerJoin, 16, -32);
-        playMultiplayerJoinDescription = new TextGui("Join a multiplayer game", ColorRGBA.White);
-        LocationGui.anchorTopLeftObject(playMultiplayerJoinDescription, playMultiplayerJoin, 16, 32);
-        playMultiplayerJoinBtn = new ButtonGui("Join", new Vector2f(), new Vector2f(100, 50)) {
-            @Override
-            public void onClick() {
-                SocketIO.getSocket().emit("find", SocketIO.getSocket().id());
-                SocketIO.getSocket().emit("getAllRoomExists", SocketIO.getSocket().id());
-                PlayJoinMultiGui.initialize(SocketIO.getSocket().id());
-                PlayGui.remove();
-            }
-        };
-        LocationGui.anchorTopRightObject(playMultiplayerJoinBtn, playMultiplayerJoin, 32, 0);
-        LocationGui.centerYObject(playMultiplayerJoinBtn, playMultiplayerJoin, playMultiplayerJoinBtn.getPosition().x);
     }
 }

@@ -2,14 +2,10 @@ package scenes;
 
 import cores.Debugger;
 import cores.Main;
-import org.json.JSONArray;
 
 public class SceneController {
     private static Scene currentScene;
-    public static boolean trigger = false;
-    public static boolean multi = false;
-    public static JSONArray map;
-    public static JSONArray player;
+
     public static void setScene(Scene scene) {
         if (currentScene != null) currentScene.remove();
         Debugger.log(Debugger.SCENE, "Delete all data from " + currentScene);
@@ -18,7 +14,6 @@ public class SceneController {
         Debugger.log(Debugger.SCENE, "Delete all data from world");
         Debugger.log(Debugger.SCENE, "Set scene from " + currentScene + " to " + scene);
         currentScene = scene;
-        multi = currentScene instanceof GameMulti;
         currentScene.show();
     }
 
@@ -28,9 +23,6 @@ public class SceneController {
 
     public static void update(float tpf) {
         if (currentScene != null && currentScene.isActive()) currentScene.update(tpf);
-        if (trigger) {
-            SceneController.setScene(new GameMulti(map, player));
-            trigger = false;
-        }
+
     }
 }

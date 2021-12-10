@@ -8,8 +8,6 @@ import cores.Map;
 import entities.Entity;
 import entities.players.Player;
 import entities.players.PlayerList;
-import scenes.GameAI;
-import scenes.SceneController;
 
 public abstract class Enemy extends Player {
     private static int count = 0;

@@ -7,7 +7,6 @@ import com.jme3.math.Vector3f;
 import cores.Debugger;
 import entities.players.Player;
 import entities.players.PlayerList;
-import scenes.Game;
 import scenes.SceneController;
 
 public class Golem extends Enemy {

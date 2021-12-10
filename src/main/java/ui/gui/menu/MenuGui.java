@@ -26,7 +26,6 @@ public class MenuGui {
             public void onClick() {
                 PlayGui.initialize();
                 MenuGui.setActive(false);
-                //SceneController.setScene(new Game(1));
             }
         };
         btnAchievement = new ButtonGui("Achievement", new Vector2f(), new Vector2f(200, 50)) {

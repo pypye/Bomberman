@@ -2,7 +2,6 @@ package entities.bombs;
 
 import audio.AudioManager;
 import cores.Map;
-import entities.Entity;
 import entities.buffs.BuffItem;
 import entities.players.Player;
 import entities.players.PlayerList;

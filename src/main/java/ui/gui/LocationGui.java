@@ -1,7 +1,6 @@
 package ui.gui;
 
 import cores.Config;
-import cores.Main;
 
 public class LocationGui {
     public static final int PADDING = 20;

@@ -4,9 +4,6 @@ import cores.Debugger;
 import entities.players.enemies.Enemy;
 import entities.players.enemies.Spider;
 import entities.players.enemies.Turtle;
-import scenes.GameAI;
-import scenes.Scene;
-import scenes.SceneController;
 import ui.gui.game.AnnouncementGui;
 import ui.gui.buffs.BuffListGui;
 
@@ -51,6 +48,7 @@ public class PlayerList {
         }
         return null;
     }
+
     public static Player getPlayer(String id) {
         for (Player player : players) {
             if (player.id.equals(id)) {
@@ -91,7 +89,7 @@ public class PlayerList {
         ArrayList<Player> removeList = new ArrayList<>();
         for (Player player : players) {
             player.onUpdate(tpf);
-            if(player instanceof MainPlayerAI) {
+            if (player instanceof MainPlayerAI) {
                 ((MainPlayerAI) player).onMoving();
             }
             if (player instanceof Enemy) {

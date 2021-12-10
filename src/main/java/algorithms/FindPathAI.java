@@ -1,6 +1,5 @@
 package algorithms;
 
-
 import com.jme3.math.Vector2f;
 import cores.Map;
 import entities.bombs.Bomb;
@@ -10,11 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
-
 
 public class FindPathAI {
-
     private final int[][] visited;
     private final int length = 20;
     private final int[] dx = {-1, 0, 1, 0};
@@ -69,18 +65,15 @@ public class FindPathAI {
         int[][] map = Map.getMap();
         updateMap();
         Queue<Vector2f> queue = new LinkedList<>();
-
         visited[x][y] = 1;
         path[x][y] = 0;
         queue.add(new Vector2f(x, y));
         addAttribute(x, y, map);
-
         while (!queue.isEmpty()) {
             Vector2f pair = queue.poll();
             int u = (int) pair.getX();
             int v = (int) pair.getY();
             visited[u][v] = 1;
-
             for (int i = 0; i < 4; i++) {
                 int newX = u + dx[i];
                 int newY = v + dy[i];
@@ -151,7 +144,7 @@ public class FindPathAI {
 
         int range = 100001;
         int rand = (int) (Math.random() * range) + 1;
-        int resultAfterMiss =  -1;
+        int resultAfterMiss = -1;
         if (rand <= missRate) {
             resultAfterMiss = (int) (Math.random() * 6) - 1;
         } else {
@@ -170,14 +163,10 @@ public class FindPathAI {
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x, bomb.getCord().y, x, y)) {
-                        return 3;
-                    }
+                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x, bomb.getCord().y, x, y)) return 3;
                 }
                 return 0;
-            } else {
-                return 1;
-            }
+            } else return 1;
         } else {
             if (itemList.size() > 0) {
                 return 2;
@@ -185,21 +174,14 @@ public class FindPathAI {
                 if (enemyList.size() > 0) {
                     int u = (int) enemyList.get(0).getX();
                     int v = (int) enemyList.get(0).getY();
-                    if (path[u][v] >= 0 && path[u][v] < MAX_PATH) {
-                        return 3;
-                    } else {
-                        return 4;
-                    }
+                    if (path[u][v] >= 0 && path[u][v] < MAX_PATH) return 3;
+                    else return 4;
                 } else {
-                    if (exitList.size() > 0) {
-                        return 5;
-                    } else {
-                        return 4;
-                    }
+                    if (exitList.size() > 0) return 5;
+                    else return 4;
                 }
             }
         }
-
     }
 
     public int nextMove(int x, int y, int l, int r) {
@@ -220,11 +202,8 @@ public class FindPathAI {
                         }
                     }
                 }
-
-                if ((int) tempPosition.getX() == -1000000000 && (int) tempPosition.getY() == -1000000000);
-                else {
-                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
-                }
+                if ((int) tempPosition.getX() == -1000000000 && (int) tempPosition.getY() == -1000000000) ;
+                else result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 break;
             case 2:
                 tempPath = MAX_PATH;
@@ -348,5 +327,4 @@ public class FindPathAI {
     public Vector2f getTrace(int u, int v) {
         return trace[u][v];
     }
-
 }

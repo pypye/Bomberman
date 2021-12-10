@@ -7,9 +7,6 @@ import com.jme3.input.controls.KeyTrigger;
 import cores.Main;
 import entities.players.MainPlayer;
 import entities.players.PlayerList;
-import scenes.SceneController;
-import socket.SocketIO;
-import ui.gui.menu.PlayCreateMultiGui;
 
 import java.util.HashSet;
 
@@ -49,26 +46,10 @@ public class PlayerInput {
         @Override
         public void onAnalog(String name, float value, float tpf) {
             if (!paused) {
-                if (name.equals("Forward")) {
-                    if (SceneController.multi)
-                        SocketIO.getSocket().emit("getPlayerMove", PlayCreateMultiGui.roomId, SocketIO.getSocket().id(), "forward", value);
-                    player.moveForward(value);
-                }
-                if (name.equals("Backward")) {
-                    if (SceneController.multi)
-                        SocketIO.getSocket().emit("getPlayerMove", PlayCreateMultiGui.roomId, SocketIO.getSocket().id(), "backward", value);
-                    player.moveBackward(value);
-                }
-                if (name.equals("Left")) {
-                    if (SceneController.multi)
-                        SocketIO.getSocket().emit("getPlayerMove", PlayCreateMultiGui.roomId, SocketIO.getSocket().id(), "left", value);
-                    player.moveLeft(value);
-                }
-                if (name.equals("Right")) {
-                    if (SceneController.multi)
-                        SocketIO.getSocket().emit("getPlayerMove", PlayCreateMultiGui.roomId, SocketIO.getSocket().id(), "right", value);
-                    player.moveRight(value);
-                }
+                if (name.equals("Forward")) player.moveForward(value);
+                if (name.equals("Backward")) player.moveBackward(value);
+                if (name.equals("Left")) player.moveLeft(value);
+                if (name.equals("Right")) player.moveRight(value);
                 if (name.equals("SetBomb")) player.setBomb();
             }
         }

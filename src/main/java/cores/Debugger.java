@@ -11,7 +11,6 @@ public class Debugger {
     public static final String ENTITY = "Entity";
     public static final String MAP = "Map";
     public static final String ENVIRONMENT = "Environment";
-    public static final String SOCKET = "Socket.IO";
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public static void initialize(boolean debug) {
