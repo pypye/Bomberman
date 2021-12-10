@@ -35,7 +35,7 @@ player ultimate = none
 spider speed = 3 (unit)
 spider ultimate duration = 5 (second)
 spider ultimate cool down = 2 (second)
-spider ultimate = chasing player, speed +1
+spider ultimate = chasing player, speed +0.5
 collision make player dead = true
 
 [turtle] //level 1 - stupid bot
