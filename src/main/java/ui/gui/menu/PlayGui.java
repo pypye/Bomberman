@@ -91,7 +91,7 @@ public class PlayGui {
         playNormalBtn = new ButtonGui("Play", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-                SceneController.setScene(new Game(2));
+                SceneController.setScene(new Game(1));
             }
         };
         LocationGui.anchorTopRightObject(playNormalBtn, playNormal, 32, 0);
@@ -108,7 +108,7 @@ public class PlayGui {
         playAIModeBtn = new ButtonGui("Watch", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-                SceneController.setScene(new GameAI(2));
+                SceneController.setScene(new GameAI(1));
             }
         };
         LocationGui.anchorTopRightObject(playAIModeBtn, playAIMode, 32, 0);

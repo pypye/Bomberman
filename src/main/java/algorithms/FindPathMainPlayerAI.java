@@ -110,8 +110,8 @@ public class FindPathMainPlayerAI {
                         && checkRange((int) position.x, (int) position.y)
                         && checkRange((int) playerCord.x , (int) playerCord.y)
                         && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                    (int) position.x, (int) position.y) <= 1f
-                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) <= 1f)
+                                    (int) position.x, (int) position.y) < 2f
+                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 2f)
 
                 ) {
                     return false;

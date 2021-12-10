@@ -74,9 +74,9 @@ public class AnnouncementGui {
                 public void onClick() {
                     Debugger.log(Debugger.EVENT, "Lose next accepted. Next level = 1");
                     if (SceneController.getCurrentScene() instanceof Game) {
-                        SceneController.setScene(new Game(2));
+                        SceneController.setScene(new Game(1));
                     } else if (SceneController.getCurrentScene() instanceof GameAI) {
-                        SceneController.setScene(new GameAI(2));
+                        SceneController.setScene(new GameAI(1));
                     }
                     InfoGuiList.setTimeCount(0);
                     this.remove();
