@@ -21,6 +21,7 @@ public class MainPlayerAI extends MainPlayer {
     public void onMoving() {
         if (!this.isMoving()) {
             prefMove = this.getCord();
+            //this.speed = DEFAULT_SPEED + 0.3f;
             this.setNextMove();
             Debugger.log(Debugger.ENTITY, "AI " + this + " position is " + prefMove);
             Debugger.log(Debugger.ENTITY, "AI " + this + " next move is " + nextMove);

@@ -162,10 +162,20 @@ public class FindPathAI {
         enemyList.add(new Vector2f(l, r));
         if (bombList.size() > 0) {
             if (checkSafePosition(x, y)) {
+                boolean check = true;
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() < Bomb.DURATION - 2 / Manhattan(bomb.getCord().x, bomb.getCord().y, x, y)) return 3;
+                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2.5 / Manhattan(bomb.getCord().x,
+                            bomb.getCord().y, x, y)) {
+                        check = false;
+                        break;
+                    }
                 }
-                return 0;
+                if(check) {
+                    return 3;
+                }
+                else {
+                    return 0;
+                }
             } else return 1;
         } else {
             if (itemList.size() > 0) {
@@ -226,6 +236,14 @@ public class FindPathAI {
                     }
                 }
                 if (tempPath <= 2) {
+                    if (tempPath == 1) {
+                        if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY())) {
+                            result = 4;
+                        }
+                        else {
+                            result = -1;
+                        }
+                    }
                     if (x == (int) tempPosition.getX()) {
                         if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
                             result = 4;

@@ -59,16 +59,20 @@ public class FindPathMainPlayerAI {
         }
 
         Player mainPlayerAI = PlayerList.getMainPlayerAI();
+        int safeDistance = 2;
         if (!hasShield(mainPlayerAI)) {
             for (Bomb bomb : BombList.bombs) {
+                if (mainPlayerAI.getBombBuffDuration() >= 0f) {
+                    safeDistance = 4;
+                }
                 if (bomb.getCord().x == u) {
-                    if (Math.abs(bomb.getCord().y - v) <= 2
+                    if (Math.abs(bomb.getCord().y - v) <= safeDistance
                             && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                         return false;
                     }
                 }
                 if (bomb.getCord().y == v) {
-                    if (Math.abs(bomb.getCord().x - u) <= 2
+                    if (Math.abs(bomb.getCord().x - u) <= safeDistance
                             && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                         return false;
                     }
@@ -76,24 +80,14 @@ public class FindPathMainPlayerAI {
             }
         }
 
-        Player spider = PlayerList.getSpider();
-        if (spider != null && Manhattan(spider.getCord().x, spider.getCord().y, u, v) <= 2 && spider.isUltimateActivated()) {
-            return false;
-        }
 
-        for (Player player : PlayerList.players) {
-            if (player instanceof Turtle) {
-                if (Manhattan(player.getCord().x, player.getCord().y, u, v) <= 2) {
-                    return false;
-                }
-            }
-        }
+
         return true;
     }
 
     private boolean hasShield(Player player) {
         if (player instanceof MainPlayerAI) {
-            return player.getShieldBuffDuration() >= 0.3f;
+            return player.getShieldBuffDuration() >= 0.5f;
         }
         return false;
     }
@@ -107,23 +101,30 @@ public class FindPathMainPlayerAI {
             }
             int moveOfEnemy = ((Enemy) player).getNextMove();
             Vector2f playerCord = player.getCord();
-            if (player instanceof Spider || player instanceof Golem) {
+            if (player instanceof Spider ) {
+                if (Manhattan(player.getCord().x, player.getCord().y, (int) position.x, (int) position.y) <= 1.5 && player.isUltimateActivated()) {
+                    return false;
+                }
                 if (
                         checkRange((int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])
                         && checkRange((int) position.x, (int) position.y)
-                        && Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                    (int) position.x, (int) position.y) <= 1
+                        && checkRange((int) playerCord.x , (int) playerCord.y)
+                        && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
+                                    (int) position.x, (int) position.y) <= 1f
+                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) <= 1f)
 
                 ) {
                     return false;
                 }
             }
-            if (player instanceof Turtle) {
+            if (player instanceof Turtle || player instanceof Golem) {
                 if (
                         checkRange((int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])
-                        && checkRange((int) position.x, (int) position.y)
-                        && Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                (int) position.x, (int) position.y) <= 1
+                                && checkRange((int) position.x, (int) position.y)
+                                && checkRange((int) playerCord.x , (int) playerCord.y)
+                                && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
+                                (int) position.x, (int) position.y) < 1f
+                                || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 1f)
 
                 ) {
                     return false;
@@ -223,10 +224,10 @@ public class FindPathMainPlayerAI {
                     && Manhattan(x, y, (int) spider.getCord().x, (int) spider.getCord().y) <= 2)
                 || !checkNearEnemy(new Vector2f(x, y))
         ) {
-            if (checkSafePosition(x, y)) {
+            if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
                 boolean check = true;
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2.3 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2.5 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         check = false;
                         break;
@@ -313,29 +314,39 @@ public class FindPathMainPlayerAI {
                 tempPath = MAX_PATH;
                 tempPosition = new Vector2f(-1000000000, -1000000000);
                 for (Vector2f enemy : enemyList) {
-                    if (path[(int) enemy.getX()][(int) enemy.getY()] < tempPath ) {
+                    if (path[(int) enemy.getX()][(int) enemy.getY()] < tempPath) {
                         tempPath = path[(int) enemy.getX()][(int) enemy.getY()];
                         tempPosition = enemy;
                     }
                 }
                 if (tempPath <= 2) {
-                    if (x == (int) tempPosition.getX()) {
-                        if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
+                    if (tempPath == 1) {
+                        if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) || !checkNearEnemy(tempPosition)){
                             result = 4;
+                        }
+                        else {
+                            result = -1;
+                        }
+                    }
+                    else {
+                        if (x == (int) tempPosition.getX()) {
+                            if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
+                                result = 4;
+                            } else {
+                                result = getDirection(x, y, (int) tempPosition.getX(),
+                                        (int) tempPosition.getY());
+                            }
+                        } else if (y == (int) tempPosition.getY()) {
+                            if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
+                                result = 4;
+                            } else {
+                                result = getDirection(x, y, (int) tempPosition.getX(),
+                                        (int) tempPosition.getY());
+                            }
                         } else {
                             result = getDirection(x, y, (int) tempPosition.getX(),
                                     (int) tempPosition.getY());
                         }
-                    } else if (y == (int) tempPosition.getY()) {
-                        if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
-                            result = 4;
-                        } else {
-                            result = getDirection(x, y, (int) tempPosition.getX(),
-                                    (int) tempPosition.getY());
-                        }
-                    } else {
-                        result = getDirection(x, y, (int) tempPosition.getX(),
-                                (int) tempPosition.getY());
                     }
                 } else {
                     result = getDirection(x, y, (int) tempPosition.getX(),
