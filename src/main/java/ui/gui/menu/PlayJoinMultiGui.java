@@ -5,6 +5,7 @@ import com.jme3.math.Vector2f;
 import cores.Config;
 import scenes.Game;
 import scenes.SceneController;
+import socket.SocketIO;
 import ui.gui.*;
 
 import java.awt.*;
@@ -37,6 +38,7 @@ public class PlayJoinMultiGui {
         returnBtn = new ButtonGui("Return to main menu", new Vector2f(), new Vector2f(200, 50)) {
             @Override
             public void onClick() {
+                SocketIO.getSocket().emit("leaveFind", SocketIO.getSocket().id());
                 PlayJoinMultiGui.remove();
             }
         };

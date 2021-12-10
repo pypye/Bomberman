@@ -169,7 +169,8 @@ public class PlayGui {
         playMultiplayerJoinBtn = new ButtonGui("Join", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-                SocketIO.getSocket().emit("getAllRoomExists", "None");
+                SocketIO.getSocket().emit("find", SocketIO.getSocket().id());
+                SocketIO.getSocket().emit("getAllRoomExists", SocketIO.getSocket().id());
                 PlayJoinMultiGui.initialize(SocketIO.getSocket().id());
                 PlayGui.remove();
             }
