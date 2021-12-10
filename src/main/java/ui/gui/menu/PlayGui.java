@@ -150,12 +150,9 @@ public class PlayGui {
             public void onClick() {
                 if(SocketIO.getSocket().id() != null){
                     SocketIO.getSocket().emit("create", SocketIO.getSocket().id());
-                    PlayCreateMultiGui.initialize(SocketIO.getSocket().id());
+                    PlayCreateMultiGui.initialize(SocketIO.getSocket().id(), "room_" + SocketIO.getSocket().id());
                     PlayGui.remove();
                 }
-
-
-
             }
         };
         LocationGui.anchorTopRightObject(playMultiplayerCreateBtn, playMultiplayerCreate, 32, 0);
@@ -173,7 +170,8 @@ public class PlayGui {
             @Override
             public void onClick() {
                 SocketIO.getSocket().emit("getAllRoomExists", "None");
-                //SocketIO.getSocket().emit("join", SocketIO.getSocket().id(), SocketIO.getSocket().id());
+                PlayJoinMultiGui.initialize(SocketIO.getSocket().id());
+                PlayGui.remove();
             }
         };
         LocationGui.anchorTopRightObject(playMultiplayerJoinBtn, playMultiplayerJoin, 32, 0);
