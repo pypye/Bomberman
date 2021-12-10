@@ -1,5 +1,6 @@
 package ui.gui.game;
 
+import audio.AudioManager;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import cores.Config;
@@ -23,6 +24,13 @@ public class AnnouncementGui {
     private final ButtonGui btn2;
 
     public AnnouncementGui(boolean win) {
+        if(win){
+            AudioManager.bgm.stop();
+            AudioManager.victory.play();
+        } else {
+            AudioManager.bgm.stop();
+            AudioManager.defeat.play();
+        }
         SceneController.getCurrentScene().setActive(false); //pause game
         SystemInput.setActive(false); //pause input
         background = new ImageGui(new Vector2f(Config.WIDTH / 2f - 550, Config.HEIGHT / 2f - 300), new Vector2f(1100, 600), "Textures/Menu/announcement_background.png");
@@ -81,10 +89,11 @@ public class AnnouncementGui {
                 Debugger.log(Debugger.EVENT, "Back to main menu accepted");
                 SceneController.setScene(new Menu());
                 this.remove();
+
             }
         };
         InfoGuiList.remove();
-        BuffListGui.remove();
+        BuffListGui.hardRemove();
         this.show();
     }
 

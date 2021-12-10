@@ -8,6 +8,8 @@ public class AudioManager {
     public static Audio explosion;
     public static Audio powerUp;
     public static Audio bgm;
+    public static Audio victory;
+    public static Audio defeat;
     private static float BGMVolume = 1f;
     private static float SFXVolume = 1f;
 
@@ -17,6 +19,8 @@ public class AudioManager {
         explosion = new Audio("Sounds/Explosion.ogg", true, false, 2);
         powerUp = new Audio("Sounds/Powerup.ogg", true, false, 1);
         bgm = new Audio("Sounds/BGM.wav", false, true, 0.2f);
+        victory = new Audio("Sounds/Victory.ogg", false, false, 1);
+        defeat = new Audio("Sounds/Defeat.ogg", false, false, 1);
         setBGMVolume(Config.BGM_VOLUME);
         setSFXVolume(Config.SFX_VOLUME);
     }
@@ -32,6 +36,8 @@ public class AudioManager {
         placeBomb.setVolume(volume);
         explosion.setVolume(2 * volume);
         powerUp.setVolume(volume);
+        victory.setVolume(volume * 0.8f);
+        defeat.setVolume(volume * 0.8f);
     }
 
     public static float getBGMVolume() {

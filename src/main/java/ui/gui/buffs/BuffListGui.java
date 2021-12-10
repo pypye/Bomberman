@@ -38,6 +38,11 @@ public class BuffListGui {
             buff.remove();
         }
     }
+    public static void hardRemove(){
+        remove();
+        buffList.clear();
+        TOTAL_SIZE = 0;
+    }
 
     public static ArrayList<BuffGui> getBuffList() {
         return buffList;

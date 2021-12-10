@@ -3,7 +3,7 @@ size = 20
 
 [Level 1]
 enemy spawn count = 3
-level 1/2/3 bot rate = 100%/0%/0%
+level 1/2/3 bot rate = 66%/33%/0%
 
 [Level 2]
 enemy spawn count = 5
