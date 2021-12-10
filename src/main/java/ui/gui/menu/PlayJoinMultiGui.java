@@ -28,7 +28,9 @@ public class PlayJoinMultiGui {
         close = new ImageButtonGui(new Vector2f(), new Vector2f(32, 32), "Textures/Settings/X.png") {
             @Override
             public void onClick() {
+                SocketIO.getSocket().emit("leaveFind", SocketIO.getSocket().id());
                 PlayJoinMultiGui.remove();
+                PlayGui.initialize();
             }
         };
         playText = new TextGui("Find room", ColorRGBA.White, 32);
@@ -40,9 +42,10 @@ public class PlayJoinMultiGui {
             public void onClick() {
                 SocketIO.getSocket().emit("leaveFind", SocketIO.getSocket().id());
                 PlayJoinMultiGui.remove();
+                PlayGui.initialize();
             }
         };
-        LocationGui.anchorBottomRightObject(returnBtn, background, 32, 16);
+        LocationGui.anchorBottomRightObject(returnBtn, background, 32, 32);
         show();
     }
 
@@ -54,7 +57,7 @@ public class PlayJoinMultiGui {
         roomTextList.clear();
         btnList.clear();
         for (int i = 0; i < players.size(); i++) {
-            create(80 + i * 100, players.get(i));
+            create(80 + i * 80, players.get(i));
         }
         for (ImageGui bg : bgList) bg.show();
         for (TextGui text : roomTextList) text.show();
@@ -71,7 +74,10 @@ public class PlayJoinMultiGui {
         ButtonGui btn = new ButtonGui("Join", new Vector2f(), new Vector2f(100, 50)) {
             @Override
             public void onClick() {
-
+                SocketIO.getSocket().emit("leaveFind", SocketIO.getSocket().id());
+                SocketIO.getSocket().emit("create", _text);
+                PlayCreateMultiGui.initialize(id, _text);
+                PlayJoinMultiGui.remove();
             }
         };
         LocationGui.anchorTopRightObject(btn, bg, 32, 0);
@@ -102,6 +108,5 @@ public class PlayJoinMultiGui {
         for (ButtonGui btn : btnList) btn.remove();
         roomTextList.clear();
         returnBtn.remove();
-        PlayGui.initialize();
     }
 }

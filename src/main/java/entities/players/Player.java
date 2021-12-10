@@ -22,6 +22,7 @@ public class Player extends Entity {
     public static final float DEFAULT_SPEED = 3f;
     public static final int DEFAULT_BOMB_LENGTH = 2;
     public static final int DEFAULT_BOMB_MAX = 3;
+    public String id;
 
     protected float speed = DEFAULT_SPEED;
     protected int bombMax = DEFAULT_BOMB_MAX;

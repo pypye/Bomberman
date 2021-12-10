@@ -1,11 +1,17 @@
 package socket;
 
 import cores.Debugger;
+import cores.Main;
+import entities.players.PlayerList;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.lwjgl.Sys;
+import scenes.GameMulti;
+import scenes.SceneController;
 import ui.gui.menu.PlayCreateMultiGui;
 import ui.gui.menu.PlayJoinMultiGui;
 
@@ -66,7 +72,39 @@ public class SocketIO {
 
                 }
             });
+            socket.on("sendStartGame", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("Start game");
+                    JSONArray map = (JSONArray) args[0];
+                    JSONArray player = (JSONArray) args[1];
+                    SceneController.trigger = true;
+                    SceneController.map = map;
+                    SceneController.player = player;
+                }
+            });
+            socket.on("sendPlayerMove", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    String id = (String) args[0];
+                    if(id.equals(SocketIO.getSocket().id())) return;
+                    String direction = (String) args[1];
+                    float value = Float.parseFloat(String.valueOf(args[2]));
+                    switch (direction) {
+                        case "forward":
+                            PlayerList.getPlayer(id).moveForward(value);
+                        case "backward":
+                            PlayerList.getPlayer(id).moveBackward(value);
+                        case "left":
+                            PlayerList.getPlayer(id).moveLeft(value);
+                        case "right":
+                            PlayerList.getPlayer(id).moveRight(value);
+                        default:
+                            break;
+                    }
 
+                }
+            });
             long timeStart = System.currentTimeMillis();
             while (!socket.connected()) {
                 Thread.sleep(50);

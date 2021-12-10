@@ -10,6 +10,8 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import input.SystemInput;
 import io.socket.emitter.Emitter;
+import org.json.JSONArray;
+import scenes.GameMulti;
 import socket.SocketIO;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.Display;
@@ -69,6 +71,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         SceneController.update(tpf);
+
     }
 
     @Override

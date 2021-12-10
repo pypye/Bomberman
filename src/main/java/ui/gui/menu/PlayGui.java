@@ -42,7 +42,7 @@ public class PlayGui {
                 PlayGui.remove();
             }
         };
-        LocationGui.anchorBottomRightObject(returnBtn, background, 32, 16);
+        LocationGui.anchorBottomRightObject(returnBtn, background, 32, 32);
         show();
         SceneController.getCurrentScene().setActive(false);
     }
@@ -123,7 +123,7 @@ public class PlayGui {
 
     private static void createAIMode() {
         playAIMode = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
-        LocationGui.anchorTopLeftObject(playAIMode, background, 64, 172);
+        LocationGui.anchorTopLeftObject(playAIMode, background, 64, 162);
         playAIModeText = new TextGui("AI mode", ColorRGBA.White, 32);
         LocationGui.anchorTopLeftObject(playAIModeText, playAIMode, 16, -32);
         playAIModeDescription = new TextGui("Watch AI bot play the game", ColorRGBA.White);
@@ -140,7 +140,7 @@ public class PlayGui {
 
     private static void createMultiplayerCreate(){
         playMultiplayerCreate = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
-        LocationGui.anchorTopLeftObject(playMultiplayerCreate, background, 64, 272);
+        LocationGui.anchorTopLeftObject(playMultiplayerCreate, background, 64, 252);
         playMultiplayerCreateText = new TextGui("Create room", ColorRGBA.White, 32);
         LocationGui.anchorTopLeftObject(playMultiplayerCreateText, playMultiplayerCreate, 16, -32);
         playMultiplayerCreateDescription = new TextGui("Create a new multiplayer game", ColorRGBA.White);
@@ -149,7 +149,7 @@ public class PlayGui {
             @Override
             public void onClick() {
                 if(SocketIO.getSocket().id() != null){
-                    SocketIO.getSocket().emit("create", SocketIO.getSocket().id());
+                    SocketIO.getSocket().emit("create", "room_" + SocketIO.getSocket().id());
                     PlayCreateMultiGui.initialize(SocketIO.getSocket().id(), "room_" + SocketIO.getSocket().id());
                     PlayGui.remove();
                 }
@@ -161,7 +161,7 @@ public class PlayGui {
 
     private static void createMultiplayerJoin(){
         playMultiplayerJoin = new ImageGui(new Vector2f(), new Vector2f(background.getSize().x - 128, 72), "Textures/Settings/part.png");
-        LocationGui.anchorTopLeftObject(playMultiplayerJoin, background, 64, 372);
+        LocationGui.anchorTopLeftObject(playMultiplayerJoin, background, 64, 342);
         playMultiplayerJoinText = new TextGui("Join room", ColorRGBA.White, 32);
         LocationGui.anchorTopLeftObject(playMultiplayerJoinText, playMultiplayerJoin, 16, -32);
         playMultiplayerJoinDescription = new TextGui("Join a multiplayer game", ColorRGBA.White);

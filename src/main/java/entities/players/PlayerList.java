@@ -51,6 +51,14 @@ public class PlayerList {
         }
         return null;
     }
+    public static Player getPlayer(String id) {
+        for (Player player : players) {
+            if (player.id.equals(id)) {
+                return player;
+            }
+        }
+        return null;
+    }
 
     public static Player getMainPlayerAI() {
         for (Player player : players) {
