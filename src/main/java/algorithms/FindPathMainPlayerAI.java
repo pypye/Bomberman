@@ -87,7 +87,7 @@ public class FindPathMainPlayerAI {
 
     private boolean hasShield(Player player) {
         if (player instanceof MainPlayerAI) {
-            return player.getShieldBuffDuration() >= 0.5f;
+            return player.getShieldBuffDuration() >= 0.2f;
         }
         return false;
     }
