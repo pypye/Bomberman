@@ -13,6 +13,7 @@ public class MainPlayerAI extends MainPlayer {
     private boolean moving = false;
     protected int nextMove = Enemy.STAND;
     private Vector2f prefMove = null;
+    private final FindPathMainPlayerAI findPath = new FindPathMainPlayerAI();
 
     public MainPlayerAI(Vector3f position) {
         super(position);
@@ -95,11 +96,8 @@ public class MainPlayerAI extends MainPlayer {
     }
 
     public void setNextMove() {
-        FindPathMainPlayerAI a = new FindPathMainPlayerAI(
-                SceneController.getCurrentScene().getLevel());
-        Debugger.log(Debugger.EVENT,
-                "AI move case is " + a.moveCase((int) this.getCord().x, (int) this.getCord().y));
-        this.nextMove = a.nextMove((int) this.getCord().x, (int) this.getCord().y);
+        Debugger.log(Debugger.EVENT, "AI move case is " + findPath.moveCase((int) this.getCord().x, (int) this.getCord().y));
+        this.nextMove = findPath.nextMove((int) this.getCord().x, (int) this.getCord().y);
 
     }
 

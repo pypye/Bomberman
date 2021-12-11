@@ -36,12 +36,9 @@ public class FindPathMainPlayerAI {
     private Vector2f[][] trace;
     private static final int MAX_PATH = 1000000000;
 
-    private final int level;
-
-    public FindPathMainPlayerAI(int level) {
+    public FindPathMainPlayerAI() {
         visited = new int[length][length];
         path = new int[length][length];
-        this.level = level;
     }
 
     public boolean checkRange(int u, int v) {

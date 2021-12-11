@@ -17,7 +17,7 @@ import entities.Entity;
 
 public class Player extends Entity {
     public static final float OFFSET = 0.45f;
-    public static final float DEFAULT_SPEED = 2.8f;
+    public float DEFAULT_SPEED = 2.8f;
     public static final int DEFAULT_BOMB_LENGTH = 2;
     public static final int DEFAULT_BOMB_MAX = 3;
     public String id;
@@ -171,7 +171,7 @@ public class Player extends Entity {
         if (!speedBuffActivated) {
             if (speedBuffDuration > 0) {
                 speedBuffActivated = true;
-                speed *= 2;
+                speed += 3f;
             }
         } else {
             speedBuffDuration -= tpf;

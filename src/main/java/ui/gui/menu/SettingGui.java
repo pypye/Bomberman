@@ -7,6 +7,7 @@ import cores.Config;
 import cores.Main;
 import org.lwjgl.opengl.Display;
 import scenes.Game;
+import scenes.GameAI;
 import scenes.Menu;
 import scenes.SceneController;
 import ui.gui.*;
@@ -59,6 +60,9 @@ public class SettingGui {
                 if (SceneController.getCurrentScene() instanceof Menu) {
                     SettingGui.remove();
                 } else if (SceneController.getCurrentScene() instanceof Game) {
+                    SettingGui.remove();
+                    SceneController.setScene(new Menu());
+                } else if (SceneController.getCurrentScene() instanceof GameAI) {
                     SettingGui.remove();
                     SceneController.setScene(new Menu());
                 }
