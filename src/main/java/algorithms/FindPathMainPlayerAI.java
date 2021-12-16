@@ -107,14 +107,14 @@ public class FindPathMainPlayerAI {
                         && checkRange((int) position.x, (int) position.y)
                         && checkRange((int) playerCord.x , (int) playerCord.y)
                         && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                    (int) position.x, (int) position.y) < 2f
-                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 2f)
+                                    (int) position.x, (int) position.y) < 1f
+                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 1f)
 
                 ) {
                     return false;
                 }
             }
-            if (player instanceof Turtle || player instanceof Golem) {
+            if (player instanceof Turtle) {
                 if (
                         checkRange((int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])
                                 && checkRange((int) position.x, (int) position.y)
@@ -224,7 +224,7 @@ public class FindPathMainPlayerAI {
             if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
                 boolean check = true;
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 1.8 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         check = false;
                         break;
@@ -272,6 +272,17 @@ public class FindPathMainPlayerAI {
 
     }
 
+    private boolean checkDifferentPosition(Vector2f pos, int next) {
+        int[] corX = {0, 0, 0, -1, 1, 0};
+        int[] corY = {0, -1, 1, 0, 0, 0};
+        pos.setX(pos.getX() + corX[next + 1]);
+        pos.setY(pos.getY() + corY[next + 1]);
+        if (!checkNearEnemy(pos)) {
+            return false;
+        }
+        return true;
+    }
+
     public int nextMove(int x, int y) {
         int option = moveCase(x, y);
         int result = -1;
@@ -283,31 +294,36 @@ public class FindPathMainPlayerAI {
                 int tempPath = 6;
                 for (int i = -5; i <= 5; i++) {
                     for (int j = -5; j <= 5; j++) {
-                        if (checkSafePosition(x + i, y + j) && path[x + i][y + j] < tempPath
+                        if (checkSafePosition(x + i, y + j) && path[x + i][y + j] <= tempPath
                                 && checkNearEnemy(new Vector2f(x + i, y + j))) {
-                            tempPath = path[x + i][y + j];
-                            tempPosition = new Vector2f(x + i, y + j);
+
+                            int temp = getDirection(x, y, (int) x + i,
+                                    (int) y + j);
+                            if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                                tempPath = path[x + i][y + j];
+                                tempPosition = new Vector2f(x + i, y + j);
+                                result = temp;
+                            }
+
                         }
                     }
                 }
-                if(checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) && checkNearEnemy(tempPosition)) {
-                    result = getDirection(x, y, (int) tempPosition.getX(),
-                            (int) tempPosition.getY());
-                }
+
 
                 break;
             case 2:
                 tempPath = MAX_PATH;
                 tempPosition = new Vector2f(-1000000000, -1000000000);
                 for (Vector2f item : itemList) {
-                    if (path[(int) item.getX()][(int) item.getY()] < tempPath && checkNearEnemy(
+                    if (path[(int) item.getX()][(int) item.getY()] <= tempPath && checkNearEnemy(
                             item) && checkSafePosition((int) item.getX(), (int) item.getY())) {
-                        tempPath = path[(int) item.getX()][(int) item.getY()];
-                        tempPosition = item;
+                        int temp = getDirection(x, y, (int) item.getX(), (int) item.getY());
+                        if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                            tempPath = path[(int) item.getX()][(int) item.getY()];
+                            tempPosition = item;
+                            result = temp;
+                        }
                     }
-                }
-                if(checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) && checkNearEnemy(tempPosition)) {
-                    result = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
                 }
 
                 break;
@@ -315,48 +331,38 @@ public class FindPathMainPlayerAI {
                 tempPath = MAX_PATH;
                 tempPosition = new Vector2f(-1000000000, -1000000000);
                 for (Vector2f enemy : enemyList) {
-                    if (path[(int) enemy.getX()][(int) enemy.getY()] < tempPath) {
+                    if (path[(int) enemy.getX()][(int) enemy.getY()] <= tempPath) {
                         tempPath = path[(int) enemy.getX()][(int) enemy.getY()];
                         tempPosition = enemy;
-                    }
-                }
-                if (tempPath <= 2) {
-                    if (tempPath == 1) {
-                        if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) || !checkNearEnemy(tempPosition)){
-                            result = 4;
-                        }
-                        else {
-                            result = -1;
-                        }
-                    }
-                    else {
-                        if (Manhattan(x, y, (int) tempPosition.getX(), (int) tempPosition.getY()) <= 2) {
-                            result = 4;
-                        }
-//                        if (x == (int) tempPosition.getX()) {
-//                            if (Math.abs(y - (int) tempPosition.getY()) <= 2) {
-//                                result = 4;
-//                            } else {
-//                                result = getDirection(x, y, (int) tempPosition.getX(),
-//                                        (int) tempPosition.getY());
-//                            }
-//                        } else if (y == (int) tempPosition.getY()) {
-//                            if (Math.abs(x - (int) tempPosition.getX()) <= 2) {
-//                                result = 4;
-//                            } else {
-//                                result = getDirection(x, y, (int) tempPosition.getX(),
-//                                        (int) tempPosition.getY());
-//                            }
+                        if (tempPath <= 2) {
+                            if (tempPath == 1) {
+//                        if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) || !checkNearEnemy(tempPosition)){
+//                            result = 4;
 //                        }
-                        else {
-                            result = getDirection(x, y, (int) tempPosition.getX(),
+//                        else {
+//                            result = -1;
+//                        }
+                                result = 4;
+                            }
+                            else {
+                                if (Manhattan(x, y, (int) tempPosition.getX(), (int) tempPosition.getY()) <= 2) {
+                                    result = 4;
+                                }
+                                else {
+                                    result = getDirection(x, y, (int) tempPosition.getX(),
+                                            (int) tempPosition.getY());
+                                }
+                            }
+                        } else {
+                            int temp = getDirection(x, y, (int) tempPosition.getX(),
                                     (int) tempPosition.getY());
+                            if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                                result = temp;
+                            }
                         }
                     }
-                } else {
-                    result = getDirection(x, y, (int) tempPosition.getX(),
-                            (int) tempPosition.getY());
                 }
+
                 break;
             case 4:
                 tempPath = MAX_PATH;
@@ -369,19 +375,25 @@ public class FindPathMainPlayerAI {
                         if (checkSafePosition((int) tempPositionOfContainer.getX(),
                                 (int) tempPositionOfContainer.getY())) {
                             if (path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()]
-                                    < tempPath) {
+                                    <= tempPath && checkNearEnemy(tempPositionOfContainer)) {
                                 tempPath = path[(int) tempPositionOfContainer.getX()][(int) tempPositionOfContainer.getY()];
                                 tempPosition = tempPositionOfContainer;
+                                if (tempPath == 0) {
+                                    result = 4;
+                                } else {
+                                    if(tempPath == MAX_PATH){
+                                        continue;
+                                    }
+                                    int temp = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
+                                    if(checkDifferentPosition(new Vector2f(x, y), temp)){
+                                        result = temp;
+                                    }
+                                }
                             }
                         }
                     }
                 }
-                if (tempPath == 0) {
-                    result = 4;
-                } else {
-                    result = getDirection(x, y, (int) tempPosition.getX(),
-                            (int) tempPosition.getY());
-                }
+
                 break;
             case 5:
                 tempPath = MAX_PATH;
