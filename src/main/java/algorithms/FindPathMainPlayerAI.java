@@ -56,20 +56,16 @@ public class FindPathMainPlayerAI {
         }
 
         Player mainPlayerAI = PlayerList.getMainPlayerAI();
-        int safeDistance = 2;
         if (!hasShield(mainPlayerAI)) {
             for (Bomb bomb : BombList.bombs) {
-                if (mainPlayerAI.getBombBuffDuration() >= 0f) {
-                    safeDistance = 4;
-                }
                 if (bomb.getCord().x == u) {
-                    if (Math.abs(bomb.getCord().y - v) <= safeDistance
+                    if (Math.abs(bomb.getCord().y - v) <= bomb.getBombExplodeLength()
                             && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                         return false;
                     }
                 }
                 if (bomb.getCord().y == v) {
-                    if (Math.abs(bomb.getCord().x - u) <= safeDistance
+                    if (Math.abs(bomb.getCord().x - u) <= bomb.getBombExplodeLength()
                             && bomb.getTimeElapsed() < Bomb.DURATION - 0.5f) {
                         return false;
                     }
@@ -84,7 +80,7 @@ public class FindPathMainPlayerAI {
 
     private boolean hasShield(Player player) {
         if (player instanceof MainPlayerAI) {
-            return player.getShieldBuffDuration() >= 0.2f;
+            return player.getShieldBuffDuration() >= 4f;
         }
         return false;
     }
