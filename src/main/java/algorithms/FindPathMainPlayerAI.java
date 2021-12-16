@@ -334,10 +334,14 @@ public class FindPathMainPlayerAI {
                                 }
                             }
                         } else {
-                            int temp = getDirection(x, y, (int) tempPosition.getX(),
-                                    (int) tempPosition.getY());
-                            if (checkDifferentPosition(new Vector2f(x, y), temp)) {
-                                result = temp;
+                            tempPath = path[(int) enemy.getX()][(int) enemy.getY()];
+                            tempPosition = enemy;
+                            if(tempPath < MAX_PATH) {
+                                int temp = getDirection(x, y, (int) tempPosition.getX(),
+                                        (int) tempPosition.getY());
+                                if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                                    result = temp;
+                                }
                             }
                         }
                     }
