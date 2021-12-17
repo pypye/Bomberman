@@ -191,7 +191,7 @@ public class FindPathAI {
 
     public int nextMove(int x, int y, int l, int r) {
         int option = moveCase(x, y, l, r);
-        option = randomMissRate(option, Math.max(0, 100 - 10 * level));
+        option = randomMissRate(option, Math.max(0, 100 - 15 * level));
         int result = -1;
         switch (option) {
             case 0:
