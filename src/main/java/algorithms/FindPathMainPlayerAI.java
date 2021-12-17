@@ -318,30 +318,29 @@ public class FindPathMainPlayerAI {
                         tempPosition = enemy;
                         if (tempPath <= 2) {
                             if (tempPath == 1) {
-//                        if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY()) || !checkNearEnemy(tempPosition)){
-//                            result = 4;
-//                        }
-//                        else {
-//                            result = -1;
-//                        }
                                 result = 4;
                             } else {
                                 if (Manhattan(x, y, (int) tempPosition.getX(), (int) tempPosition.getY()) <= 2) {
                                     result = 4;
                                 } else {
-                                    result = getDirection(x, y, (int) tempPosition.getX(),
+                                    if (path[(int) tempPosition.getX()][(int) tempPosition.getY()] == MAX_PATH) {
+                                        continue;
+                                    }
+                                    int temp = getDirection(x, y, (int) tempPosition.getX(),
                                             (int) tempPosition.getY());
+                                    if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                                        result = temp;
+                                    }
                                 }
                             }
                         } else {
-                            tempPath = path[(int) enemy.getX()][(int) enemy.getY()];
-                            tempPosition = enemy;
-                            if(tempPath < MAX_PATH) {
-                                int temp = getDirection(x, y, (int) tempPosition.getX(),
-                                        (int) tempPosition.getY());
-                                if (checkDifferentPosition(new Vector2f(x, y), temp)) {
-                                    result = temp;
-                                }
+                            if (path[(int) tempPosition.getX()][(int) tempPosition.getY()] == MAX_PATH) {
+                                continue;
+                            }
+                            int temp = getDirection(x, y, (int) tempPosition.getX(),
+                                    (int) tempPosition.getY());
+                            if (checkDifferentPosition(new Vector2f(x, y), temp)) {
+                                result = temp;
                             }
                         }
                     }
