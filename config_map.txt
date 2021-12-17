@@ -6,8 +6,8 @@ enemy spawn count = 3
 level 1/2/3 bot rate = 66%/33%/0%
 
 [Level 2]
-enemy spawn count = 5
-level 1/2/3 bot rate = 60%/20%/20%
+enemy spawn count = 3
+level 1/2/3 bot rate = 33%/33%/33%
 
 [Level 3]
 enemy spawn count = 6
