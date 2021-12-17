@@ -141,15 +141,11 @@ public class FindPathAI {
 
     private int randomMissRate(int result, double missRate) {
         missRate *= 1000;
-
         int range = 100001;
         int rand = (int) (Math.random() * range) + 1;
-        int resultAfterMiss = -1;
-        if (rand <= missRate) {
-            resultAfterMiss = (int) (Math.random() * 6) - 1;
-        } else {
-            return result;
-        }
+        int resultAfterMiss;
+        if (rand <= missRate) resultAfterMiss = (int) (Math.random() * 6) - 1;
+        else return result;
         return resultAfterMiss;
     }
 
@@ -164,16 +160,15 @@ public class FindPathAI {
             if (checkSafePosition(x, y)) {
                 boolean check = true;
                 for (Bomb bomb : BombList.bombs) {
-                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2.5 / Manhattan(bomb.getCord().x,
+                    if (bomb.getTimeElapsed() >= Bomb.DURATION - 2 / Manhattan(bomb.getCord().x,
                             bomb.getCord().y, x, y)) {
                         check = false;
                         break;
                     }
                 }
-                if(check) {
+                if (check) {
                     return 3;
-                }
-                else {
+                } else {
                     return 0;
                 }
             } else return 1;
@@ -196,7 +191,7 @@ public class FindPathAI {
 
     public int nextMove(int x, int y, int l, int r) {
         int option = moveCase(x, y, l, r);
-        option = randomMissRate(option, 100 - 15 * level);
+        option = randomMissRate(option, Math.max(0, 100 - 10 * level));
         int result = -1;
         switch (option) {
             case 0:
@@ -239,8 +234,7 @@ public class FindPathAI {
                     if (tempPath == 1) {
                         if (checkSafePosition((int) tempPosition.getX(), (int) tempPosition.getY())) {
                             result = 4;
-                        }
-                        else {
+                        } else {
                             result = -1;
                         }
                     }

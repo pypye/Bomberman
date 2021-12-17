@@ -66,6 +66,7 @@ public class Audio {
     public void stop() {
         audio.stop();
     }
+
     public void pause() {
         audio.pause();
     }

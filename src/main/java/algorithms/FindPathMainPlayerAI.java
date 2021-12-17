@@ -4,25 +4,19 @@ import com.jme3.math.Vector2f;
 import cores.Map;
 import entities.bombs.Bomb;
 import entities.bombs.BombList;
-
-import entities.buffs.ShieldItem;
 import entities.players.MainPlayerAI;
 import entities.players.Player;
 import entities.players.PlayerList;
 import entities.players.enemies.Enemy;
-import entities.players.enemies.Golem;
 import entities.players.enemies.Spider;
 import entities.players.enemies.Turtle;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Random;
 
 public class FindPathMainPlayerAI {
-
     private final int[][] visited;
     private final int length = 20;
     private final int[] dx = {-1, 0, 1, 0};
@@ -72,9 +66,6 @@ public class FindPathMainPlayerAI {
                 }
             }
         }
-
-
-
         return true;
     }
 
@@ -84,6 +75,7 @@ public class FindPathMainPlayerAI {
         }
         return false;
     }
+
     private boolean checkNearEnemy(Vector2f position) {
         int[] corX = {0, 0, 0, -1, 1, 0};
         int[] corY = {0, -1, 1, 0, 0, 0};
@@ -94,18 +86,17 @@ public class FindPathMainPlayerAI {
             }
             int moveOfEnemy = ((Enemy) player).getNextMove();
             Vector2f playerCord = player.getCord();
-            if (player instanceof Spider ) {
+            if (player instanceof Spider) {
                 if (Manhattan(player.getCord().x, player.getCord().y, (int) position.x, (int) position.y) <= 1.5 && player.isUltimateActivated()) {
                     return false;
                 }
                 if (
                         checkRange((int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])
-                        && checkRange((int) position.x, (int) position.y)
-                        && checkRange((int) playerCord.x , (int) playerCord.y)
-                        && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
-                                    (int) position.x, (int) position.y) < 1f
-                        || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 1f)
-
+                                && checkRange((int) position.x, (int) position.y)
+                                && checkRange((int) playerCord.x, (int) playerCord.y)
+                                && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
+                                (int) position.x, (int) position.y) < 1f
+                                || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 1f)
                 ) {
                     return false;
                 }
@@ -114,11 +105,10 @@ public class FindPathMainPlayerAI {
                 if (
                         checkRange((int) playerCord.x + corX[moveOfEnemy + 1], (int) playerCord.y + corY[moveOfEnemy + 1])
                                 && checkRange((int) position.x, (int) position.y)
-                                && checkRange((int) playerCord.x , (int) playerCord.y)
+                                && checkRange((int) playerCord.x, (int) playerCord.y)
                                 && (Manhattan(playerCord.x + corX[moveOfEnemy + 1], playerCord.y + corY[moveOfEnemy + 1],
                                 (int) position.x, (int) position.y) < 1f
                                 || Manhattan(playerCord.x, playerCord.y, (int) position.x, (int) position.y) < 1f)
-
                 ) {
                     return false;
                 }
@@ -189,9 +179,7 @@ public class FindPathMainPlayerAI {
                 path[i][j] = 1000000000;
             }
         }
-
     }
-
 
     private float Manhattan(float x, float y, int u, int v) {
         return Math.abs(x - u) + Math.abs(y - v);
@@ -214,7 +202,7 @@ public class FindPathMainPlayerAI {
 
         if ((bombList.size() > 0 && !checkHasShield)
                 || (spider != null && spider.isUltimateActivated()
-                    && Manhattan(x, y, (int) spider.getCord().x, (int) spider.getCord().y) <= 2)
+                && Manhattan(x, y, (int) spider.getCord().x, (int) spider.getCord().y) <= 2)
                 || !checkNearEnemy(new Vector2f(x, y))
         ) {
             if (checkSafePosition(x, y) && checkNearEnemy(new Vector2f(x, y))) {
@@ -226,10 +214,9 @@ public class FindPathMainPlayerAI {
                         break;
                     }
                 }
-                if(check) {
+                if (check) {
                     return 3;
-                }
-                else {
+                } else {
                     return 0;
                 }
             } else {
@@ -292,7 +279,6 @@ public class FindPathMainPlayerAI {
                     for (int j = -5; j <= 5; j++) {
                         if (checkSafePosition(x + i, y + j) && path[x + i][y + j] <= tempPath
                                 && checkNearEnemy(new Vector2f(x + i, y + j))) {
-
                             int temp = getDirection(x, y, (int) x + i,
                                     (int) y + j);
                             if (checkDifferentPosition(new Vector2f(x, y), temp)) {
@@ -339,12 +325,10 @@ public class FindPathMainPlayerAI {
 //                            result = -1;
 //                        }
                                 result = 4;
-                            }
-                            else {
+                            } else {
                                 if (Manhattan(x, y, (int) tempPosition.getX(), (int) tempPosition.getY()) <= 2) {
                                     result = 4;
-                                }
-                                else {
+                                } else {
                                     result = getDirection(x, y, (int) tempPosition.getX(),
                                             (int) tempPosition.getY());
                                 }
@@ -377,11 +361,11 @@ public class FindPathMainPlayerAI {
                                 if (tempPath == 0) {
                                     result = 4;
                                 } else {
-                                    if(tempPath == MAX_PATH){
+                                    if (tempPath == MAX_PATH) {
                                         continue;
                                     }
                                     int temp = getDirection(x, y, (int) tempPosition.getX(), (int) tempPosition.getY());
-                                    if(checkDifferentPosition(new Vector2f(x, y), temp)){
+                                    if (checkDifferentPosition(new Vector2f(x, y), temp)) {
                                         result = temp;
                                     }
                                 }
