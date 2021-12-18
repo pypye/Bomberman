@@ -17,11 +17,11 @@ import ui.gui.TextGui;
 import ui.gui.buffs.BuffListGui;
 
 public class AnnouncementGui {
-    private final ImageGui background;
-    private final ImageGui image;
-    private final TextGui levelText, timeText;
-    private final ButtonGui btn1;
-    private final ButtonGui btn2;
+    private static ImageGui background;
+    private static ImageGui image;
+    private static TextGui levelText, timeText;
+    private static ButtonGui btn1;
+    private static ButtonGui btn2;
     int nextLevel;
 
     public AnnouncementGui(boolean win) {
@@ -95,10 +95,10 @@ public class AnnouncementGui {
         };
         InfoGuiList.remove();
         BuffListGui.hardRemove();
-        this.show();
+        show();
     }
 
-    public void show() {
+    public static void show() {
         background.show();
         image.show();
         btn1.show();
@@ -107,12 +107,12 @@ public class AnnouncementGui {
         timeText.show();
     }
 
-    public void remove() {
-        background.remove();
-        image.remove();
-        btn1.remove();
-        btn2.remove();
-        levelText.remove();
-        timeText.remove();
+    public static void remove() {
+        if(background != null) background.remove();
+        if(image != null) image.remove();
+        if(btn1 != null) btn1.remove();
+        if(btn2 != null) btn2.remove();
+        if(levelText != null) levelText.remove();
+        if(timeText != null) timeText.remove();
     }
 }

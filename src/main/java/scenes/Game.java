@@ -10,6 +10,7 @@ import input.PlayerInput;
 import input.SystemInput;
 import particles.BombExplodeParticleList;
 import ui.gui.buffs.BuffListGui;
+import ui.gui.game.AnnouncementGui;
 import ui.gui.game.InfoGuiList;
 
 public class Game extends Scene {
@@ -56,6 +57,7 @@ public class Game extends Scene {
         Map.remove();
         Environment.remove();
         AudioManager.bgm.stop();
+        AnnouncementGui.remove();
     }
 
     public void setLevel(int level) {
